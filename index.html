@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Isaiah Ongaki Nyakundi | Data Engineer</title>
-
-    <link rel="stylesheet" href="css/style.css">
+    <title>Isaiah Nyakundi | Data Engineer</title>
 
     <meta
         name="description"
-        content="Portfolio of Isaiah Ongaki Nyakundi, a Data Engineer building reliable data platforms, pipelines, and analytics systems."
+        content="Isaiah Nyakundi is a Data Engineer building production-oriented data platforms, pipelines, analytics systems, and reliable data products."
     >
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -21,12 +21,15 @@
     <header>
         <nav>
 
-            <a href="#home">Isaiah Nyakundi</a>
+            <a href="#home" class="nav-brand">
+                Isaiah Nyakundi
+            </a>
 
-            <div>
+            <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#projects">Projects</a>
                 <a href="#engineering">Engineering</a>
+                <a href="#writing">Writing</a>
                 <a href="#contact">Contact</a>
             </div>
 
@@ -37,30 +40,45 @@
     <main>
 
         <!-- Hero -->
-        <section id="home">
+        <section id="home" class="hero">
 
-            <p>DATA ENGINEER</p>
+            <p class="eyebrow">DATA ENGINEER</p>
 
             <h1>
                 I build data systems
                 that people can trust.
             </h1>
 
-            <p>
+            <p class="hero-description">
                 I design and build end-to-end data platforms, pipelines,
                 and analytics systems — from ingestion and transformation
                 to reliable, production-ready data products.
             </p>
 
-            <a href="#projects">View my work</a>
+            <p class="hero-focus">
+                Data Platforms · Pipelines · Analytics
+            </p>
 
-            <a
-                href="https://github.com/viradidi"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                GitHub
-            </a>
+            <div class="hero-actions">
+
+                <a href="#projects" class="button button-primary">
+                    View Projects
+                </a>
+
+                <a
+                    href="https://github.com/viradidi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="button"
+                >
+                    GitHub
+                </a>
+
+                <a href="#contact" class="button">
+                    Let's Connect
+                </a>
+
+            </div>
 
         </section>
 
@@ -68,19 +86,39 @@
         <!-- About -->
         <section id="about">
 
-            <h2>About</h2>
+            <div class="section-label">
+                ABOUT
+            </div>
 
-            <p>
-                I'm Isaiah Ongaki Nyakundi, a Data Engineer focused on
-                building reliable data systems from ingestion to analytics.
-            </p>
+            <h2>
+                Systems-minded data engineering.
+            </h2>
 
-            <p>
-                I approach data engineering as a systems problem:
-                understanding the business requirement, designing the
-                architecture, building reliable pipelines, testing the data,
-                automating workflows, and making systems observable.
-            </p>
+            <div class="about-content">
+
+                <p>
+                    I'm Isaiah Nyakundi, a Data Engineer focused on
+                    building reliable data systems from ingestion to
+                    analytics.
+                </p>
+
+                <p>
+                    I approach data engineering as a systems problem:
+                    understand the business requirement, design the
+                    architecture, build reliable pipelines, validate
+                    the data, automate the workflow, and make the
+                    system observable.
+                </p>
+
+                <p>
+                    My goal is not simply to make a pipeline run.
+                    I care about maintainability, data quality,
+                    failure handling, performance, testing,
+                    observability, and the business value created
+                    by the system.
+                </p>
+
+            </div>
 
         </section>
 
@@ -88,11 +126,17 @@
         <!-- What I Build -->
         <section id="engineering">
 
-            <h2>What I Build</h2>
+            <div class="section-label">
+                WHAT I BUILD
+            </div>
 
-            <p>
-                I focus on building data systems end to end, using
-                technology where it solves a real engineering or business problem.
+            <h2>
+                End-to-end data systems.
+            </h2>
+
+            <p class="section-intro">
+                I use technology where it solves a real engineering
+                or business problem.
             </p>
 
 
@@ -100,35 +144,44 @@
 
                 <article>
 
+                    <span class="card-number">01</span>
+
                     <h3>Data Platforms</h3>
 
                     <p>
-                        Reliable foundations for storing, processing, and
-                        serving data for analytical workloads.
+                        Foundations for ingesting, processing,
+                        storing, transforming, and serving data
+                        for analytical workloads.
                     </p>
 
                 </article>
 
 
                 <article>
+
+                    <span class="card-number">02</span>
 
                     <h3>Data Pipelines</h3>
 
                     <p>
-                        Automated ingestion and transformation workflows
-                        designed for reliability, maintainability, and scale.
+                        Automated workflows designed around
+                        reliability, testing, maintainability,
+                        observability, and operational recovery.
                     </p>
 
                 </article>
 
 
                 <article>
+
+                    <span class="card-number">03</span>
 
                     <h3>Streaming Systems</h3>
 
                     <p>
-                        Event-driven pipelines for use cases where data
-                        needs to be processed continuously and with low latency.
+                        Event-driven architectures for workloads
+                        where data must be processed continuously
+                        and delivered with low latency.
                     </p>
 
                 </article>
@@ -136,11 +189,14 @@
 
                 <article>
 
+                    <span class="card-number">04</span>
+
                     <h3>Analytics & Data Products</h3>
 
                     <p>
-                        Trusted analytical models and data products that turn
-                        processed data into useful business information.
+                        Trusted analytical models and data products
+                        that transform processed data into useful
+                        business information.
                     </p>
 
                 </article>
@@ -152,8 +208,8 @@
 
                 <span>Reliability</span>
                 <span>Data Quality</span>
-                <span>Automation</span>
                 <span>Testing</span>
+                <span>Automation</span>
                 <span>Observability</span>
                 <span>Performance</span>
 
@@ -162,101 +218,330 @@
         </section>
 
 
-        <!-- Projects -->
+        <!-- Featured Project -->
         <section id="projects">
 
-            <h2>Projects</h2>
+            <div class="section-label">
+                FEATURED PROJECT
+            </div>
 
-            <p>
-                Real-world projects focused on architecture, reliability,
-                scalability, automation, and business value.
+            <h2>
+                E-Commerce Data Platform
+            </h2>
+
+            <p class="project-lead">
+                A production-oriented end-to-end data platform for
+                ingesting, validating, transforming, orchestrating,
+                and serving e-commerce data for analytics.
             </p>
 
 
-            <article>
+            <article class="featured-project">
 
-                <h3>E-Commerce Data Platform</h3>
+                <div class="project-meta">
 
-                <p>
-                    A production-oriented end-to-end data platform for
-                    ingesting, validating, transforming, and serving
-                    e-commerce data for analytics.
-                </p>
+                    <span>Python</span>
+                    <span>PostgreSQL</span>
+                    <span>Airflow</span>
+                    <span>dbt</span>
+                    <span>Docker</span>
+                    <span>SQL</span>
 
-                <p>
-                    Python · PostgreSQL · Airflow · dbt · Docker · SQL · Data Quality
-                </p>
+                </div>
 
-                <a
-                    href="https://github.com/viradidi/ecommerce-data-platform"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    View Project →
-                </a>
+
+                <div class="project-grid">
+
+                    <div>
+
+                        <h3>Architecture</h3>
+
+                        <p>
+                            Source data flows through an orchestrated
+                            ingestion and validation process before
+                            being transformed into analytics-ready
+                            models.
+                        </p>
+
+                        <p>
+                            The system separates ingestion,
+                            transformation, testing, orchestration,
+                            and analytical serving responsibilities.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>Engineering Decisions</h3>
+
+                        <p>
+                            Airflow manages workflow orchestration,
+                            PostgreSQL provides the analytical database,
+                            and dbt manages transformation and data
+                            quality testing.
+                        </p>
+
+                        <p>
+                            Docker provides a reproducible local
+                            environment for the complete platform.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>Data Quality</h3>
+
+                        <p>
+                            dbt tests validate nullability and
+                            uniqueness across staging and analytical
+                            models before the pipeline is considered
+                            successful.
+                        </p>
+
+                        <p>
+                            The latest pipeline execution completed
+                            successfully with all eight data tests
+                            passing.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>Results</h3>
+
+                        <p>
+                            The platform produces a trusted customer
+                            transaction summary that can be consumed
+                            by downstream analytical workloads.
+                        </p>
+
+                        <p>
+                            The pipeline is automated, repeatable,
+                            testable, and version controlled.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="project-actions">
+
+                    <a
+                        href="https://github.com/viradidi/ecommerce-data-platform"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button button-primary"
+                    >
+                        View GitHub
+                    </a>
+
+                    <a
+                        href="https://github.com/viradidi/ecommerce-data-platform/tree/main/architecture"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button"
+                    >
+                        Architecture
+                    </a>
+
+                </div>
 
             </article>
 
 
-            <article>
-
-                <h3>Real-Time Event Platform</h3>
-
-                <p>
-                    A streaming platform designed to process application
-                    events in near real time and make them available for
-                    downstream analytics.
-                </p>
-
-                <p>
-                    Kafka · Spark Streaming · Delta Lake
-                </p>
-
-                <a href="#">
-                    Project coming soon
-                </a>
-
-            </article>
+            <!-- More Projects -->
+            <div class="section-label more-projects-label">
+                MORE PROJECTS
+            </div>
 
 
-            <article>
+            <div class="project-list">
 
-                <h3>Modern Analytics Platform</h3>
+                <article>
 
-                <p>
-                    An analytics engineering platform demonstrating
-                    transformation, dimensional modeling, testing,
-                    documentation, and warehouse analytics.
-                </p>
+                    <span class="card-number">02</span>
 
-                <p>
-                    Snowflake · dbt · SQL
-                </p>
+                    <h3>Real-Time Event Platform</h3>
 
-                <a href="#">
-                    Project coming soon
-                </a>
+                    <p>
+                        A streaming architecture designed to process
+                        application events in near real time and make
+                        them available for downstream analytics.
+                    </p>
 
-            </article>
+                    <p class="tech-stack">
+                        Kafka · Spark Streaming · Delta Lake
+                    </p>
+
+                    <span class="project-status">
+                        In development
+                    </span>
+
+                </article>
+
+
+                <article>
+
+                    <span class="card-number">03</span>
+
+                    <h3>Modern Analytics Platform</h3>
+
+                    <p>
+                        An analytics engineering platform demonstrating
+                        transformation, dimensional modeling, testing,
+                        documentation, and warehouse analytics.
+                    </p>
+
+                    <p class="tech-stack">
+                        Snowflake · dbt · SQL
+                    </p>
+
+                    <span class="project-status">
+                        Planned
+                    </span>
+
+                </article>
+
+            </div>
 
         </section>
 
 
         <!-- Engineering Philosophy -->
-        <section>
+        <section id="engineering-principles">
 
-            <h2>How I Engineer</h2>
+            <div class="section-label">
+                ENGINEERING
+            </div>
 
-            <p>
-                Build → Test → Automate → Deploy → Observe
+            <h2>
+                Build systems, not demos.
+            </h2>
+
+            <div class="engineering-flow">
+
+                <span>Build</span>
+                <span>→</span>
+                <span>Test</span>
+                <span>→</span>
+                <span>Automate</span>
+                <span>→</span>
+                <span>Deploy</span>
+                <span>→</span>
+                <span>Observe</span>
+
+            </div>
+
+            <p class="engineering-description">
+                Good data engineering goes beyond making a pipeline
+                work once. I design systems with reliability,
+                reproducibility, data quality, observability,
+                maintainability, and failure recovery in mind.
             </p>
 
-            <p>
-                My focus is not simply making pipelines run.
-                I care about reliability, maintainability, data quality,
-                performance, failure handling, observability, and
-                measurable business impact.
+        </section>
+
+
+        <!-- Writing -->
+        <section id="writing">
+
+            <div class="section-label">
+                WRITING
+            </div>
+
+            <h2>
+                Thinking in systems.
+            </h2>
+
+            <p class="section-intro">
+                Technical notes about the systems I build,
+                the engineering decisions behind them, and
+                what I learn while solving real data problems.
             </p>
+
+
+            <div class="writing-list">
+
+                <article>
+
+                    <span class="writing-type">
+                        ARCHITECTURE NOTE
+                    </span>
+
+                    <h3>
+                        Designing an End-to-End E-Commerce Data Platform
+                    </h3>
+
+                    <p>
+                        Why the platform separates ingestion,
+                        orchestration, transformation, testing,
+                        and analytical serving.
+                    </p>
+
+                    <a
+                        href="https://github.com/viradidi/ecommerce-data-platform"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Read on GitHub →
+                    </a>
+
+                </article>
+
+
+                <article>
+
+                    <span class="writing-type">
+                        ENGINEERING NOTE
+                    </span>
+
+                    <h3>
+                        Data Quality as a Pipeline Contract
+                    </h3>
+
+                    <p>
+                        How automated data tests turn assumptions
+                        about analytical data into enforceable
+                        engineering contracts.
+                    </p>
+
+                    <span class="coming-soon">
+                        Coming soon
+                    </span>
+
+                </article>
+
+
+                <article>
+
+                    <span class="writing-type">
+                        ENGINEERING NOTE
+                    </span>
+
+                    <h3>
+                        From Pipeline to Production System
+                    </h3>
+
+                    <p>
+                        The difference between getting data from A
+                        to B and engineering a system that can be
+                        operated reliably.
+                    </p>
+
+                    <span class="coming-soon">
+                        Coming soon
+                    </span>
+
+                </article>
+
+            </div>
 
         </section>
 
@@ -264,20 +549,36 @@
         <!-- Contact -->
         <section id="contact">
 
-            <h2>Let's Connect</h2>
+            <div class="section-label">
+                LET'S CONNECT
+            </div>
 
-            <p>
-                Interested in data engineering, data platforms,
-                analytics engineering, or building technology?
+            <h2>
+                Let's build something useful.
+            </h2>
+
+            <p class="contact-description">
+                I'm interested in data engineering, data platforms,
+                analytics engineering, distributed systems, and
+                building technology that solves real problems.
             </p>
 
-            <a
-                href="https://github.com/viradidi"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                GitHub
-            </a>
+
+            <div class="contact-links">
+
+                <a
+                    href="https://github.com/viradidi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+
+                <a href="#home">
+                    Back to top ↑
+                </a>
+
+            </div>
 
         </section>
 
@@ -288,7 +589,11 @@
     <footer>
 
         <p>
-            © 2026 Isaiah Ongaki Nyakundi
+            © 2026 Isaiah Nyakundi
+        </p>
+
+        <p>
+            Data Engineering · Data Platforms · Analytics
         </p>
 
     </footer>
