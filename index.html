@@ -20,7 +20,7 @@
 
     <meta
         name="keywords"
-        content="Data Engineer, Analytics Engineer, Cloud Engineer, Azure, Microsoft Fabric, Python, SQL, Spark, Airflow, dbt, PostgreSQL, Docker, Delta Lake, Data Platforms, Data Quality, Analytics Engineering"
+        content="Data Engineer, Analytics Engineer, Cloud Engineer, Azure, Microsoft Fabric, Python, SQL, Spark, PySpark, Airflow, dbt, PostgreSQL, Docker, Delta Lake, Data Platforms, Data Quality, Analytics Engineering, Medallion Architecture"
     >
 
     <meta
@@ -135,8 +135,6 @@
             <div class="hero-grid">
 
 
-                <!-- Hero content -->
-
                 <div class="hero-content">
 
                     <div class="status-line">
@@ -235,8 +233,6 @@
                 </div>
 
 
-
-                <!-- Hero system visual -->
 
                 <div
                     class="hero-visual"
@@ -571,8 +567,6 @@
             <div class="capability-grid">
 
 
-                <!-- Capability 01 -->
-
                 <article class="capability-card">
 
                     <div class="card-top">
@@ -625,8 +619,6 @@
                 </article>
 
 
-
-                <!-- Capability 02 -->
 
                 <article class="capability-card">
 
@@ -681,8 +673,6 @@
 
 
 
-                <!-- Capability 03 -->
-
                 <article class="capability-card">
 
                     <div class="card-top">
@@ -735,8 +725,6 @@
                 </article>
 
 
-
-                <!-- Capability 04 -->
 
                 <article class="capability-card">
 
@@ -834,17 +822,20 @@
 
             <p class="project-lead">
 
-                A production-oriented data platform demonstrating the
-                complete analytical lifecycle: ingestion, validation,
-                orchestration, transformation, testing, and serving.
-                Alongside this, the projects below are drawn from
-                2+ years of freelance data engineering work for clients.
+                Production-oriented data engineering projects demonstrating
+                ingestion, distributed processing, medallion architecture,
+                orchestration, transformation, testing, data quality,
+                and analytical serving. Alongside this, the projects below
+                are drawn from 2+ years of freelance data engineering work
+                for clients.
 
             </p>
 
 
 
-            <!-- FEATURED PROJECT -->
+            <!-- =================================================
+                 FEATURED PROJECT / 001
+                 ================================================= -->
 
             <article class="featured-project">
 
@@ -905,8 +896,6 @@
                 <div class="project-grid">
 
 
-                    <!-- Problem -->
-
                     <div class="project-block">
 
                         <span class="project-block-label">
@@ -938,8 +927,6 @@
                     </div>
 
 
-
-                    <!-- Architecture -->
 
                     <div class="project-block">
 
@@ -1004,8 +991,6 @@
 
 
 
-                    <!-- Engineering -->
-
                     <div class="project-block">
 
                         <span class="project-block-label">
@@ -1035,8 +1020,6 @@
 
 
 
-                    <!-- Data Quality -->
-
                     <div class="project-block">
 
                         <span class="project-block-label">
@@ -1065,8 +1048,6 @@
                     </div>
 
 
-
-                    <!-- Outcome -->
 
                     <div class="project-block">
 
@@ -1138,17 +1119,311 @@
 
 
 
-            <!-- ADDITIONAL PROJECTS -->
+            <!-- =================================================
+                 RETAIL PYSPARK PROJECT / 002
+                 ================================================= -->
+
+            <article class="featured-project">
+
+
+                <div class="project-header">
+
+                    <div>
+
+                        <span class="project-kicker">
+                            PROJECT / 002
+                        </span>
+
+                        <h3>
+                            Retail Sales PySpark Data Engineering Pipeline
+                        </h3>
+
+                    </div>
+
+
+                    <span class="project-status">
+                        PRODUCTION-ORIENTED
+                    </span>
+
+                </div>
+
+
+
+                <div class="project-meta">
+
+                    <span>
+                        PySpark
+                    </span>
+
+                    <span>
+                        Apache Spark 3.5.1
+                    </span>
+
+                    <span>
+                        Docker
+                    </span>
+
+                    <span>
+                        Python
+                    </span>
+
+                    <span>
+                        Parquet
+                    </span>
+
+                    <span>
+                        Medallion Architecture
+                    </span>
+
+                </div>
+
+
+
+                <div class="project-grid">
+
+
+                    <!-- Problem -->
+
+                    <div class="project-block">
+
+                        <span class="project-block-label">
+                            PROBLEM
+                        </span>
+
+                        <h4>
+                            Turning raw retail data into trusted metrics
+                        </h4>
+
+                        <p>
+
+                            Retail datasets often contain invalid values,
+                            inconsistent fields, and records that cannot
+                            safely be used for analytical reporting.
+
+                        </p>
+
+                        <p>
+
+                            This project demonstrates how distributed
+                            processing and explicit data-quality rules
+                            can turn raw retail sales data into reliable
+                            business-ready outputs.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- Architecture -->
+
+                    <div class="project-block">
+
+                        <span class="project-block-label">
+                            ARCHITECTURE
+                        </span>
+
+                        <h4>
+                            Bronze → Silver → Gold
+                        </h4>
+
+                        <p>
+
+                            Raw CSV data is ingested into a Bronze layer,
+                            cleaned and standardized in Silver, and
+                            transformed into business-ready Gold metrics.
+
+                        </p>
+
+
+                        <div class="mini-flow">
+
+                            <span>
+                                RAW CSV
+                            </span>
+
+                            <span>
+                                &rarr;
+                            </span>
+
+                            <span>
+                                BRONZE
+                            </span>
+
+                            <span>
+                                &rarr;
+                            </span>
+
+                            <span>
+                                SILVER
+                            </span>
+
+                            <span>
+                                &rarr;
+                            </span>
+
+                            <span>
+                                GOLD
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Data Quality -->
+
+                    <div class="project-block">
+
+                        <span class="project-block-label">
+                            DATA QUALITY
+                        </span>
+
+                        <h4>
+                            Invalid data handled explicitly
+                        </h4>
+
+                        <p>
+
+                            Invalid customer ages, quantities, prices,
+                            shipping dates, and discount values are
+                            converted to NULL rather than silently
+                            contaminating downstream analytics.
+
+                        </p>
+
+                        <p>
+
+                            Gender values are standardized to improve
+                            consistency across the analytical dataset.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- Distributed Processing -->
+
+                    <div class="project-block">
+
+                        <span class="project-block-label">
+                            DISTRIBUTED PROCESSING
+                        </span>
+
+                        <h4>
+                            Built with PySpark
+                        </h4>
+
+                        <p>
+
+                            Apache Spark provides the distributed processing
+                            engine while PySpark implements the ingestion,
+                            transformation, cleansing, and analytical
+                            workflows.
+
+                        </p>
+
+                        <p>
+
+                            Parquet is used as the storage format between
+                            pipeline layers.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- Business Output -->
+
+                    <div class="project-block">
+
+                        <span class="project-block-label">
+                            BUSINESS OUTPUT
+                        </span>
+
+                        <h4>
+                            Retail analytics ready
+                        </h4>
+
+                        <p>
+
+                            The Gold layer produces daily sales metrics
+                            including total revenue, total orders, and
+                            average order value.
+
+                        </p>
+
+                        <p>
+
+                            City-level revenue metrics provide additional
+                            analytical visibility into revenue, order
+                            volume, and average order value.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="project-actions">
+
+                    <a
+                        href="https://github.com/viradidi/retail-pyspark"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button button-primary"
+                    >
+
+                        View GitHub
+
+                        <span class="external-mark">
+                            &nearr;
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="https://github.com/viradidi/retail-pyspark#architecture"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button"
+                    >
+
+                        View Architecture
+
+                        <span class="external-mark">
+                            &nearr;
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 ADDITIONAL PROJECTS
+                 ================================================= -->
 
             <div class="additional-projects">
 
+
+                <!-- PROJECT 003 -->
 
                 <article class="project-card">
 
                     <div class="project-card-top">
 
                         <span class="project-kicker">
-                            PROJECT / 002
+                            PROJECT / 003
                         </span>
 
                         <span>
@@ -1202,12 +1477,14 @@
 
 
 
+                <!-- PROJECT 004 -->
+
                 <article class="project-card">
 
                     <div class="project-card-top">
 
                         <span class="project-kicker">
-                            PROJECT / 003
+                            PROJECT / 004
                         </span>
 
                         <span>
@@ -1262,7 +1539,6 @@
             </div>
 
 
-            <!-- View more on GitHub -->
 
             <a
                 href="https://github.com/viradidi?tab=repositories"
@@ -1365,6 +1641,8 @@
                         <span>&middot;</span>
                         Apache Spark
                         <span>&middot;</span>
+                        PySpark
+                        <span>&middot;</span>
                         Airflow
 
                     </p>
@@ -1414,6 +1692,8 @@
                         Docker
                         <span>&middot;</span>
                         Delta Lake
+                        <span>&middot;</span>
+                        Parquet
                         <span>&middot;</span>
                         Snowflake
 
@@ -1800,6 +2080,43 @@
 
                     <a
                         href="https://github.com/viradidi/ecommerce-data-platform"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+
+                        Read on GitHub
+
+                        <span>
+                            &rarr;
+                        </span>
+
+                    </a>
+
+                </article>
+
+
+
+                <article class="writing-card">
+
+                    <span class="writing-type">
+                        PYSPARK ENGINEERING
+                    </span>
+
+                    <h3>
+                        Building a Retail Medallion Pipeline with PySpark
+                    </h3>
+
+                    <p>
+
+                        How Bronze, Silver, and Gold layers can structure
+                        retail data processing while enforcing explicit
+                        data-quality rules and producing business-ready
+                        analytical metrics.
+
+                    </p>
+
+                    <a
+                        href="https://github.com/viradidi/retail-pyspark"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
