@@ -27,6 +27,11 @@
             if (event.target.closest("a")) setMenu(false);
         });
 
+        // Clicking anywhere outside the open menu closes it.
+        document.addEventListener("click", function (event) {
+            if (toggle.getAttribute("aria-expanded") === "true" && !menu.contains(event.target) && !toggle.contains(event.target)) setMenu(false);
+        });
+
         document.addEventListener("keydown", function (event) {
             if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
                 setMenu(false);

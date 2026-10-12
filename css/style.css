@@ -224,6 +224,8 @@ code { font-family: var(--mono); font-size: 0.86em; padding: 1px 5px; border-rad
     text-transform: uppercase;
 }
 .eyebrow { color: var(--cyan); margin-bottom: 18px; }
+.status-line { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; padding: 6px 14px; border: 1px solid rgba(52, 211, 153, 0.35); border-radius: 999px; background: rgba(52, 211, 153, 0.07); font-size: 0.84rem; color: var(--text-soft); }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex: none; }
 
 .hero h1 {
     font-size: clamp(2.3rem, 5.4vw, 4rem);

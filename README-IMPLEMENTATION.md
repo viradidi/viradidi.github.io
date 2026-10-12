@@ -35,3 +35,9 @@ Also verified against the repos: E-Commerce's 6 pytest tests all pass (run with 
 2. **E-Commerce:** `dbt/profiles.yml` has a database password committed, and `docker-compose.env` is tracked. Move both to environment variables / an untracked `.env` and rotate the password.
 3. **Novacart:** `upsert_to_gold` builds its merge condition as `target.{target_table} = source.{join_key}`, which will fail once the Gold table exists; the Bronze control table is created twice with different schemas; the README is one line.
 4. **Retail:** README's "Running the Project" ends mid-command (`docker compose up -d`, no `spark-submit`).
+
+## Review of `isaiah-portfolio-final-2026-10-12.zip`
+Compared against the original upload and re-checked against the four GitHub repos (unchanged since the first audit; FlowBridge `sql/*.sql` and three docs are still 0 bytes).
+- **Not adopted:** FlowBridge "Evidence in repo: 9 ordered SQL scripts, Streams & Tasks, stored procedures, dynamic tables, RBAC, verification script" (files are empty); practices citing "FlowBridge verification SQL / docs (data model, governance, deployment)"; E-Commerce "Bronze→Silver→Gold models" (dbt has one staging view and one mart); the resume's matching FlowBridge claims; the "Writing" section; two leftover `TODO` comments.
+- **Still broken in that package:** the hero overflow (page 1532px wide at a 1440px viewport, 621px at 390px).
+- **Adopted into this build:** "Available for freelance and full-time work" status line, the biostatistics wording in About, the contact copy, click-outside-to-close for the mobile menu, a keywords meta tag.
