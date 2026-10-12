@@ -4,914 +4,682 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isaiah Nyakundi | Data Engineer · Analytics Engineer · Cloud Engineer</title>
-    <meta name="description" content="Isaiah Nyakundi is a Data Engineer, Analytics Engineer, and Cloud Engineer building reliable cloud data platforms, analytics systems, data pipelines, and production-oriented engineering solutions.">
-    <meta name="keywords" content="Data Engineer, Analytics Engineer, Cloud Engineer, Azure, Microsoft Fabric, Python, SQL, Spark, PySpark, Airflow, dbt, PostgreSQL, Docker, Delta Lake, Data Platforms, Data Quality, Analytics Engineering, Medallion Architecture">
+    <title>Isaiah Nyakundi | Data Engineer · Python · SQL · ETL</title>
+    <meta name="description" content="Isaiah Nyakundi is a data engineer who builds reliable data pipelines and cloud data platforms with Python, SQL, Spark, Airflow and dbt. Available for freelance pipeline, integration and data-quality work.">
     <meta name="author" content="Isaiah Nyakundi">
     <meta name="theme-color" content="#060b14">
+    <link rel="canonical" href="https://viradidi.github.io/">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Isaiah Nyakundi">
+    <meta property="og:title" content="Isaiah Nyakundi | Data Engineer">
+    <meta property="og:description" content="Reliable data pipelines and cloud data platforms: Python, SQL, PySpark, Airflow, dbt, Snowflake and Databricks.">
+    <meta property="og:url" content="https://viradidi.github.io/">
+    <meta property="og:image" content="https://viradidi.github.io/assets/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Isaiah Nyakundi, Data Engineer: Python, SQL, ETL">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Isaiah Nyakundi | Data Engineer">
+    <meta name="twitter:description" content="Reliable data pipelines and cloud data platforms.">
+    <meta name="twitter:image" content="https://viradidi.github.io/assets/og-image.png">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Isaiah Nyakundi",
+        "jobTitle": "Data Engineer",
+        "url": "https://viradidi.github.io/",
+        "email": "mailto:isaiahnyakundi87@gmail.com",
+        "alumniOf": "Jomo Kenyatta University of Agriculture and Technology",
+        "sameAs": [
+            "https://github.com/viradidi",
+            "https://www.linkedin.com/in/limbaga-undefined-752bab429/"
+        ],
+        "knowsAbout": ["Data engineering", "ETL", "Python", "SQL", "Apache Spark", "Airflow", "dbt"]
+    }
+    </script>
+
     <link rel="stylesheet" href="css/style.css">
-<base target="_blank">
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- =====================================================
-         SITE HEADER
-         ===================================================== -->
-    <header class="site-header">
-        <nav class="navigation" aria-label="Primary navigation">
-            <a href="#home" class="nav-brand" aria-label="Isaiah Nyakundi home">
-                <span class="brand-mark">IN</span>
+    <header class="site-header" id="top">
+        <nav class="navigation container" aria-label="Primary">
+            <a href="#home" class="nav-brand" aria-label="Isaiah Nyakundi, back to top">
+                <span class="brand-mark" aria-hidden="true">IN</span>
                 <span class="brand-text">Isaiah Nyakundi</span>
             </a>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#capabilities">Capabilities</a>
-                <a href="#projects">Projects</a>
-                <a href="#stack">Stack</a>
-                <a href="#engineering">Engineering</a>
-                <a href="#writing">Writing</a>
-                <a href="#resume">Resume</a>
-                <a href="#contact">Contact</a>
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+                <span class="nav-toggle-bars" aria-hidden="true"></span>
+                <span class="visually-hidden">Menu</span>
+            </button>
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#practices">Practices</a></li>
+                    <li><a href="#stack">Stack</a></li>
+                    <li><a href="#resume">Resume</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="#contact" class="btn btn-primary btn-small nav-cta">Work With Me</a>
             </div>
-            <a href="#contact" class="nav-cta">Let's Talk</a>
         </nav>
     </header>
 
-    <main>
+    <main id="main">
 
-        <!-- =====================================================
-             HERO
-             ===================================================== -->
+        <!-- HERO -->
         <section id="home" class="hero">
-            <div class="hero-grid">
-                <div class="hero-content">
-                    <div class="status-line">
-                        <span class="status-dot" aria-hidden="true"></span>
-                        <span>BUILDING DATA SYSTEMS</span>
-                    </div>
-                    <p class="eyebrow">DATA ENGINEER &middot; ANALYTICS ENGINEER &middot; CLOUD ENGINEER</p>
-                    <h1>I build <span class="gradient-text">cloud data platforms</span> that people can trust.</h1>
-                    <p class="hero-description">
-                        I design and build reliable data systems across ingestion, transformation, orchestration, analytics,
-                        and cloud platforms — turning raw data into trusted data products and business insight.
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">Data Engineer · Python · SQL · ETL</p>
+                    <h1>I build reliable data pipelines and <span class="gradient-text">cloud data platforms.</span></h1>
+                    <p class="hero-lead">
+                        I use Python, SQL and modern data engineering tools to move, transform, validate and prepare data
+                        for analytics and business decisions.
                     </p>
-                    <div class="hero-focus">
-                        <span>Microsoft Azure</span>
-                        <span>Microsoft Fabric</span>
-                        <span>Data Engineering</span>
-                        <span>Analytics Engineering</span>
-                    </div>
                     <div class="hero-actions">
-                        <a href="#projects" class="button button-primary">
-                            View Projects <span class="button-arrow">&rarr;</span>
-                        </a>
-                        <a href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer" class="button">
-                            View GitHub
-                        </a>
-                        <a href="resume/Isaiah-Nyakundi-Data-Engineer-Resume.pdf" target="_blank" rel="noopener noreferrer" class="button">
-                            View Resume
-                        </a>
+                        <a href="#projects" class="btn btn-primary">Explore My Projects <span aria-hidden="true">&rarr;</span></a>
+                        <a href="#contact" class="btn btn-ghost">Work With Me</a>
                     </div>
+                    <ul class="hero-links" aria-label="Profiles">
+                        <li><a href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+                        <li><a href="https://www.linkedin.com/in/limbaga-undefined-752bab429/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+                        <li><a href="resume/Isaiah-Nyakundi-Data-Engineer-Resume.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+                    </ul>
                 </div>
-                <div class="hero-visual" aria-hidden="true">
-                    <div class="hero-terminal">
-                        <div class="terminal-top">
-                            <span class="terminal-dot"></span>
-                            <span class="terminal-dot"></span>
-                            <span class="terminal-dot"></span>
-                            <span class="terminal-title">data-platform</span>
-                        </div>
-                        <div class="terminal-body">
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">$</span>
-                                <span>airflow dags list</span>
-                            </div>
-                            <div class="terminal-line muted">daily_platform_pipeline</div>
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">$</span>
-                                <span>dbt build</span>
-                            </div>
-                            <div class="terminal-line success">PASS &nbsp; analytical_models</div>
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">$</span>
-                                <span>validate --data-quality</span>
-                            </div>
-                            <div class="terminal-line success">PASS &nbsp; quality_contracts</div>
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">$</span>
-                                <span class="cursor">_</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hero-architecture">
-                        <div class="architecture-label">DATA FLOW</div>
-                        <div class="architecture-flow">
-                            <span>SOURCE</span>
-                            <span class="flow-arrow">&rarr;</span>
-                            <span>INGEST</span>
-                            <span class="flow-arrow">&rarr;</span>
-                            <span>TRANSFORM</span>
-                            <span class="flow-arrow">&rarr;</span>
-                            <span>SERVE</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-scroll">
-                <span>SCROLL TO EXPLORE</span>
-                <span class="scroll-line"></span>
+
+                <aside class="hero-panel" aria-label="What I work on">
+                    <p class="panel-label">The pipeline I design for</p>
+                    <ol class="mini-flow">
+                        <li><strong>Source</strong><span>files, databases, APIs</span></li>
+                        <li><strong>Ingest</strong><span>incremental, repeatable</span></li>
+                        <li><strong>Validate</strong><span>tests at every boundary</span></li>
+                        <li><strong>Transform</strong><span>SQL, PySpark, dbt</span></li>
+                        <li><strong>Serve</strong><span>analytics-ready tables</span></li>
+                    </ol>
+                    <dl class="panel-facts">
+                        <div><dt>4</dt><dd>public projects with code</dd></div>
+                        <div><dt>2+ yrs</dt><dd>freelance data engineering</dd></div>
+                    </dl>
+                </aside>
             </div>
         </section>
 
-        <!-- =====================================================
-             ABOUT
-             ===================================================== -->
+        <!-- ABOUT -->
         <section id="about" class="section">
-            <div class="section-heading">
-                <div>
-                    <div class="section-label">01 / ABOUT</div>
-                    <h2>Systems-minded data <span class="gradient-text">engineering.</span></h2>
-                </div>
-                <p class="section-number">01</p>
-            </div>
-            <div class="about-grid">
-                <div class="about-statement">
-                    <p class="large-text">
-                        I'm Isaiah Nyakundi, a Data Engineer, Analytics Engineer, and Cloud Engineer focused
-                        on building reliable systems from source data to analytical products.
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-label">01 / About</p>
+                    <h2>An analyst's habits, <span class="gradient-text">an engineer's discipline.</span></h2>
+                </header>
+                <div class="about-grid">
+                    <p class="about-statement">
+                        I'm a data engineer who started in biostatistics. I'm drawn to the unglamorous part of data work:
+                        making sure the numbers that reach a dashboard are correct, and stay correct on the next run.
                     </p>
-                </div>
-                <div class="about-content">
-                    <p>
-                        I approach data engineering as a systems problem. I start with the business requirement, design the
-                        architecture, build the data pipelines, validate the data, automate the workflow, and make the
-                        system observable.
-                    </p>
-                    <p>
-                        My engineering focus spans cloud data platforms, analytics engineering, data quality, orchestration,
-                        distributed processing, and analytical workloads. Alongside project work, I've spent 2+ years
-                        freelancing as a data engineer, building pipelines and analytics systems directly for clients.
-                    </p>
-                    <p>
-                        I care about more than making a pipeline run. I design for reliability, maintainability,
-                        reproducibility, performance, security, observability, and measurable business value.
-                    </p>
-                    <div class="about-principles">
-                        <span>BUILD</span>
-                        <span>TEST</span>
-                        <span>AUTOMATE</span>
-                        <span>DEPLOY</span>
-                        <span>OBSERVE</span>
+                    <div class="about-body">
+                        <p>
+                            I'm completing a Bachelor of Science in Biostatistics at Jomo Kenyatta University of Agriculture and
+                            Technology (JKUAT), which taught me to question data before trusting it: where it came from, what is
+                            missing, and what a result can honestly support. I now apply that to pipelines. I have spent 2+ years
+                            freelancing as a data engineer, building ingestion and transformation work for clients.
+                        </p>
+                        <p>
+                            My projects below are built to show how I work. I start from who will use the data, pick the simplest
+                            architecture that fits, validate at the boundaries, make reruns safe, and write down the decisions so
+                            someone else can maintain it. Each project card states what is verified in the code and what is not.
+                        </p>
+                        <ul class="about-points">
+                            <li><strong>Analytical.</strong> I check assumptions and edge cases before building on them.</li>
+                            <li><strong>Practical.</strong> Python, SQL, Spark, Airflow and dbt, chosen for the problem, not the trend.</li>
+                            <li><strong>Documented.</strong> Architecture notes and READMEs ship with the code.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- =====================================================
-             CAPABILITIES
-             ===================================================== -->
-        <section id="capabilities" class="section section-alt">
-            <div class="section-heading">
-                <div>
-                    <div class="section-label">02 / CAPABILITIES</div>
-                    <h2>From cloud infrastructure <span class="gradient-text">to analytics.</span></h2>
+        <!-- SERVICES -->
+        <section id="services" class="section section-alt">
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-label">02 / Services</p>
+                    <h2>What you can <span class="gradient-text">hire me to do.</span></h2>
+                    <p class="section-lead">Scoped to your situation, with no fixed packages and no guaranteed outcomes. Each engagement starts with a short conversation about your data and goals.</p>
+                </header>
+                <div class="service-grid">
+                    <article class="service">
+                        <h3>Python automation &amp; data processing</h3>
+                        <dl>
+                            <dt>The problem</dt><dd>Recurring manual work: copying exports, cleaning spreadsheets, stitching files together.</dd>
+                            <dt>You get</dt><dd>A documented, scheduled Python job with logging and clear failure messages.</dd>
+                            <dt>The value</dt><dd>Hours returned to your team and fewer copy-paste errors.</dd>
+                        </dl>
+                    </article>
+                    <article class="service">
+                        <h3>SQL development &amp; transformation</h3>
+                        <dl>
+                            <dt>The problem</dt><dd>Reports disagree because business logic lives in scattered queries.</dd>
+                            <dt>You get</dt><dd>Version-controlled SQL models with one definition of each metric.</dd>
+                            <dt>The value</dt><dd>Numbers people can trace and trust.</dd>
+                        </dl>
+                    </article>
+                    <article class="service">
+                        <h3>ETL / ELT pipeline development</h3>
+                        <dl>
+                            <dt>The problem</dt><dd>Data sits in source systems and never reaches analysts in a usable form.</dd>
+                            <dt>You get</dt><dd>An incremental, rerunnable pipeline into your warehouse or lakehouse, with run metadata.</dd>
+                            <dt>The value</dt><dd>Analytics-ready data that refreshes without babysitting.</dd>
+                        </dl>
+                    </article>
+                    <article class="service">
+                        <h3>Data integration &amp; troubleshooting</h3>
+                        <dl>
+                            <dt>The problem</dt><dd>Systems that don't talk to each other, or a pipeline that fails and nobody knows why.</dd>
+                            <dt>You get</dt><dd>Working integrations, or a diagnosis of the failure with a fix and notes.</dd>
+                            <dt>The value</dt><dd>Fewer incidents and faster recovery when something breaks.</dd>
+                        </dl>
+                    </article>
+                    <article class="service">
+                        <h3>Data quality validation &amp; testing</h3>
+                        <dl>
+                            <dt>The problem</dt><dd>Bad records quietly reach reports and nobody notices until a decision is wrong.</dd>
+                            <dt>You get</dt><dd>Automated checks (nulls, duplicates, ranges, relationships) that stop or flag bad data.</dd>
+                            <dt>The value</dt><dd>Problems are caught at the source, not in a meeting.</dd>
+                        </dl>
+                    </article>
+                    <article class="service service-cta">
+                        <h3>Have a project in mind?</h3>
+                        <p>Tell me what data you have and what you need from it. I'll reply with questions and a suggested approach.</p>
+                        <a href="#contact" class="btn btn-primary">Discuss a project <span aria-hidden="true">&rarr;</span></a>
+                    </article>
                 </div>
-                <p class="section-number">02</p>
-            </div>
-            <p class="section-intro">
-                I build across the modern data lifecycle, connecting cloud platforms, data engineering, analytics engineering,
-                reliability, and business-facing data products.
-            </p>
-            <div class="capability-grid">
-                <article class="capability-card">
-                    <div class="card-top">
-                        <span class="card-number">01</span>
-                        <span class="card-icon">☁️</span>
-                    </div>
-                    <h3>Cloud Data Engineering</h3>
-                    <p>Designing cloud-based data platforms and production-oriented workloads using Azure services and Microsoft Fabric.</p>
-                    <div class="tag-list">
-                        <span>Azure</span>
-                        <span>Microsoft Fabric</span>
-                        <span>Lakehouse</span>
-                        <span>Cloud Architecture</span>
-                    </div>
-                </article>
-                <article class="capability-card">
-                    <div class="card-top">
-                        <span class="card-number">02</span>
-                        <span class="card-icon">🔄</span>
-                    </div>
-                    <h3>Pipeline Engineering</h3>
-                    <p>Building batch and distributed data pipelines with orchestration, transformation, validation, retries, and repeatable execution.</p>
-                    <div class="tag-list">
-                        <span>Python</span>
-                        <span>SQL</span>
-                        <span>Spark</span>
-                        <span>Airflow</span>
-                    </div>
-                </article>
-                <article class="capability-card">
-                    <div class="card-top">
-                        <span class="card-number">03</span>
-                        <span class="card-icon">📐</span>
-                    </div>
-                    <h3>Analytics Engineering</h3>
-                    <p>Building tested and maintainable analytical models so business logic is centralized, documented, reproducible, and easier to trust.</p>
-                    <div class="tag-list">
-                        <span>dbt</span>
-                        <span>SQL</span>
-                        <span>Dimensional Modeling</span>
-                        <span>Data Quality</span>
-                    </div>
-                </article>
-                <article class="capability-card">
-                    <div class="card-top">
-                        <span class="card-number">04</span>
-                        <span class="card-icon">🛡️</span>
-                    </div>
-                    <h3>Reliability & Observability</h3>
-                    <p>Treating data quality as an engineering problem through automated validation, workflow monitoring, reproducibility, and failure-aware design.</p>
-                    <div class="tag-list">
-                        <span>Testing</span>
-                        <span>Data Contracts</span>
-                        <span>Observability</span>
-                        <span>Automation</span>
-                    </div>
-                </article>
             </div>
         </section>
 
-        <!-- =====================================================
-             PROJECTS — VISUAL CARD GRID + ARCHITECTURE PANELS
-             ===================================================== -->
+        <!-- PROJECTS -->
         <section id="projects" class="section">
-            <div class="section-heading">
-                <div>
-                    <div class="section-label">03 / SELECTED WORK</div>
-                    <h2>Engineering work, <span class="gradient-text">not demos.</span></h2>
-                </div>
-                <p class="section-number">03</p>
-            </div>
-            <p class="project-lead">
-                Production-oriented data engineering projects demonstrating ingestion, distributed processing, medallion architecture,
-                orchestration, transformation, testing, data quality, and analytical serving. Click any project to explore its full architecture.
-            </p>
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-label">03 / Selected work</p>
+                    <h2>Four projects, <span class="gradient-text">honestly described.</span></h2>
+                    <p class="section-lead">These are portfolio projects, not client work. Each card was checked against the repository: the status badge and the "Not in the repo yet" list say exactly what exists today.</p>
+                </header>
 
-            <!-- PROJECT CARDS GRID -->
-            <div class="projects-visual-grid">
+                <div class="project-list">
 
-                <!-- PROJECT 001 -->
-                <article class="project-visual-card active" onclick="toggleProject('p1')" id="card-p1" data-project="p1">
-                    <div class="pvc-visual">
-                        <span class="pvc-status badge-live">Production</span>
-                        <img src="images/project-001-arch.png" alt="E-Commerce Data Platform Architecture" class="pvc-arch-img" loading="lazy">
-                    </div>
-                    <div class="pvc-body">
-                        <div class="pvc-id">PROJECT / 001</div>
-                        <h3 class="pvc-title">E-Commerce Data Platform</h3>
-                        <p class="pvc-desc">End-to-end pipeline: ingestion → orchestration → transformation → testing → analytics serving.</p>
-                        <div class="pvc-tags">
-                            <span>Python</span>
-                            <span>PostgreSQL</span>
-                            <span>Airflow</span>
-                            <span>dbt</span>
-                            <span>Docker</span>
-                        </div>
-                        <div class="pvc-actions">
-                            <a href="https://github.com/viradidi/ecommerce-data-platform" target="_blank" rel="noopener noreferrer" class="pvc-btn pvc-btn-primary" onclick="event.stopPropagation();">
-                                🐙 GitHub
-                            </a>
-                            <a href="https://github.com/viradidi/ecommerce-data-platform/tree/main/architecture" target="_blank" rel="noopener noreferrer" class="pvc-btn" onclick="event.stopPropagation();">
-                                📖 Architecture
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- PROJECT 002 -->
-                <article class="project-visual-card" onclick="toggleProject('p2')" id="card-p2" data-project="p2">
-                    <div class="pvc-visual">
-                        <span class="pvc-status badge-live">Production</span>
-                        <img src="images/project-002-arch.png" alt="Retail Medallion Pipeline Architecture" class="pvc-arch-img" loading="lazy">
-                    </div>
-                    <div class="pvc-body">
-                        <div class="pvc-id">PROJECT / 002</div>
-                        <h3 class="pvc-title">Retail Medallion Pipeline</h3>
-                        <p class="pvc-desc">Distributed PySpark processing with Bronze→Silver→Gold architecture and explicit data quality rules.</p>
-                        <div class="pvc-tags">
-                            <span>PySpark</span>
-                            <span>Spark 3.5.1</span>
-                            <span>Parquet</span>
-                            <span>Docker</span>
-                        </div>
-                        <div class="pvc-actions">
-                            <a href="https://github.com/viradidi/retail-pyspark" target="_blank" rel="noopener noreferrer" class="pvc-btn pvc-btn-primary" onclick="event.stopPropagation();">
-                                🐙 GitHub
-                            </a>
-                            <a href="https://github.com/viradidi/retail-pyspark#architecture" target="_blank" rel="noopener noreferrer" class="pvc-btn" onclick="event.stopPropagation();">
-                                📖 Architecture
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- PROJECT 003 -->
-                <article class="project-visual-card dev" onclick="toggleProject('p3')" id="card-p3" data-project="p3">
-                    <div class="pvc-visual">
-                        <span class="pvc-status badge-dev">In Development</span>
-                        <img src="images/project-003-arch.png" alt="Real-Time Event Platform Architecture" class="pvc-arch-img" loading="lazy">
-                    </div>
-                    <div class="pvc-body">
-                        <div class="pvc-id">PROJECT / 003</div>
-                        <h3 class="pvc-title">Real-Time Event Platform</h3>
-                        <p class="pvc-desc">Streaming architecture: Kafka ingestion, Spark Streaming transformations, Delta Lake storage.</p>
-                        <div class="pvc-tags">
-                            <span>Kafka</span>
-                            <span>Spark Streaming</span>
-                            <span>Delta Lake</span>
-                        </div>
-                        <div class="pvc-actions">
-                            <a href="#" class="pvc-btn" onclick="event.stopPropagation();">🐙 GitHub</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- PROJECT 004 -->
-                <article class="project-visual-card dev" onclick="toggleProject('p4')" id="card-p4" data-project="p4">
-                    <div class="pvc-visual">
-                        <span class="pvc-status badge-dev">In Development</span>
-                        <img src="images/project-004-arch.png" alt="Modern Analytics Platform Architecture" class="pvc-arch-img" loading="lazy">
-                    </div>
-                    <div class="pvc-body">
-                        <div class="pvc-id">PROJECT / 004</div>
-                        <h3 class="pvc-title">Modern Analytics Platform</h3>
-                        <p class="pvc-desc">Dimensional modeling, data quality contracts, and business-facing data products on Snowflake.</p>
-                        <div class="pvc-tags">
-                            <span>dbt</span>
-                            <span>Snowflake</span>
-                            <span>SQL</span>
-                            <span>Power BI</span>
-                        </div>
-                        <div class="pvc-actions">
-                            <a href="#" class="pvc-btn" onclick="event.stopPropagation();">🐙 GitHub</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- PROJECT 005 -->
-                <article class="project-visual-card dev" onclick="toggleProject('p5')" id="card-p5" data-project="p5">
-                    <div class="pvc-visual">
-                        <span class="pvc-status badge-dev">In Development</span>
-                        <img src="images/project-005-arch.png" alt="Azure End-to-End ETL Architecture" class="pvc-arch-img" loading="lazy">
-                    </div>
-                    <div class="pvc-body">
-                        <div class="pvc-id">PROJECT / 005</div>
-                        <h3 class="pvc-title">Azure End-to-End ETL</h3>
-                        <p class="pvc-desc">Cloud-native batch pipeline: ADF orchestration, ADLS storage, Databricks transformations, Power BI serving.</p>
-                        <div class="pvc-tags">
-                            <span>Azure</span>
-                            <span>ADF</span>
-                            <span>Databricks</span>
-                            <span>Delta Lake</span>
-                        </div>
-                        <div class="pvc-actions">
-                            <a href="#" class="pvc-btn" onclick="event.stopPropagation();">🐙 GitHub</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- PROJECT 006 -->
-                <article class="project-visual-card dev" onclick="toggleProject('p6')" id="card-p6" data-project="p6">
-                    <div class="pvc-visual">
-                        <span class="pvc-status badge-dev">In Development</span>
-                        <img src="images/project-006-arch.png" alt="Fabric Lakehouse Analytics Architecture" class="pvc-arch-img" loading="lazy">
-                    </div>
-                    <div class="pvc-body">
-                        <div class="pvc-id">PROJECT / 006</div>
-                        <h3 class="pvc-title">Fabric Lakehouse Analytics</h3>
-                        <p class="pvc-desc">Microsoft Fabric lakehouse architecture with OneLake storage, semantic models, and integrated Power BI.</p>
-                        <div class="pvc-tags">
-                            <span>Microsoft Fabric</span>
-                            <span>OneLake</span>
-                            <span>Lakehouse</span>
-                            <span>Power BI</span>
-                        </div>
-                        <div class="pvc-actions">
-                            <a href="#" class="pvc-btn" onclick="event.stopPropagation();">🐙 GitHub</a>
-                        </div>
-                    </div>
-                </article>
-            </div>
-
-            <!-- EXPANDED DETAIL PANELS -->
-            <div class="detail-panels-container">
-
-                <!-- PANEL P001 -->
-                <div class="detail-panel visible" id="panel-p1">
-                    <span class="detail-close" onclick="closePanel()">&times;</span>
-                    <div class="detail-header">
-                        <div class="detail-title">E-Commerce Data Platform</div>
-                        <div class="detail-subtitle">Airflow → dbt → PostgreSQL with automated testing and Docker reproducibility</div>
-                    </div>
-
-                    <div class="detail-section">
-                        <h4 class="detail-section-title">🎯 Problem</h4>
-                        <p class="detail-text">The platform is designed around a common data engineering problem: moving source datasets through a repeatable workflow until they become reliable, analytics-ready outputs. The goal is not simply to execute a pipeline, but to make the full lifecycle reproducible, testable, and understandable.</p>
-                    </div>
-
-                    <div class="detail-section">
-                        <h4 class="detail-section-title">🏗️ Architecture</h4>
-                        <p class="detail-text">Source datasets move through an orchestrated ingestion and validation workflow before being transformed into analytics-ready models. The platform separates ingestion, orchestration, transformation, testing, and analytical serving responsibilities.</p>
-                        <div class="detail-arch-flow">
-                            <div class="dflow-node"><span class="dflow-icon">📊</span><span class="dflow-label">SOURCE</span><span class="dflow-detail">Raw CSV/JSON</span></div>
-                            <span class="dflow-arrow">→</span>
-                            <div class="dflow-node"><span class="dflow-icon">🌪️</span><span class="dflow-label">AIRFLOW</span><span class="dflow-detail">Orchestration</span></div>
-                            <span class="dflow-arrow">→</span>
-                            <div class="dflow-node"><span class="dflow-icon">🔧</span><span class="dflow-label">DBT</span><span class="dflow-detail">Transform + Test</span></div>
-                            <span class="dflow-arrow">→</span>
-                            <div class="dflow-node"><span class="dflow-icon">🐘</span><span class="dflow-label">POSTGRESQL</span><span class="dflow-detail">Analytics DB</span></div>
-                        </div>
-                    </div>
-
-                    <div class="detail-section">
-                        <h4 class="detail-section-title">📊 Metrics</h4>
-                        <div class="detail-metrics">
-                            <div class="dmetric"><div class="dmetric-value">8</div><div class="dmetric-label">dbt Tests</div></div>
-                            <div class="dmetric"><div class="dmetric-value">100%</div><div class="dmetric-label">Pass Rate</div></div>
-                            <div class="dmetric"><div class="dmetric-value">Docker</div><div class="dmetric-label">Reproducible</div></div>
-                            <div class="dmetric"><div class="dmetric-value">Git</div><div class="dmetric-label">Versioned</div></div>
-                        </div>
-                    </div>
-
-                    <div class="detail-section">
-                        <h4 class="detail-section-title">✅ Data Quality Contracts</h4>
-                        <div class="detail-quality">
-                            <div class="dq-item"><span class="dq-check">✓</span><span>Primary key uniqueness on customer_transaction_id</span></div>
-                            <div class="dq-item"><span class="dq-check">✓</span><span>Non-null constraints on order_date, customer_id, total_amount</span></div>
-                            <div class="dq-item"><span class="dq-check">✓</span><span>Referential integrity between transactions and customers</span></div>
-                            <div class="dq-item"><span class="dq-check">✓</span><span>Total_amount within valid business range (≥ 0)</span></div>
-                        </div>
-                    </div>
-
-                    <div class="detail-section">
-                        <h4 class="detail-section-title">💼 Business Value</h4>
-                        <p class="detail-text">The platform produces a trusted customer transaction summary suitable for downstream analytical workloads. The pipeline is automated, repeatable, testable, and version controlled — enabling faster, more reliable business reporting.</p>
-                    </div>
-                </div>
-
-                <!-- PANEL P002 -->
-                <div class="detail-panel" id="panel-p2">
-                    <span class="detail-close" onclick="closePanel()">&times;</span>
-                    <div class="detail-header">
-                        <div class="detail-title">Retail Medallion Pipeline</div>
-                        <div class="detail-subtitle">PySpark distributed processing with explicit data quality rules and Parquet storage</div>
-                    </div>
-
-                    <div class="detail-section">
-                        <h4 class="detail-section-title">🎯 Problem</h4>
-                        <p class="detail-text">Retail datasets often contain invalid values, inconsistent fields, and records that cannot safely be used for analytical reporting. This project demonstrates how distributed processing and explicit data-quality rules can turn raw retail sales data into reliable business-ready outputs.</p>
-                    </div>
-
-                    <div class="detail-section">
-                        <h4 class="detail-section-title">🏗️ Architecture — Medallion</h4>
-                        <div class="detail-medallion">
-                            <div class="dmed-layer dmed-bronze">
-                                <span class="dmed-badge dmed-badge-bronze">BRONZE</span>
-                                <span class="dmed-desc">Raw CSV ingestion — schema enforced, no transformations</span>
-                                <span class="dmed-meta">CSV → Parquet</span>
+                    <!-- 1 FlowBridge -->
+                    <article class="project" aria-labelledby="p1-title">
+                        <header class="project-head">
+                            <div>
+                                <p class="kicker">01 · Snowflake · Azure</p>
+                                <h3 id="p1-title">FlowBridge: Supply Chain Data Platform</h3>
                             </div>
-                            <span class="dmed-conn">↓</span>
-                            <div class="dmed-layer dmed-silver">
-                                <span class="dmed-badge dmed-badge-silver">SILVER</span>
-                                <span class="dmed-desc">Cleaned & standardized — null invalid ages, normalize gender, validate dates</span>
-                                <span class="dmed-meta">Parquet</span>
+                            <span class="status status-design">Documented design · code pending</span>
+                        </header>
+                        <p class="project-summary">A supply-chain analytics platform designed around event-driven ingestion of nested operational JSON from Azure into a Snowflake medallion model, served through governed views to a dashboard.</p>
+
+                        <figure class="diagram" aria-label="FlowBridge architecture as documented in the repository README">
+                            <div class="lane">
+                                <p class="lane-title">Azure ingestion</p>
+                                <ol>
+                                    <li class="node"><span class="node-label">Source</span><strong>Python + Faker</strong><small>Nested JSON</small></li>
+                                    <li class="node"><span class="node-label">Land</span><strong>ADLS Gen2</strong><small>Cloud data lake</small></li>
+                                    <li class="node"><span class="node-label">Notify</span><strong>Event Grid + Queue</strong><small>Blob events</small></li>
+                                    <li class="node"><span class="node-label">Load</span><strong>Snowpipe</strong><small>Automated ingestion</small></li>
+                                </ol>
                             </div>
-                            <span class="dmed-conn">↓</span>
-                            <div class="dmed-layer dmed-gold">
-                                <span class="dmed-badge dmed-badge-gold">GOLD</span>
-                                <span class="dmed-desc">Business metrics — daily revenue, AOV, city-level aggregations</span>
-                                <span class="dmed-meta">Parquet</span>
+                            <div class="lane">
+                                <p class="lane-title">Snowflake medallion</p>
+                                <ol>
+                                    <li class="node" data-kind="store"><span class="node-label">Bronze</span><strong>Raw</strong><small>Source-faithful</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Silver</span><strong>Cleaned</strong><small>Dedupe, flatten nested data</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Gold</span><strong>Star schema</strong><small>Facts + dimensions</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Serving</span><strong>Secure views</strong><small>Streamlit dashboard</small></li>
+                                </ol>
                             </div>
+                            <figcaption>Per the README: Streams and Tasks, stored procedures, dynamic tables, RBAC, and DEV&rarr;PROD separation.</figcaption>
+                        </figure>
+
+                        <div class="project-grid">
+                            <section class="pblock">
+                                <h4>Problem</h4>
+                                <p>Supply-chain data (orders, shipments, inventory, supplier events) arrives nested, duplicated and incomplete, which makes it hard to analyse directly.</p>
+                            </section>
+                            <section class="pblock">
+                                <h4>Design decisions (as documented)</h4>
+                                <ul>
+                                    <li>Event-driven loading rather than scheduled bulk copies.</li>
+                                    <li>Medallion layers separate raw preservation, cleansing and business modelling.</li>
+                                    <li>Star schema with surrogate keys; SCD Type 1 dimensions.</li>
+                                    <li>RBAC and secure views for consumption.</li>
+                                </ul>
+                            </section>
+                            <section class="pblock">
+                                <h4>Verified in the repo</h4>
+                                <ul>
+                                    <li>README, architecture and business-problem docs are published.</li>
+                                </ul>
+                            </section>
+                            <section class="pblock pblock-gap">
+                                <h4>Not in the repo yet</h4>
+                                <ul>
+                                    <li>The nine SQL scripts and the data-model, deployment and governance docs are currently empty files.</li>
+                                    <li>Generator and dashboard code are not included.</li>
+                                    <li>Treat this card as design, not verified implementation.</li>
+                                </ul>
+                            </section>
                         </div>
-                    </div>
 
-                    <div class="detail-section">
-                        <h4 class="detail-section-title">📊 Metrics</h4>
-                        <div class="detail-metrics">
-                            <div class="dmetric"><div class="dmetric-value">PySpark</div><div class="dmetric-label">Engine</div></div>
-                            <div class="dmetric"><div class="dmetric-value">3.5.1</div><div class="dmetric-label">Spark Version</div></div>
-                            <div class="dmetric"><div class="dmetric-value">Parquet</div><div class="dmetric-label">Storage</div></div>
-                            <div class="dmetric"><div class="dmetric-value">Docker</div><div class="dmetric-label">Runtime</div></div>
+                        <footer class="project-foot">
+                            <ul class="tags" aria-label="Technologies">
+                                <li>Snowflake</li><li>Azure ADLS Gen2</li><li>Snowpipe</li><li>SQL</li><li>Python</li>
+                            </ul>
+                            <a class="btn btn-primary" href="https://github.com/viradidi/FLOWBRIDGE-SNOWFLAKE-PROJECT" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span><span class="visually-hidden"> (FlowBridge repository, opens in a new tab)</span></a>
+                        </footer>
+                    </article>
+
+                    <!-- 2 Novacart -->
+                    <article class="project" aria-labelledby="p2-title">
+                        <header class="project-head">
+                            <div>
+                                <p class="kicker">02 · Databricks · Delta Lake</p>
+                                <h3 id="p2-title">Novacart: Incremental Data Pipeline</h3>
+                            </div>
+                            <span class="status status-partial">Working notebooks · no tests or orchestration</span>
+                        </header>
+                        <p class="project-summary">An incremental lakehouse pipeline for orders, products and payments. Per-layer control tables record what has been processed, so each run handles only new or changed records.</p>
+
+                        <figure class="diagram" aria-label="Novacart incremental pipeline architecture">
+                            <div class="lane">
+                                <p class="lane-title">Bronze · ingest</p>
+                                <ol>
+                                    <li class="node"><span class="node-label">Source</span><strong>SQL source tables</strong><small>orders, products, payments</small></li>
+                                    <li class="node"><span class="node-label">Filter</span><strong>Watermark</strong><small>timestamp, then primary key</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Write</span><strong>Bronze Delta</strong><small>Append + run ID lineage</small></li>
+                                    <li class="node" data-kind="control"><span class="node-label">State</span><strong>ingestion_control</strong><small>Updated after write</small></li>
+                                </ol>
+                            </div>
+                            <div class="lane">
+                                <p class="lane-title">Silver · clean</p>
+                                <ol>
+                                    <li class="node"><span class="node-label">Read</span><strong>New Bronze rows</strong><small>Since last ingested_at</small></li>
+                                    <li class="node"><span class="node-label">Clean</span><strong>Standardise + dedupe</strong><small>Latest record per key</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Write</span><strong>MERGE by key</strong><small>Invalid rows to quarantine</small></li>
+                                    <li class="node" data-kind="control"><span class="node-label">State</span><strong>processing_control</strong><small>Run ID, rows merged</small></li>
+                                </ol>
+                            </div>
+                            <div class="lane">
+                                <p class="lane-title">Gold · serve</p>
+                                <ol>
+                                    <li class="node"><span class="node-label">Detect</span><strong>Impacted orders</strong><small>From orders, payments, products</small></li>
+                                    <li class="node"><span class="node-label">Join</span><strong>Order-level facts</strong><small>Payment state, ratios</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Write</span><strong>Gold + SCD2</strong><small>History of changed orders</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Output</span><strong>Metrics + Parquet</strong><small>Category performance, snapshots</small></li>
+                                </ol>
+                            </div>
+                        </figure>
+
+                        <div class="project-grid">
+                            <section class="pblock">
+                                <h4>Problem</h4>
+                                <p>Re-reading full source tables every run is slow, and messy values (currency strings, mixed casing, duplicates, late updates) leak into analytics.</p>
+                            </section>
+                            <section class="pblock">
+                                <h4>Engineering decisions</h4>
+                                <ul>
+                                    <li>Composite high-watermark (timestamp, then key) so rows sharing a timestamp are neither skipped nor re-read.</li>
+                                    <li>A control table per layer stores last position, run ID and row counts.</li>
+                                    <li>Invalid orders, products and payments go to quarantine tables instead of being dropped.</li>
+                                    <li>Gold recomputes only orders affected by a change.</li>
+                                </ul>
+                            </section>
+                            <section class="pblock">
+                                <h4>Verified in the repo</h4>
+                                <ul>
+                                    <li>Bronze, Silver and Gold notebooks implement the full path.</li>
+                                    <li>Silver merges by key, so reruns update instead of duplicating.</li>
+                                    <li><strong>Known trade-off:</strong> Bronze appends before advancing its checkpoint, so a crash between the two can re-ingest rows; Silver's de-duplication absorbs them.</li>
+                                </ul>
+                            </section>
+                            <section class="pblock pblock-gap">
+                                <h4>Not in the repo yet</h4>
+                                <ul>
+                                    <li>Automated tests and a scheduler or orchestration.</li>
+                                    <li>README documentation (currently one line).</li>
+                                </ul>
+                            </section>
                         </div>
-                    </div>
 
-                    <div class="detail-section">
-                        <h4 class="detail-section-title">✅ Data Quality Rules</h4>
-                        <div class="detail-quality">
-                            <div class="dq-item"><span class="dq-check">✓</span><span>Invalid customer ages (negative, >120) → NULL</span></div>
-                            <div class="dq-item"><span class="dq-check">✓</span><span>Negative quantities and prices → NULL</span></div>
-                            <div class="dq-item"><span class="dq-check">✓</span><span>Future shipping dates → NULL</span></div>
-                            <div class="dq-item"><span class="dq-check">✓</span><span>Gender values standardized (M/F/Unknown)</span></div>
+                        <footer class="project-foot">
+                            <ul class="tags" aria-label="Technologies">
+                                <li>Databricks</li><li>PySpark</li><li>Delta Lake</li><li>SQL</li><li>Incremental ETL</li>
+                            </ul>
+                            <a class="btn btn-primary" href="https://github.com/viradidi/Novacart-casestudy" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span><span class="visually-hidden"> (Novacart repository, opens in a new tab)</span></a>
+                        </footer>
+                    </article>
+
+                    <!-- 3 Retail -->
+                    <article class="project" aria-labelledby="p3-title">
+                        <header class="project-head">
+                            <div>
+                                <p class="kicker">03 · PySpark · Docker</p>
+                                <h3 id="p3-title">Retail Analytics Data Pipeline</h3>
+                            </div>
+                            <span class="status status-ok">Working batch pipeline · no tests or benchmarks</span>
+                        </header>
+                        <p class="project-summary">A Dockerised PySpark pipeline that turns a synthetic retail sales dataset, seeded with deliberately invalid records, into cleaned Silver data and business metrics in Parquet.</p>
+
+                        <figure class="diagram" aria-label="Retail PySpark medallion architecture">
+                            <div class="lane">
+                                <p class="lane-title">Input</p>
+                                <ol>
+                                    <li class="node"><span class="node-label">Generate</span><strong>generate_raw_data.py</strong><small>Includes invalid records</small></li>
+                                    <li class="node"><span class="node-label">Raw</span><strong>Retail CSV</strong><small>Configured for 1,000,000 rows</small></li>
+                                </ol>
+                            </div>
+                            <div class="lane">
+                                <p class="lane-title">PySpark medallion · Spark 3.5.1 cluster in Docker Compose</p>
+                                <ol>
+                                    <li class="node" data-kind="store"><span class="node-label">Bronze</span><strong>Typed Parquet</strong><small>Read CSV, cast dates</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Silver</span><strong>Rule-based cleaning</strong><small>Invalid values to NULL</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Gold</span><strong>Revenue metrics</strong><small>Delivered orders only</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Output</span><strong>Parquet</strong><small>Daily sales, city revenue</small></li>
+                                </ol>
+                            </div>
+                        </figure>
+
+                        <div class="project-grid">
+                            <section class="pblock">
+                                <h4>Problem</h4>
+                                <p>Retail exports contain impossible ages, non-positive quantities and prices, out-of-range discounts and ship dates before order dates, all of which distort revenue if left in.</p>
+                            </section>
+                            <section class="pblock">
+                                <h4>Engineering decisions</h4>
+                                <ul>
+                                    <li>Invalid fields become NULL while the row is kept, so order counts are not silently lost.</li>
+                                    <li>Revenue = quantity × unit price × (1 − discount), for Delivered orders with valid quantity and price.</li>
+                                    <li>Each layer is written as Parquet with overwrite, so a rerun rebuilds outputs deterministically.</li>
+                                    <li>Spark standalone cluster (1 master, 2 workers) defined in Docker Compose.</li>
+                                </ul>
+                            </section>
+                            <section class="pblock">
+                                <h4>Verified in the repo</h4>
+                                <ul>
+                                    <li>One script implements Bronze, Silver and two Gold outputs.</li>
+                                    <li>Silver rules: age 18–100, quantity and price above 0, discount 0–50%, ship date not before order date, gender standardised.</li>
+                                    <li>Generator is configured for 1,000,000 records.</li>
+                                </ul>
+                            </section>
+                            <section class="pblock pblock-gap">
+                                <h4>Not in the repo yet</h4>
+                                <ul>
+                                    <li>Automated tests.</li>
+                                    <li>Recorded run times or output sizes, so no performance claims are made here.</li>
+                                    <li>Complete run instructions in the README.</li>
+                                </ul>
+                            </section>
                         </div>
-                    </div>
 
-                    <div class="detail-section">
-                        <h4 class="detail-section-title">💼 Business Value</h4>
-                        <p class="detail-text">The Gold layer produces daily sales metrics including total revenue, total orders, and average order value. City-level revenue metrics provide additional analytical visibility into revenue, order volume, and average order value — enabling data-driven retail decisions.</p>
-                    </div>
+                        <footer class="project-foot">
+                            <ul class="tags" aria-label="Technologies">
+                                <li>PySpark</li><li>Spark 3.5.1</li><li>Docker</li><li>Parquet</li><li>Python</li>
+                            </ul>
+                            <a class="btn btn-primary" href="https://github.com/viradidi/retail-pyspark" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span><span class="visually-hidden"> (Retail pipeline repository, opens in a new tab)</span></a>
+                        </footer>
+                    </article>
+
+                    <!-- 4 E-commerce -->
+                    <article class="project" aria-labelledby="p4-title">
+                        <header class="project-head">
+                            <div>
+                                <p class="kicker">04 · Airflow · dbt · PostgreSQL</p>
+                                <h3 id="p4-title">E-Commerce Data Platform</h3>
+                            </div>
+                            <span class="status status-ok">Working on sample data · small scale</span>
+                        </header>
+                        <p class="project-summary">A containerised platform where Airflow schedules validated loads into PostgreSQL and runs tested dbt models. A separate Python package adds config-driven ingestion and quality checks covered by pytest.</p>
+
+                        <figure class="diagram" aria-label="E-commerce data platform architecture">
+                            <div class="lane">
+                                <p class="lane-title">Airflow DAG · daily_platform_pipeline · @daily</p>
+                                <ol>
+                                    <li class="node"><span class="node-label">Extract</span><strong>CSV source</strong><small>Schema and row checks</small></li>
+                                    <li class="node"><span class="node-label">Validate</span><strong>Quality gate</strong><small>Nulls, duplicates, ranges</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Load</span><strong>PostgreSQL upsert</strong><small>ON CONFLICT on business key</small></li>
+                                    <li class="node"><span class="node-label">Transform</span><strong>dbt build</strong><small>Models + tests</small></li>
+                                </ol>
+                            </div>
+                            <div class="lane">
+                                <p class="lane-title">PostgreSQL + dbt</p>
+                                <ol>
+                                    <li class="node" data-kind="store"><span class="node-label">Table</span><strong>customer_transactions</strong><small>Loaded by Airflow</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Staging</span><strong>stg_customer_transactions</strong><small>View, tested</small></li>
+                                    <li class="node" data-kind="store"><span class="node-label">Mart</span><strong>customer_transaction_summary</strong><small>Table, tested</small></li>
+                                </ol>
+                            </div>
+                            <figcaption>Runs in Docker Compose: PostgreSQL 16, Redis, and Airflow with Celery workers, with health checks.</figcaption>
+                        </figure>
+
+                        <div class="project-grid">
+                            <section class="pblock">
+                                <h4>Problem</h4>
+                                <p>Analytics tables are only as trustworthy as the loads behind them. Bad rows, duplicate loads and untested SQL cause silent errors in reports.</p>
+                            </section>
+                            <section class="pblock">
+                                <h4>Engineering decisions</h4>
+                                <ul>
+                                    <li>Validation runs before loading and fails the task on null keys, duplicates or negative amounts.</li>
+                                    <li>Loads upsert on the business key, so reruns update rather than duplicate.</li>
+                                    <li>dbt <code>not_null</code> and <code>unique</code> tests run inside the same DAG via <code>dbt build</code>.</li>
+                                    <li>Ingestion paths and datasets live in a config file, not in code.</li>
+                                </ul>
+                            </section>
+                            <section class="pblock">
+                                <h4>Verified in the repo</h4>
+                                <ul>
+                                    <li>6 pytest tests cover ingestion and orders validation. I ran them and all pass.</li>
+                                    <li>dbt tests on the staging and mart models.</li>
+                                    <li>Logging and config loading in the <code>src/</code> package.</li>
+                                </ul>
+                            </section>
+                            <section class="pblock pblock-gap">
+                                <h4>Not in the repo yet</h4>
+                                <ul>
+                                    <li>Realistic data volume: the DAG loads a few sample rows.</li>
+                                    <li>The <code>src/</code> package is not yet wired into the DAG.</li>
+                                    <li>CI, Airflow task retries, and dbt models beyond one staging view and one mart.</li>
+                                </ul>
+                            </section>
+                        </div>
+
+                        <footer class="project-foot">
+                            <ul class="tags" aria-label="Technologies">
+                                <li>Airflow</li><li>dbt</li><li>PostgreSQL</li><li>Docker</li><li>pytest</li>
+                            </ul>
+                            <a class="btn btn-primary" href="https://github.com/viradidi/ecommerce-data-platform" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span><span class="visually-hidden"> (E-Commerce Data Platform repository, opens in a new tab)</span></a>
+                        </footer>
+                    </article>
                 </div>
 
-                <!-- PANEL P003 -->
-                <div class="detail-panel" id="panel-p3">
-                    <span class="detail-close" onclick="closePanel()">&times;</span>
-                    <div class="detail-header">
-                        <div class="detail-title">Real-Time Event Platform</div>
-                        <div class="detail-subtitle">Streaming architecture — Kafka ingestion, Spark Streaming, Delta Lake</div>
-                    </div>
-                    <div class="detail-arch-flow">
-                        <div class="dflow-node"><span class="dflow-icon">📡</span><span class="dflow-label">EVENTS</span><span class="dflow-detail">Clickstream / IoT</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">🚀</span><span class="dflow-label">KAFKA</span><span class="dflow-detail">Ingestion</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">⚡</span><span class="dflow-label">SPARK STREAMING</span><span class="dflow-detail">Transform</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">💾</span><span class="dflow-label">DELTA LAKE</span><span class="dflow-detail">Storage</span></div>
-                    </div>
-                    <div class="dev-notice">🚧 Architecture defined. Implementation in progress.</div>
-                </div>
-
-                <!-- PANEL P004 -->
-                <div class="detail-panel" id="panel-p4">
-                    <span class="detail-close" onclick="closePanel()">&times;</span>
-                    <div class="detail-header">
-                        <div class="detail-title">Modern Analytics Platform</div>
-                        <div class="detail-subtitle">dbt + Snowflake with dimensional modeling and data quality contracts</div>
-                    </div>
-                    <div class="detail-arch-flow">
-                        <div class="dflow-node"><span class="dflow-icon">❄️</span><span class="dflow-label">SNOWFLAKE</span><span class="dflow-detail">Raw Data</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">🔧</span><span class="dflow-label">DBT</span><span class="dflow-detail">Models + Tests</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">📐</span><span class="dflow-label">DIMENSIONAL</span><span class="dflow-detail">Star Schema</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">📊</span><span class="dflow-label">POWER BI</span><span class="dflow-detail">Dashboards</span></div>
-                    </div>
-                    <div class="dev-notice">🚧 Architecture defined. Implementation in progress.</div>
-                </div>
-
-                <!-- PANEL P005 -->
-                <div class="detail-panel" id="panel-p5">
-                    <span class="detail-close" onclick="closePanel()">&times;</span>
-                    <div class="detail-header">
-                        <div class="detail-title">Azure End-to-End ETL</div>
-                        <div class="detail-subtitle">Azure Data Factory → ADLS → Databricks → Delta Lake → Power BI</div>
-                    </div>
-                    <div class="detail-arch-flow">
-                        <div class="dflow-node"><span class="dflow-icon">🔷</span><span class="dflow-label">ADF</span><span class="dflow-detail">Orchestration</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">🌊</span><span class="dflow-label">ADLS</span><span class="dflow-detail">Storage</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">⚙️</span><span class="dflow-label">DATABRICKS</span><span class="dflow-detail">Transform</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">📈</span><span class="dflow-label">POWER BI</span><span class="dflow-detail">Analytics</span></div>
-                    </div>
-                    <div class="dev-notice">🚧 Architecture defined. Implementation in progress.</div>
-                </div>
-
-                <!-- PANEL P006 -->
-                <div class="detail-panel" id="panel-p6">
-                    <span class="detail-close" onclick="closePanel()">&times;</span>
-                    <div class="detail-header">
-                        <div class="detail-title">Fabric Lakehouse Analytics</div>
-                        <div class="detail-subtitle">Microsoft Fabric → OneLake → Lakehouse → Warehouse → Power BI</div>
-                    </div>
-                    <div class="detail-arch-flow">
-                        <div class="dflow-node"><span class="dflow-icon">🧵</span><span class="dflow-label">FABRIC</span><span class="dflow-detail">Platform</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">🌊</span><span class="dflow-label">ONELAKE</span><span class="dflow-detail">Storage</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">🏠</span><span class="dflow-label">LAKEHOUSE</span><span class="dflow-detail">Bronze/Silver/Gold</span></div>
-                        <span class="dflow-arrow">→</span>
-                        <div class="dflow-node"><span class="dflow-icon">📊</span><span class="dflow-label">POWER BI</span><span class="dflow-detail">BI</span></div>
-                    </div>
-                    <div class="dev-notice">🚧 Architecture defined. Implementation in progress.</div>
-                </div>
-            </div>
-
-            <!-- VIEW MORE ON GITHUB -->
-            <a href="https://github.com/viradidi?tab=repositories" target="_blank" rel="noopener noreferrer" class="more-on-github">
-                <span>View more projects on GitHub</span>
-                <span class="external-mark">&nearr;</span>
-            </a>
-        </section>
-
-        <!-- =====================================================
-             TECHNOLOGY STACK
-             ===================================================== -->
-        <section id="stack" class="section section-alt">
-            <div class="section-heading">
-                <div>
-                    <div class="section-label">04 / TECHNOLOGY</div>
-                    <h2>Tools underneath <span class="gradient-text">the systems.</span></h2>
-                </div>
-                <p class="section-number">04</p>
-            </div>
-            <div class="stack-grid">
-                <div class="stack-group">
-                    <span class="stack-index">01</span>
-                    <h3>Cloud</h3>
-                    <p>Microsoft Azure <span>&middot;</span> Microsoft Fabric</p>
-                </div>
-                <div class="stack-group">
-                    <span class="stack-index">02</span>
-                    <h3>Data Engineering</h3>
-                    <p>Python <span>&middot;</span> SQL <span>&middot;</span> Apache Spark <span>&middot;</span> PySpark <span>&middot;</span> Airflow</p>
-                </div>
-                <div class="stack-group">
-                    <span class="stack-index">03</span>
-                    <h3>Analytics Engineering</h3>
-                    <p>dbt <span>&middot;</span> Dimensional Modeling <span>&middot;</span> Data Quality</p>
-                </div>
-                <div class="stack-group">
-                    <span class="stack-index">04</span>
-                    <h3>Data Platforms</h3>
-                    <p>PostgreSQL <span>&middot;</span> Docker <span>&middot;</span> Delta Lake <span>&middot;</span> Parquet <span>&middot;</span> Snowflake</p>
-                </div>
-                <div class="stack-group">
-                    <span class="stack-index">05</span>
-                    <h3>Streaming</h3>
-                    <p>Apache Kafka <span>&middot;</span> Event-Driven Systems <span>&middot;</span> Distributed Processing</p>
-                </div>
-                <div class="stack-group">
-                    <span class="stack-index">06</span>
-                    <h3>Engineering</h3>
-                    <p>Git <span>&middot;</span> GitHub <span>&middot;</span> Docker <span>&middot;</span> DataOps</p>
-                </div>
+                <p class="more-projects">
+                    <a class="btn btn-ghost" href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer">View All Projects on GitHub <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+                </p>
             </div>
         </section>
 
-        <!-- =====================================================
-             ENGINEERING PHILOSOPHY
-             ===================================================== -->
-        <section id="engineering" class="section">
-            <div class="section-heading">
-                <div>
-                    <div class="section-label">05 / ENGINEERING</div>
-                    <h2>Build systems, <span class="gradient-text">not demos.</span></h2>
-                </div>
-                <p class="section-number">05</p>
-            </div>
-            <p class="engineering-description">
-                My engineering approach is centered on reliability, reproducibility, data quality, automation, observability,
-                performance, maintainability, security, and failure recovery.
-            </p>
-            <div class="engineering-flow">
-                <div class="flow-stage"><span>01</span><strong>Build</strong></div>
-                <span class="flow-connector">&rarr;</span>
-                <div class="flow-stage"><span>02</span><strong>Test</strong></div>
-                <span class="flow-connector">&rarr;</span>
-                <div class="flow-stage"><span>03</span><strong>Automate</strong></div>
-                <span class="flow-connector">&rarr;</span>
-                <div class="flow-stage"><span>04</span><strong>Deploy</strong></div>
-                <span class="flow-connector">&rarr;</span>
-                <div class="flow-stage"><span>05</span><strong>Observe</strong></div>
-            </div>
-            <div class="engineering-principles">
-                <div class="principle-card">
-                    <span>01</span>
-                    <strong>Reliability</strong>
-                    <p>Design for predictable execution and recovery.</p>
-                </div>
-                <div class="principle-card">
-                    <span>02</span>
-                    <strong>Data Quality</strong>
-                    <p>Turn analytical assumptions into tests.</p>
-                </div>
-                <div class="principle-card">
-                    <span>03</span>
-                    <strong>Automation</strong>
-                    <p>Remove repetitive operational work.</p>
-                </div>
-                <div class="principle-card">
-                    <span>04</span>
-                    <strong>Observability</strong>
-                    <p>Make failures and system behavior visible.</p>
-                </div>
-                <div class="principle-card">
-                    <span>05</span>
-                    <strong>Performance</strong>
-                    <p>Design processing and storage deliberately.</p>
-                </div>
-                <div class="principle-card">
-                    <span>06</span>
-                    <strong>Governance</strong>
-                    <p>Build systems people can safely depend on.</p>
+        <!-- PRACTICES -->
+        <section id="practices" class="section section-alt">
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-label">04 / Engineering practices</p>
+                    <h2>Production habits, <span class="gradient-text">tied to evidence.</span></h2>
+                    <p class="section-lead">Each practice links to where it appears in my projects. Where it is only partly there, or still a next step, it says so.</p>
+                </header>
+                <div class="practice-grid">
+                    <article class="practice">
+                        <p class="badge badge-ok">Demonstrated</p>
+                        <h3>Validation &amp; automated tests</h3>
+                        <p>E-Commerce: validation gate before load, 6 passing pytest tests, dbt <code>not_null</code>/<code>unique</code> tests. Retail: rule-based cleaning in Silver (no tests yet).</p>
+                    </article>
+                    <article class="practice">
+                        <p class="badge badge-ok">Demonstrated</p>
+                        <h3>Incremental processing &amp; change handling</h3>
+                        <p>Novacart: composite timestamp + key watermark, Silver driven by ingestion time, Gold recomputing only impacted orders with SCD Type 2 history.</p>
+                    </article>
+                    <article class="practice">
+                        <p class="badge badge-partial">Partly implemented</p>
+                        <h3>Idempotency &amp; safe reruns</h3>
+                        <p>E-Commerce upserts on the business key; Novacart Silver merges by key; Retail rebuilds with overwrite. Gap: Novacart Bronze can re-ingest rows after a mid-run crash.</p>
+                    </article>
+                    <article class="practice">
+                        <p class="badge badge-partial">Partly implemented</p>
+                        <h3>Retries, failure handling &amp; recovery</h3>
+                        <p>Fail-fast validation and checkpoints that advance only after a write. Next step: configure Airflow retries and failure alerts.</p>
+                    </article>
+                    <article class="practice">
+                        <p class="badge badge-partial">Partly implemented</p>
+                        <h3>Backfills &amp; late-arriving data</h3>
+                        <p>Novacart picks up late or updated rows through its <code>updated_at</code> watermark and latest-record rule. Next step: parameterised date-range backfills.</p>
+                    </article>
+                    <article class="practice">
+                        <p class="badge badge-partial">Partly implemented</p>
+                        <h3>Observability &amp; logging</h3>
+                        <p>Run IDs and row counts in Novacart control tables; structured logging in the E-Commerce package. Next step: metrics and alerting.</p>
+                    </article>
+                    <article class="practice">
+                        <p class="badge badge-partial">Partly implemented</p>
+                        <h3>Security &amp; access control</h3>
+                        <p>E-Commerce Airflow settings come from environment variables; FlowBridge documents RBAC and secure views. Next step: move every remaining credential to a secret store.</p>
+                    </article>
+                    <article class="practice">
+                        <p class="badge badge-ok">Demonstrated</p>
+                        <h3>Documentation &amp; maintainable code</h3>
+                        <p>Architecture and data-model docs in E-Commerce, FlowBridge design docs, modular <code>src/</code> packages and config-driven ingestion.</p>
+                    </article>
+                    <article class="practice">
+                        <p class="badge badge-next">Next step</p>
+                        <h3>Version control, deployment &amp; CI/CD</h3>
+                        <p>Everything is in Git, and Docker Compose gives reproducible environments. No CI pipeline yet; the next addition is GitHub Actions running pytest and <code>dbt build</code>.</p>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- =====================================================
-             WRITING
-             ===================================================== -->
-        <section id="writing" class="section section-alt">
-            <div class="section-heading">
-                <div>
-                    <div class="section-label">06 / WRITING</div>
-                    <h2>Thinking in <span class="gradient-text">systems.</span></h2>
+        <!-- STACK -->
+        <section id="stack" class="section">
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-label">05 / Technology</p>
+                    <h2>Tools I've used, <span class="gradient-text">and where.</span></h2>
+                    <p class="section-lead">Grouped by job, with the project that backs each group. Listing a tool is not a claim of production experience with it.</p>
+                </header>
+                <div class="stack-grid">
+                    <article class="stack-group">
+                        <h3>Programming &amp; querying</h3>
+                        <p class="stack-items">Python · SQL · Spark SQL</p>
+                        <p class="stack-evidence">All four projects</p>
+                    </article>
+                    <article class="stack-group">
+                        <h3>Data processing</h3>
+                        <p class="stack-items">Apache Spark · PySpark</p>
+                        <p class="stack-evidence">Retail pipeline, Novacart</p>
+                    </article>
+                    <article class="stack-group">
+                        <h3>Warehousing &amp; lakehouse</h3>
+                        <p class="stack-items">Snowflake · Databricks · Delta Lake</p>
+                        <p class="stack-evidence">Novacart (Databricks, Delta); Snowflake in FlowBridge design</p>
+                    </article>
+                    <article class="stack-group">
+                        <h3>Orchestration &amp; transformation</h3>
+                        <p class="stack-items">Apache Airflow · dbt</p>
+                        <p class="stack-evidence">E-Commerce Data Platform</p>
+                    </article>
+                    <article class="stack-group">
+                        <h3>Storage &amp; databases</h3>
+                        <p class="stack-items">PostgreSQL · Parquet</p>
+                        <p class="stack-evidence">E-Commerce, Retail</p>
+                    </article>
+                    <article class="stack-group">
+                        <h3>Infrastructure &amp; delivery</h3>
+                        <p class="stack-items">Docker · Azure (ADLS Gen2) · Git &amp; GitHub</p>
+                        <p class="stack-evidence">Docker in two projects; Azure in FlowBridge design</p>
+                    </article>
+                    <article class="stack-group stack-direction">
+                        <h3>Platform direction</h3>
+                        <p class="stack-items">Microsoft Fabric</p>
+                        <p class="stack-evidence">Currently learning; not yet in a published project</p>
+                    </article>
                 </div>
-                <p class="section-number">06</p>
-            </div>
-            <p class="section-intro">
-                Technical notes about architecture, cloud data platforms, engineering decisions, analytics, and lessons learned
-                while building real systems.
-            </p>
-            <div class="writing-list">
-                <article class="writing-card">
-                    <span class="writing-type">ARCHITECTURE NOTE</span>
-                    <h3>Designing an End-to-End E-Commerce Data Platform</h3>
-                    <p>Why the platform separates ingestion, orchestration, transformation, testing, and analytical serving.</p>
-                    <a href="https://github.com/viradidi/ecommerce-data-platform" target="_blank" rel="noopener noreferrer">
-                        Read on GitHub <span>&rarr;</span>
-                    </a>
-                </article>
-                <article class="writing-card">
-                    <span class="writing-type">PYSPARK ENGINEERING</span>
-                    <h3>Building a Retail Medallion Pipeline with PySpark</h3>
-                    <p>How Bronze, Silver, and Gold layers can structure retail data processing while enforcing explicit data-quality rules and producing business-ready analytical metrics.</p>
-                    <a href="https://github.com/viradidi/retail-pyspark" target="_blank" rel="noopener noreferrer">
-                        Read on GitHub <span>&rarr;</span>
-                    </a>
-                </article>
             </div>
         </section>
 
-        <!-- =====================================================
-             RESUME
-             ===================================================== -->
-        <section id="resume" class="section resume-section">
-            <div class="resume-card">
-                <div class="resume-copy">
-                    <div class="section-label">07 / RESUME</div>
-                    <h2>The engineer <span class="gradient-text">behind the systems.</span></h2>
-                    <p>Get the concise version of my engineering experience, technical capabilities, projects, and professional direction.</p>
+        <!-- RESUME -->
+        <section id="resume" class="section section-alt">
+            <div class="container">
+                <div class="resume-card">
+                    <div>
+                        <p class="section-label">06 / Resume</p>
+                        <h2>One page, <span class="gradient-text">plain and ATS-friendly.</span></h2>
+                        <p>Skills, projects with repository links, freelance experience and education. Portfolio projects are labelled as such and kept separate from client work.</p>
+                    </div>
                     <div class="resume-actions">
-                        <a href="resume/Isaiah-Nyakundi-Data-Engineer-Resume.pdf" target="_blank" rel="noopener noreferrer" class="button button-primary">
-                            View Resume <span class="external-mark">&nearr;</span>
-                        </a>
-                        <a href="resume/Isaiah-Nyakundi-Data-Engineer-Resume.pdf" download class="button">
-                            Download PDF
-                        </a>
-                    </div>
-                </div>
-                <div class="resume-visual">
-                    <div class="resume-document">
-                        <div class="resume-document-top">
-                            <span>IN</span>
-                            <span>RESUME / 2026</span>
-                        </div>
-                        <div class="resume-document-line large"></div>
-                        <div class="resume-document-line medium"></div>
-                        <div class="resume-document-line short"></div>
-                        <div class="resume-document-section">
-                            <span></span><span></span><span></span>
-                        </div>
-                        <div class="resume-document-section">
-                            <span></span><span></span><span></span>
-                        </div>
+                        <a href="resume/Isaiah-Nyakundi-Data-Engineer-Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Resume <span aria-hidden="true">↗</span><span class="visually-hidden"> (PDF, opens in a new tab)</span></a>
+                        <a href="resume/Isaiah-Nyakundi-Data-Engineer-Resume.pdf" download class="btn btn-ghost">Download PDF</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- =====================================================
-             CONTACT
-             ===================================================== -->
+        <!-- CONTACT -->
         <section id="contact" class="section contact-section">
-            <div class="section-heading">
-                <div>
-                    <div class="section-label">08 / CONTACT</div>
-                    <h2>Let's build something <span class="gradient-text">useful.</span></h2>
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-label">07 / Contact</p>
+                    <h2>Have a data problem <span class="gradient-text">to solve?</span></h2>
+                    <p class="section-lead">I'm open to freelance work and full-time roles involving data pipelines, automation, integration and data quality. Send a few lines about your data and what you need from it.</p>
+                </header>
+                <div class="contact-grid">
+                    <a class="contact-card" href="mailto:isaiahnyakundi87@gmail.com?subject=Data%20engineering%20enquiry">
+                        <span class="contact-label">Email</span>
+                        <span class="contact-value">isaiahnyakundi87@gmail.com</span>
+                    </a>
+                    <a class="contact-card" href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer">
+                        <span class="contact-label">GitHub</span>
+                        <span class="contact-value">github.com/viradidi</span>
+                    </a>
+                    <a class="contact-card" href="https://www.linkedin.com/in/limbaga-undefined-752bab429/" target="_blank" rel="noopener noreferrer">
+                        <span class="contact-label">LinkedIn</span>
+                        <span class="contact-value">Isaiah Nyakundi</span>
+                    </a>
+                    <a class="contact-card" href="tel:+254719367955">
+                        <span class="contact-label">Phone</span>
+                        <span class="contact-value">+254 719 367 955</span>
+                    </a>
                 </div>
-                <p class="section-number">08</p>
-            </div>
-            <p class="contact-description">
-                I'm open to conversations around data engineering, analytics engineering, cloud data platforms,
-                Microsoft Azure, Microsoft Fabric, and building technology that solves real problems.
-            </p>
-            <div class="contact-info-grid">
-                <a href="mailto:isaiahnyakundi87@gmail.com?subject=Data%20Engineering%20Opportunity" class="info-card">
-                    <span class="info-card-label">EMAIL ME</span>
-                    <span class="info-card-value">isaiahnyakundi87@gmail.com</span>
-                </a>
-                <a href="tel:+254719367955" class="info-card">
-                    <span class="info-card-label">CALL ME</span>
-                    <span class="info-card-value">+254 719 367 955</span>
-                </a>
-                <div class="info-card info-card-social">
-                    <span class="info-card-label">FIND ME</span>
-                    <div class="social-icons">
-                        <a href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
-                        <a href="https://www.linkedin.com/in/limbaga-undefined-752bab429/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
-                    </div>
-                </div>
-            </div>
-            <div class="contact-cta">
-                <p>Have a data problem worth solving?</p>
-                <a href="mailto:isaiahnyakundi87@gmail.com?subject=Let's%20Build%20Something" class="button button-primary">
-                    Start a Conversation <span>&nearr;</span>
-                </a>
+                <p class="contact-cta">
+                    <a class="btn btn-primary" href="mailto:isaiahnyakundi87@gmail.com?subject=Data%20engineering%20enquiry">Start a conversation <span aria-hidden="true">&rarr;</span></a>
+                </p>
             </div>
         </section>
     </main>
 
-    <!-- =====================================================
-         FOOTER
-         ===================================================== -->
     <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <span class="brand-mark">IN</span>
-                <div>
-                    <strong>Isaiah Nyakundi</strong>
-                    <span>Data · Analytics · Cloud</span>
-                </div>
-            </div>
-            <p class="footer-copy">Building reliable data systems, one architecture at a time.</p>
-            <p class="footer-meta">&copy; 2026 Isaiah Nyakundi</p>
+        <div class="container footer-inner">
+            <p><strong>Isaiah Nyakundi</strong> · Data Engineer · Python · SQL · ETL</p>
+            <p><a href="#top">Back to top</a> · &copy; 2026 Isaiah Nyakundi</p>
         </div>
     </footer>
 
-    <!-- =====================================================
-         SCRIPTS
-         ===================================================== -->
-    <script>
-        /* Header scroll state */
-        const header = document.querySelector(".site-header");
-        if (header) {
-            const updateHeader = () => {
-                if (window.scrollY > 20) {
-                    header.classList.add("is-scrolled");
-                } else {
-                    header.classList.remove("is-scrolled");
-                }
-            };
-            updateHeader();
-            window.addEventListener("scroll", updateHeader, { passive: true });
-        }
-
-        /* Section navigation highlighting */
-        const sections = document.querySelectorAll("main section[id]");
-        const navigationLinks = document.querySelectorAll(".nav-links a");
-        if (sections.length && navigationLinks.length && "IntersectionObserver" in window) {
-            const sectionObserver = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (!entry.isIntersecting) return;
-                        navigationLinks.forEach((link) => link.classList.remove("is-active"));
-                        const activeLink = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
-                        if (activeLink) activeLink.classList.add("is-active");
-                    });
-                },
-                { rootMargin: "-35% 0px -55% 0px" }
-            );
-            sections.forEach((section) => sectionObserver.observe(section));
-        }
-
-        /* Project card toggle */
-        let activePanel = 'p1';
-        function toggleProject(id) {
-            const card = document.getElementById('card-' + id);
-            const panel = document.getElementById('panel-' + id);
-
-            // If clicking same active card, close it
-            if (activePanel === id && panel.classList.contains('visible')) {
-                closePanel();
-                return;
-            }
-
-            // Update cards
-            document.querySelectorAll('.project-visual-card').forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-
-            // Update panels
-            document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('visible'));
-            panel.classList.add('visible');
-
-            activePanel = id;
-
-            // Scroll to panel
-            setTimeout(() => {
-                panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 100);
-        }
-
-        function closePanel() {
-            document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('visible'));
-            document.querySelectorAll('.project-visual-card').forEach(c => c.classList.remove('active'));
-            activePanel = null;
-        }
-    </script>
+    <script src="js/main.js" defer></script>
 </body>
+
 </html>
