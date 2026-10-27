@@ -1,378 +1,105 @@
-Skip to content
-IN Isaiah Nyakundi Menu
-About
-Services
-Projects
-Practices
-Stack
-Resume
-Contact
-Work With Me
-Available for freelance and full-time opportunities
-
-Data Engineering · Python · SQL · ETL
-
-I build reliable data pipelines and cloud data platforms.
-I use Python, SQL and modern data engineering tools to ingest, transform and validate data for analytics and business decisions. My projects focus on maintainability, safe reruns and making data quality visible.
-
-Explore My Projects → Work With Me
-GitHub (opens in a new tab)
-LinkedIn (opens in a new tab)
-Resume (PDF) (opens in a new tab)
-The pipeline I design for
-
-SourceFiles, databases, APIs
-IngestIncremental, repeatable
-ValidateChecks at data boundaries
-TransformSQL, PySpark, dbt
-ServeAnalytics-ready tables
-4
-featured portfolio projects
-6
-passing pytest tests reported for E-Commerce
-01 / About
-
-An analyst's habits, an engineer's discipline.
-I'm interested in the unglamorous part of data work: making sure the numbers that reach a dashboard are correct, explainable and dependable on the next run.
-
-I'm completing a Bachelor of Science in Biostatistics at Jomo Kenyatta University of Agriculture and Technology (JKUAT). This background shapes how I approach data engineering: define the question, understand how data was generated, and test assumptions before relying on the results. I apply that approach in projects focused on Python, SQL, data ingestion, transformation and data quality.
-
-My projects show how I approach engineering decisions. I start with the business problem, choose an architecture that fits, validate data at important boundaries, make reruns safer and document trade-offs. Each project distinguishes implemented functionality from work that remains outstanding.
-
-Analytical. I examine assumptions and edge cases before building on them.
-Practical. I choose Python, SQL, Spark, Airflow and dbt based on the problem.
-Documented. Architecture notes and READMEs explain design choices and limitations.
-02 / Services
-
-What you can hire me to do.
-Work is scoped to your situation, without fixed packages or guaranteed outcomes. Each engagement starts with a conversation about your data, requirements and goals.
-
-Python automation & data processing
-The problem
-Recurring manual work: copying exports, cleaning spreadsheets and combining files.
-You get
-A documented Python workflow with logging and useful failure messages.
-The value
-Less repetitive work and fewer copy-and-paste errors.
-SQL development & transformation
-The problem
-Reports disagree because business logic is scattered across queries.
-You get
-Version-controlled SQL transformations and clearly defined metrics.
-The value
-More consistent and traceable reporting logic.
-ETL / ELT pipeline development
-The problem
-Data remains trapped in source systems or arrives in analytics in an unusable form.
-You get
-An appropriately scoped pipeline with validation and documented run behaviour.
-The value
-Data prepared for downstream analysis with less manual intervention.
-Data integration & troubleshooting
-The problem
-Systems do not exchange data reliably, or pipeline failures are difficult to diagnose.
-You get
-An integration or a documented diagnosis with recommended fixes.
-The value
-Clearer failure causes and a more maintainable workflow.
-Data quality validation & testing
-The problem
-Invalid records reach reports without being noticed.
-You get
-Automated checks for nulls, duplicates, ranges and relationships, where appropriate.
-The value
-Data issues are identified earlier and made easier to investigate.
-Have a project in mind?
-Tell me what data you have and what you need from it. I'll ask questions and suggest a practical approach.
-
-Discuss a project →
-03 / Selected work
-
-Four projects, honestly described.
-These are portfolio projects, not client engagements. Each project distinguishes verified implementation from documented design and outstanding work.
-
-01 · Azure · Data Factory · Databricks
-
-Uber Eats: Azure Data Engineering Platform
-Published project · implementation documented
-An end-to-end data engineering project for bringing together operational data from API, CSV and relational sources, with Azure Data Factory orchestration, cloud data lake storage and Databricks transformation assets designed to prepare data for analytics.
-
-Source systems
-
-Extract REST API Incremental, paginated access
-Ingest CSV files File-based source data
-Connect SQL source Relational records
-Azure data platform · logical view
-
-Orchestrate Azure Data Factory Pipelines and linked services
-Land ADLS Gen2 Cloud storage and raw data
-Transform Azure Databricks Notebook-based processing
-Prepare Silver data Structured data for analytics
-Logical architecture based on the repository's project assets and documentation. The diagram communicates the intended data flow; it is not a claim that every service is currently deployed or running in production.
-Business problem
-Operational data spread across APIs, files and relational systems is difficult to analyse consistently. A repeatable ingestion and transformation path helps consolidate those sources into a more useful analytics foundation.
-
-Engineering approach
-Azure Data Factory assets describe the ingestion and orchestration flow.
-API access includes timestamp-based filtering and pagination.
-Repository assets cover source connections, pipelines, datasets and notebook-based processing.
-Architecture and operations documentation explain pipeline responsibilities, reliability considerations and limitations.
-Published engineering evidence
-Source code and project configuration are published in the GitHub repository.
-The README describes the business context, architecture, technology choices and project scope.
-The architecture overview provides a business-facing view of the data flow.
-The operations and reliability guide documents failure handling, recovery considerations and operational acceptance criteria.
-Scope and limitations
-The repository demonstrates a portfolio project, not a claim of a live production service or client deployment.
-Configuration files and architecture documentation are evidence of project design; they do not by themselves prove that every Azure resource is deployed.
-Cloud execution costs and environment-specific setup may affect reproducibility.
-Azure Data Factory
-ADLS Gen2
-Databricks
-Python
-SQL
-REST API
-View on GitHub ↗ (Uber Eats Azure Data Engineering Platform repository, opens in a new tab)
-02 · Databricks · Delta Lake
-
-Novacart: Incremental Data Pipeline
-Working notebooks · no tests or orchestration
-An incremental lakehouse pipeline for orders, products and payments. Per-layer control tables record processing state so subsequent runs can focus on new or changed records.
-
-Bronze · ingest
-
-Source SQL source tables Orders, products, payments
-Filter Watermark Timestamp, then primary key
-Write Bronze Delta Append with run ID lineage
-State ingestion_control Updated after write
-Silver · clean
-
-Read New Bronze rows Since last ingested_at
-Clean Standardise + dedupe Latest record per key
-Write MERGE by key Invalid rows to quarantine
-State processing_control Run ID and rows merged
-Gold · serve
-
-Detect Impacted orders Changes from source tables
-Join Order-level facts Payment state and ratios
-Write Gold + SCD2 History of changed orders
-Output Metrics + Parquet Category performance and snapshots
-Problem
-Re-reading entire source tables on every run is wasteful, while inconsistent currency values, mixed casing, duplicates and late updates can contaminate analytics.
-
-Engineering decisions
-Composite high-watermark using timestamp and key to handle shared timestamps.
-Control tables record processing positions, run IDs and row counts.
-Invalid orders, products and payments are directed to quarantine tables.
-Gold processing targets orders affected by source changes.
-Verified in the repository
-Bronze, Silver and Gold notebooks implement the pipeline path.
-Silver merges by key so reruns update existing records instead of simply appending duplicates.
-Known trade-off: Bronze appends before advancing its checkpoint. A crash between these steps can cause re-ingestion; Silver deduplication is intended to absorb repeated records.
-Not implemented yet
-Automated tests and scheduled orchestration.
-Comprehensive README documentation.
-Databricks
-PySpark
-Delta Lake
-SQL
-Incremental ETL
-View on GitHub ↗ (Novacart repository, opens in a new tab)
-03 · PySpark · Docker
-
-Retail Analytics Data Pipeline
-Working batch pipeline · no tests or benchmarks
-A Dockerised PySpark pipeline that processes synthetic retail sales data, including deliberately invalid records, into cleaned Silver data and business metrics stored in Parquet.
-
-Input
-
-Generate generate_raw_data.py Includes invalid records
-Raw Retail CSV Configured for 1,000,000 rows
-PySpark medallion · Spark 3.5.1 in Docker Compose
-
-Bronze Typed Parquet Read CSV and cast dates
-Silver Rule-based cleaning Invalid values handled as NULL
-Gold Revenue metrics Delivered orders only
-Output Parquet Daily sales and city revenue
-Problem
-Retail exports may contain impossible ages, non-positive quantities and prices, out-of-range discounts, and ship dates before order dates. These issues can distort revenue calculations.
-
-Engineering decisions
-Invalid fields become NULL while rows are retained, avoiding silent row loss.
-Revenue is quantity × unit price × (1 − discount), for delivered orders with valid quantity and price.
-Layers are written as Parquet with overwrite behaviour so reruns rebuild outputs.
-Spark standalone cluster uses one master and two workers in Docker Compose.
-Verified in the repository
-One script implements Bronze, Silver and two Gold outputs.
-Silver rules include age 18–100, positive quantity and price, discount 0–50%, ship date checks and gender standardisation.
-The generator is configured for 1,000,000 records.
-Not implemented yet
-Automated tests.
-Recorded run times and output sizes, so no performance claims are made.
-Complete run instructions in the README.
-PySpark
-Spark 3.5.1
-Docker
-Parquet
-Python
-View on GitHub ↗ (Retail pipeline repository, opens in a new tab)
-04 · Airflow · dbt · PostgreSQL
-
-E-Commerce Data Platform
-Working on sample data · small scale
-A containerised platform where Airflow schedules validated loads into PostgreSQL and runs dbt models. A separate Python package provides config-driven ingestion and quality checks covered by pytest.
-
-Airflow DAG · daily_platform_pipeline · @daily
-
-Extract CSV source Schema and row checks
-Validate Quality gate Nulls, duplicates and ranges
-Load PostgreSQL upsert ON CONFLICT on business key
-Transform dbt build Models and tests
-PostgreSQL + dbt
-
-Table customer_transactions Loaded by Airflow
-Staging stg_customer_transactions View with dbt tests
-Mart customer_transaction_summary Table with dbt tests
-Docker Compose environment with PostgreSQL 16, Redis and Airflow Celery workers, including health checks.
-Data quality checks
-
-ILLUSTRATIVE PREVIEW
-$ dbt build
-
-Visual preview only. These lines are not a captured execution log and do not claim that these exact tests have just passed.
-
-CHECK not_null — required fields
-CHECK unique — key constraints
-CHECK model tests — staging and mart
-Example test categories Not a live result
-Problem
-Analytics tables are only as trustworthy as the loads behind them. Invalid rows, duplicate loads and untested SQL can introduce silent errors into reports.
-
-Engineering decisions
-Validation runs before loading and fails the task on null keys, duplicates or negative amounts.
-Loads upsert on the business key so reruns update records rather than simply duplicate them.
-dbt not_null and unique tests run in the DAG through dbt build.
-Ingestion paths and datasets are configured outside the main code.
-Verified in the repository
-Six pytest tests covering ingestion and orders validation were reported as passing.
-dbt tests are defined for the staging and mart models.
-The src/ package contains logging and configuration-loading functionality.
-Not implemented yet
-The DAG loads only a few sample rows; realistic data-volume testing remains outstanding.
-The src/ package is not yet wired into the DAG.
-CI, Airflow task retries and additional dbt models remain outstanding.
-Airflow
-dbt
-PostgreSQL
-Docker
-pytest
-View on GitHub ↗ (E-Commerce Data Platform repository, opens in a new tab)
-View All Projects on GitHub ↗ (opens in a new tab)
-
-04 / Engineering practices
-
-Production habits, tied to evidence.
-These practices are connected to the projects where they appear. Partial implementations and outstanding work are identified explicitly.
-
-Demonstrated
-
-Validation & automated tests
-E-Commerce: validation before load, six reported passing pytest tests, and dbt not_null/unique tests. Retail: rule-based Silver cleaning, without automated tests yet.
-
-Demonstrated
-
-Incremental processing & change handling
-Novacart: composite timestamp and key watermark, Silver processing based on ingestion time, and Gold processing for affected orders.
-
-Partly implemented
-
-Idempotency & safe reruns
-E-Commerce upserts by business key; Novacart Silver merges by key; Retail rebuilds outputs with overwrite. Novacart Bronze can re-ingest records after a crash between append and checkpoint advancement.
-
-Partly implemented
-
-Retries, failure handling & recovery
-Validation failures stop processing, and checkpoints are designed to advance after writes. Configured Airflow retries and failure alerts remain future work.
-
-Partly implemented
-
-Backfills & late-arriving data
-Novacart uses an updated_at watermark and latest-record handling to detect changes. Parameterised date-range backfills remain a next step.
-
-Partly implemented
-
-Observability & logging
-Novacart control tables capture run IDs and row counts, while the E-Commerce package includes structured logging functionality. Centralised metrics and alerting remain outstanding.
-
-Partly implemented
-
-Security & access control
-E-Commerce configuration uses environment variables, and FlowBridge documents RBAC and secure views. A complete secrets-management implementation still needs to be demonstrated.
-
-Demonstrated
-
-Documentation & maintainable code
-Architecture documentation, project READMEs, modular Python functionality and configuration-driven ingestion appear across the projects, with completeness varying by repository.
-
-Next step
-
-Version control, deployment & CI/CD
-Projects are maintained in Git, and Docker Compose provides reproducible local environments where configured. A CI pipeline running tests and dbt checks remains outstanding.
-
-05 / Technology
-
-Tools I've used, and where.
-Each group includes project context. Listing a tool does not imply production experience or mastery of every feature.
-
-Programming & querying
-Python · SQL · Spark SQL
-
-Used across the portfolio projects
-
-Data processing
-Apache Spark · PySpark
-
-Retail pipeline and Novacart
-
-Warehousing & lakehouse
-Snowflake · Databricks · Delta Lake
-
-Novacart implementation; Snowflake in FlowBridge design
-
-Orchestration & transformation
-Apache Airflow · dbt
-
-E-Commerce Data Platform
-
-Storage & databases
-PostgreSQL · Parquet
-
-E-Commerce and Retail
-
-Infrastructure & delivery
-Docker · Azure ADLS Gen2 · Git · GitHub
-
-Docker in implemented projects; Azure in FlowBridge design
-
-Platform direction
-Microsoft Fabric
-
-Currently learning; not yet demonstrated in a published project
-
-06 / Resume
-
-One page, plain and ATS-friendly.
-Skills, project links, education and relevant experience. Portfolio projects should remain clearly distinguished from paid client engagements.
-
-View Resume ↗ (PDF, opens in a new tab) Download PDF
-07 / Contact
-
-Have a data problem to solve?
-I'm open to freelance opportunities and full-time roles involving data pipelines, automation, integration and data quality. Tell me about your data and goals so we can discuss a practical approach.
-
-Email isaiahnyakundi87@gmail.com GitHub github.com/viradidi LinkedIn Isaiah Nyakundi Phone +254 719 367 955
-Start a conversation →
-
-Isaiah Nyakundi · Data Engineering · Python · SQL · ETL
-
-Back to top · © 2026 Isaiah Nyakundi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Isaiah Nyakundi — Data Engineer. Pipelines. Cloud platforms.</title>
+<meta name="theme-color" content="#0d0d0f">
+<meta name="description" content="Isaiah Nyakundi builds reliable data pipelines and cloud data platforms with Python, SQL, Spark, Airflow and dbt.">
+<link rel="canonical" href="https://viradidi.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%E2%9A%99%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<meta property="og:url" content="https://viradidi.github.io/">
+<meta property="og:title" content="Isaiah Nyakundi — Data Engineer">
+<meta property="og:description" content="Reliable data pipelines and cloud data platforms.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><div class="wrap"><nav aria-label="Main">
+<a class="brand" href="#top">Isaiah Nyakundi</a>
+<div class="links"><a href="#about">About</a><a href="#services">Services</a><a href="#work">Projects</a><a href="#practices">Practices</a><a href="#stack">Stack</a><a href="#writing">Writing</a><a href="#contact">Contact</a></div>
+<a class="btn pri sm" href="#contact">Work with me</a>
+</nav></div></header>
+
+<main id="top">
+<section class="hero"><div class="wrap hg"><div>
+<p class="avail"><i></i>Available for freelance and full-time roles</p>
+<h1>I build cloud data platforms that people can <span class="ac">trust</span>.</h1>
+<p class="lead">Reliable pipelines. Governed data. Observable systems. Business-ready analytics. I’m a Data Engineer, Analytics Engineer and Cloud Engineer with a degree in Biostatistics.</p>
+<div class="cta"><a class="btn pri" href="#work">Explore projects</a><a class="btn" href="https://github.com/viradidi" target="_blank" rel="noopener">View GitHub</a><a class="btn" href="#contact">Contact me</a></div>
+<ul class="tools" aria-label="Tools"><li>Python</li><li>SQL</li><li>Spark</li><li>Airflow</li><li>dbt</li><li>Databricks</li><li>Delta Lake</li><li>PostgreSQL</li><li>Kafka</li><li>Snowflake</li><li>Docker</li><li>Azure</li></ul></div><aside class="panel"><h2>The pipeline I design for</h2><ol><li><b data-n="01">Source</b><span>Files, databases, APIs</span></li><li><b data-n="02">Ingest</b><span>Incremental, repeatable</span></li><li><b data-n="03">Validate</b><span>Checks at data boundaries</span></li><li><b data-n="04">Transform</b><span>SQL, PySpark, dbt</span></li><li><b data-n="05">Serve</b><span>Analytics-ready tables</span></li></ol></aside></div></section>
+
+<section class="sec alt" id="about"><div class="wrap"><p class="lab">01 / About</p>
+<h2>An analyst’s habits, an engineer’s discipline.</h2>
+<div class="about" style="margin-top:36px">
+<p class="big">I care about the unglamorous part of data work: making sure the numbers that reach a dashboard are correct, explainable and dependable on the next run.</p>
+<div><p>I’m completing a BSc in Biostatistics at JKUAT. That training shapes how I engineer data: define the question, understand how the data was generated, and test assumptions before trusting results.</p>
+<p>Each project starts with the business problem, picks an architecture that fits, validates data at key boundaries, makes reruns safer and documents trade-offs. Every project separates what is implemented from what is still outstanding.</p></div>
+</div></div></section>
+
+<section class="sec" id="services"><div class="wrap"><p class="lab">02 / Services</p>
+<h2>What you can hire me to do.</h2>
+<p class="sub">Scoped to your situation. Every engagement starts with a conversation about your data and goals.</p>
+<div class="grid g3">
+<div class="card"><h3>Python automation</h3><dl><dt>Problem</dt><dd>Manual exports, spreadsheet cleanup, file merging.</dd><dt>You get</dt><dd>A documented workflow with logging and clear failure messages.</dd></dl></div>
+<div class="card"><h3>SQL development</h3><dl><dt>Problem</dt><dd>Reports disagree because logic is scattered.</dd><dt>You get</dt><dd>Version-controlled transformations and defined metrics.</dd></dl></div>
+<div class="card"><h3>ETL / ELT pipelines</h3><dl><dt>Problem</dt><dd>Data is stuck in source systems or arrives unusable.</dd><dt>You get</dt><dd>A scoped pipeline with validation and documented run behaviour.</dd></dl></div>
+<div class="card"><h3>Integration and troubleshooting</h3><dl><dt>Problem</dt><dd>Systems don’t exchange data reliably.</dd><dt>You get</dt><dd>An integration, or a documented diagnosis with fixes.</dd></dl></div>
+<div class="card"><h3>Data quality testing</h3><dl><dt>Problem</dt><dd>Invalid records reach reports unnoticed.</dd><dt>You get</dt><dd>Automated checks for nulls, duplicates, ranges and relationships.</dd></dl></div>
+<div class="card"><h3>Have a project in mind?</h3><p>Tell me what data you have and what you need from it.</p><p style="margin-top:14px"><a class="btn pri sm" href="#contact">Start a conversation</a></p></div>
+</div></div></section>
+
+<section class="sec alt" id="work"><div class="wrap"><p class="lab">03 / Selected work</p><h2>Four flagship projects.</h2><p class="sub">Portfolio projects, not client engagements. Each states what it implements and what is still outstanding.</p><article class="proj"><div class="ph"><h3>ResilienceOps</h3><span class="st w">Details to confirm against the repo</span></div><p>Fault-tolerant data ingestion and recovery. The problem: recovering from a failure without losing updates or creating duplicate records.</p><div class="dia"><svg viewBox="0 0 1000 230" role="img" aria-label="ResilienceOps recovery concept" font-family="Inter,system-ui,sans-serif"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#111"/></marker></defs><text x="500" y="24" text-anchor="middle" font-size="15" fill="#111">ResilienceOps: recovery concept</text><rect x="60" y="100" width="124" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M110.0 124v17a12 5 0 0 0 24 0v-17" fill="#475569" fill-opacity=".15" stroke="#475569" stroke-width="1.5"/><ellipse cx="122.0" cy="124" rx="12" ry="5" fill="#475569" fill-opacity=".35" stroke="#475569" stroke-width="1.5"/><text x="122.0" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Source</text><text x="122.0" y="182" text-anchor="middle" font-size="10" fill="#555">changing data</text><rect x="280" y="100" width="140" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><circle cx="350.0" cy="132" r="11" fill="none" stroke="#0078d4" stroke-width="5" stroke-dasharray="4.3 4.3"/><circle cx="350.0" cy="132" r="8" fill="none" stroke="#0078d4" stroke-width="1.5"/><circle cx="350.0" cy="132" r="3" fill="#0078d4"/><text x="350.0" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Checkpointed ingest</text><text x="350.0" y="182" text-anchor="middle" font-size="10" fill="#555">resume position</text><rect x="520" y="100" width="124" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M570.0 124v17a12 5 0 0 0 24 0v-17" fill="#3776ab" fill-opacity=".15" stroke="#3776ab" stroke-width="1.5"/><ellipse cx="582.0" cy="124" rx="12" ry="5" fill="#3776ab" fill-opacity=".35" stroke="#3776ab" stroke-width="1.5"/><text x="582.0" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Idempotent write</text><text x="582.0" y="182" text-anchor="middle" font-size="10" fill="#555">no duplicates</text><rect x="760" y="100" width="124" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M822.0 120l11 4v8c0 7-6 10-11 12c-5-2-11-5-11-12v-8z" fill="#d4a017" fill-opacity=".15" stroke="#d4a017" stroke-width="1.5"/><path d="M817.0 132l4 4l7-8" fill="none" stroke="#d4a017" stroke-width="2"/><text x="822.0" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Reconcile</text><text x="822.0" y="182" text-anchor="middle" font-size="10" fill="#555">source vs target</text><path d="M184 144 L280 144" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M420 144 L520 144" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M644 144 L760 144" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M350 100 L350 66 L560 66" fill="none" stroke="#111" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#ar)"/><text x="455" y="60" text-anchor="middle" font-size="10" fill="#555">retry on failure (concept)</text></svg></div><p class="cap">Conceptual flow of the project’s theme. Replace with the repository’s own architecture once confirmed.</p><details class="more"><summary>Engineering notes and limits</summary><div class="pg"><div class="pb"><h4>Focus areas</h4><ul><li>Checkpoints and watermarks</li><li>Idempotent writes</li><li>Retryable failures</li></ul></div><div class="pb"><h4>Also covers</h4><ul><li>Late-arriving updates</li><li>Reconciliation</li><li>Operational visibility</li></ul></div></div></details><div class="pf"><ul class="tags"><li>Python</li><li>SQL</li><li>Reliability</li></ul><a class="btn sm" href="https://github.com/viradidi/resilienceops" target="_blank" rel="noopener">View on GitHub ↗</a></div></article><article class="proj"><div class="ph"><h3>FinGuard: real-time fraud monitoring</h3><span class="st">Portfolio project · simulated data</span></div><p>Simulated credit-card transactions flow through Kafka into Databricks, where Bronze, Silver and Gold layers feed fraud-monitoring analytics and email alerts.</p><div class="dia"><svg viewBox="0 0 1000 320" role="img" aria-label="FinGuard architecture" font-family="Inter,system-ui,sans-serif"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#111"/></marker></defs><text x="500" y="24" text-anchor="middle" font-size="15" fill="#111">Real-Time Fraud Monitoring Pipeline</text><rect x="345" y="80" width="450" height="150" rx="6" fill="none" stroke="#111" stroke-width="1"/><text x="357" y="97" font-size="11" fill="#111">Azure Databricks · Spark Structured Streaming</text><rect x="30" y="110" width="124" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><text x="92.0" y="149" text-anchor="middle" font-size="20" font-weight="700" fill="#3776ab">&lt;/&gt;</text><text x="92.0" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Python producers</text><text x="92.0" y="192" text-anchor="middle" font-size="10" fill="#555">simulated events</text><rect x="190" y="110" width="124" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M242.0 142L261.0 133M242.0 142L261.0 151M242.0 142H261.0" stroke="#111" stroke-width="1.5"/><circle cx="241.0" cy="142" r="4.5" fill="#111"/><circle cx="262.0" cy="133" r="4" fill="#fff" stroke="#111" stroke-width="1.5"/><circle cx="262.0" cy="142" r="4" fill="#fff" stroke="#111" stroke-width="1.5"/><circle cx="262.0" cy="151" r="4" fill="#fff" stroke="#111" stroke-width="1.5"/><text x="252.0" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Confluent Kafka</text><text x="252.0" y="192" text-anchor="middle" font-size="10" fill="#555">event streaming</text><rect x="360" y="126" width="130" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M419.0 162l-3 11l9-4l9 4l-3-11z" fill="#b0703a" fill-opacity=".6"/><circle cx="425.0" cy="155" r="10" fill="#b0703a" stroke="#fff" stroke-width="1.5"/><circle cx="425.0" cy="155" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".8"/><text x="425.0" y="194" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Bronze</text><text x="425.0" y="208" text-anchor="middle" font-size="10" fill="#555">raw events</text><rect x="505" y="126" width="130" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M564.0 162l-3 11l9-4l9 4l-3-11z" fill="#8a94a3" fill-opacity=".6"/><circle cx="570.0" cy="155" r="10" fill="#8a94a3" stroke="#fff" stroke-width="1.5"/><circle cx="570.0" cy="155" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".8"/><text x="570.0" y="194" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Silver</text><text x="570.0" y="208" text-anchor="middle" font-size="10" fill="#555">transformed</text><rect x="650" y="126" width="130" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M709.0 162l-3 11l9-4l9 4l-3-11z" fill="#d4a017" fill-opacity=".6"/><circle cx="715.0" cy="155" r="10" fill="#d4a017" stroke="#fff" stroke-width="1.5"/><circle cx="715.0" cy="155" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".8"/><text x="715.0" y="194" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Gold</text><text x="715.0" y="208" text-anchor="middle" font-size="10" fill="#555">metrics + alert rules</text><rect x="850" y="50" width="130" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><rect x="901.0" y="71" width="28" height="22" rx="2" fill="#fff" stroke="#f2b200" stroke-width="1.5"/><path d="M907.0 88V82M913.0 88V76M919.0 88V80M925.0 88V74" stroke="#f2b200" stroke-width="3.5"/><text x="915.0" y="118" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Dashboard</text><text x="915.0" y="132" text-anchor="middle" font-size="10" fill="#555">fraud monitoring</text><rect x="850" y="180" width="130" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M905.0 219h20l-3-5v-6a7 7 0 0 0-14 0v6z" fill="#e8412c" fill-opacity=".2" stroke="#e8412c" stroke-width="1.5"/><circle cx="915.0" cy="223" r="2.5" fill="#e8412c"/><text x="915.0" y="248" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Email alerts</text><text x="915.0" y="262" text-anchor="middle" font-size="10" fill="#555">notifications</text><path d="M154 154 L190 154" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M314 154 L360 154" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M490 170 L505 170" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M635 170 L650 170" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M780 160 L815 160 L815 94 L850 94" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M780 180 L815 180 L815 224 L850 224" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/></svg></div><p class="cap">From the repository README. Transactions and fraud scenarios are simulated; this is not a production fraud system.</p><details class="more"><summary>Engineering notes and limits</summary><div class="pg"><div class="pb"><h4>Decisions</h4><ul><li>Raw events preserved in Bronze</li><li>Gold applies transaction metrics and alert rules</li><li>Producer config kept out of code</li></ul></div><div class="pb"><h4>In the repo</h4><ul><li>Kafka producers and fraud engine</li><li>Bronze, Silver, Gold and alert notebooks</li><li>PostgreSQL scripts and a dashboard definition</li></ul></div><div class="pb gap"><h4>Not yet</h4><ul><li>Automated tests</li><li>Latency and throughput measurements</li><li>Documented replay procedures</li></ul></div></div></details><div class="pf"><ul class="tags"><li>Kafka</li><li>Spark Streaming</li><li>Databricks</li><li>Delta Lake</li><li>PostgreSQL</li></ul><a class="btn sm" href="https://github.com/viradidi/finguard-realtime-streaming" target="_blank" rel="noopener">View on GitHub ↗</a></div></article><article class="proj"><div class="ph"><h3>FlowBridge: supply-chain analytics on Snowflake</h3><span class="st w">In progress</span></div><p>Turns raw supply-chain data (orders, shipments, inventory, suppliers) into governed, analytics-ready models and a Streamlit dashboard.</p><div class="dia"><svg viewBox="0 0 1000 340" role="img" aria-label="FlowBridge architecture" font-family="Inter,system-ui,sans-serif"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#111"/></marker></defs><text x="500" y="24" text-anchor="middle" font-size="15" fill="#111">FlowBridge Supply-Chain Data Platform</text><rect x="50" y="48" width="124" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><text x="112.0" y="87" text-anchor="middle" font-size="20" font-weight="700" fill="#3776ab">&lt;/&gt;</text><text x="112.0" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Python + Faker</text><text x="112.0" y="130" text-anchor="middle" font-size="10" fill="#555">nested JSON</text><rect x="230" y="48" width="124" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M280.0 89a7 7 0 0 1 0-13a9 9 0 0 1 17-1a7 7 0 0 1 7 14z" fill="#0078d4" fill-opacity=".18" stroke="#0078d4" stroke-width="1.5"/><text x="292.0" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#111">ADLS Gen2</text><text x="292.0" y="130" text-anchor="middle" font-size="10" fill="#555">data lake</text><rect x="410" y="48" width="124" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M462.0 80L481.0 71M462.0 80L481.0 89M462.0 80H481.0" stroke="#0078d4" stroke-width="1.5"/><circle cx="461.0" cy="80" r="4.5" fill="#0078d4"/><circle cx="482.0" cy="71" r="4" fill="#fff" stroke="#0078d4" stroke-width="1.5"/><circle cx="482.0" cy="80" r="4" fill="#fff" stroke="#0078d4" stroke-width="1.5"/><circle cx="482.0" cy="89" r="4" fill="#fff" stroke="#0078d4" stroke-width="1.5"/><text x="472.0" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Event Grid</text><text x="472.0" y="130" text-anchor="middle" font-size="10" fill="#555">+ storage queue</text><rect x="590" y="48" width="124" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><circle cx="652.0" cy="80" r="11" fill="none" stroke="#29b5e8" stroke-width="5" stroke-dasharray="4.3 4.3"/><circle cx="652.0" cy="80" r="8" fill="none" stroke="#29b5e8" stroke-width="1.5"/><circle cx="652.0" cy="80" r="3" fill="#29b5e8"/><text x="652.0" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Snowpipe</text><text x="652.0" y="130" text-anchor="middle" font-size="10" fill="#555">auto ingest</text><rect x="40" y="170" width="625" height="150" rx="6" fill="none" stroke="#111" stroke-width="1"/><text x="52" y="187" font-size="11" fill="#111">Snowflake · Medallion Architecture</text><rect x="55" y="196" width="130" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M114.0 232l-3 11l9-4l9 4l-3-11z" fill="#b0703a" fill-opacity=".6"/><circle cx="120.0" cy="225" r="10" fill="#b0703a" stroke="#fff" stroke-width="1.5"/><circle cx="120.0" cy="225" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".8"/><text x="120.0" y="264" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Bronze</text><text x="120.0" y="278" text-anchor="middle" font-size="10" fill="#555">raw</text><rect x="200" y="196" width="130" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M259.0 232l-3 11l9-4l9 4l-3-11z" fill="#8a94a3" fill-opacity=".6"/><circle cx="265.0" cy="225" r="10" fill="#8a94a3" stroke="#fff" stroke-width="1.5"/><circle cx="265.0" cy="225" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".8"/><text x="265.0" y="264" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Silver</text><text x="265.0" y="278" text-anchor="middle" font-size="10" fill="#555">clean + model</text><rect x="345" y="196" width="130" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M404.0 232l-3 11l9-4l9 4l-3-11z" fill="#d4a017" fill-opacity=".6"/><circle cx="410.0" cy="225" r="10" fill="#d4a017" stroke="#fff" stroke-width="1.5"/><circle cx="410.0" cy="225" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".8"/><text x="410.0" y="264" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Gold</text><text x="410.0" y="278" text-anchor="middle" font-size="10" fill="#555">star schema</text><rect x="490" y="196" width="130" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M555.0 216l11 4v8c0 7-6 10-11 12c-5-2-11-5-11-12v-8z" fill="#29b5e8" fill-opacity=".15" stroke="#29b5e8" stroke-width="1.5"/><path d="M550.0 228l4 4l7-8" fill="none" stroke="#29b5e8" stroke-width="2"/><text x="555.0" y="264" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Serving</text><text x="555.0" y="278" text-anchor="middle" font-size="10" fill="#555">secure views</text><rect x="740" y="196" width="130" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><rect x="791.0" y="217" width="28" height="22" rx="2" fill="#fff" stroke="#ff4b4b" stroke-width="1.5"/><path d="M797.0 234V228M803.0 234V222M809.0 234V226M815.0 234V220" stroke="#ff4b4b" stroke-width="3.5"/><text x="805.0" y="264" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Streamlit</text><text x="805.0" y="278" text-anchor="middle" font-size="10" fill="#555">dashboard</text><path d="M174 92 L230 92" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M354 92 L410 92" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M534 92 L590 92" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M652 136 L652 153 L120 153 L120 196" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M185 240 L200 240" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M330 240 L345 240" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M475 240 L490 240" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M620 240 L740 240" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/></svg></div><p class="cap">From the repository README. The repository is marked in progress.</p><details class="more"><summary>Engineering notes and limits</summary><div class="pg"><div class="pb"><h4>Decisions</h4><ul><li>Medallion layers inside Snowflake</li><li>Streams and Tasks for incremental processing</li><li>Star schema with surrogate keys, SCD Type 1</li></ul></div><div class="pb"><h4>In the repo</h4><ul><li>Numbered SQL scripts, setup to verification</li><li>RBAC, secure views and governance notes</li><li>DEV to PROD deployment scripts</li></ul></div><div class="pb gap"><h4>Limits</h4><ul><li>In progress</li><li>Dimension history is not kept (Type 1)</li></ul></div></div></details><div class="pf"><ul class="tags"><li>Snowflake</li><li>Azure ADLS Gen2</li><li>Snowpipe</li><li>SQL</li><li>Streamlit</li></ul><a class="btn sm" href="https://github.com/viradidi/FLOWBRIDGE-SNOWFLAKE-PROJECT" target="_blank" rel="noopener">View on GitHub ↗</a></div></article><article class="proj"><div class="ph"><h3>Novacart: incremental lakehouse pipeline</h3><span class="st w">Working notebooks · no tests or orchestration</span></div><p>Processes changing orders, products and payments incrementally, so each run handles only new or changed records and keeps reliable processing state.</p><div class="dia"><svg viewBox="0 0 1000 350" role="img" aria-label="Novacart architecture" font-family="Inter,system-ui,sans-serif"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#111"/></marker></defs><text x="500" y="24" text-anchor="middle" font-size="15" fill="#111">Novacart Incremental Lakehouse Pipeline</text><rect x="30" y="70" width="124" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M80.0 94v17a12 5 0 0 0 24 0v-17" fill="#475569" fill-opacity=".15" stroke="#475569" stroke-width="1.5"/><ellipse cx="92.0" cy="94" rx="12" ry="5" fill="#475569" fill-opacity=".35" stroke="#475569" stroke-width="1.5"/><text x="92.0" y="138" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Source tables</text><text x="92.0" y="152" text-anchor="middle" font-size="10" fill="#555">orders, payments</text><rect x="195" y="40" width="500" height="150" rx="6" fill="none" stroke="#111" stroke-width="1"/><text x="207" y="57" font-size="11" fill="#111">Databricks · Delta Lake · PySpark</text><rect x="210" y="76" width="140" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M274.0 112l-3 11l9-4l9 4l-3-11z" fill="#b0703a" fill-opacity=".6"/><circle cx="280.0" cy="105" r="10" fill="#b0703a" stroke="#fff" stroke-width="1.5"/><circle cx="280.0" cy="105" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".8"/><text x="280.0" y="144" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Bronze</text><text x="280.0" y="158" text-anchor="middle" font-size="10" fill="#555">watermark ingest</text><rect x="375" y="76" width="140" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M439.0 112l-3 11l9-4l9 4l-3-11z" fill="#8a94a3" fill-opacity=".6"/><circle cx="445.0" cy="105" r="10" fill="#8a94a3" stroke="#fff" stroke-width="1.5"/><circle cx="445.0" cy="105" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".8"/><text x="445.0" y="144" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Silver</text><text x="445.0" y="158" text-anchor="middle" font-size="10" fill="#555">MERGE by key</text><rect x="540" y="76" width="140" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M604.0 112l-3 11l9-4l9 4l-3-11z" fill="#d4a017" fill-opacity=".6"/><circle cx="610.0" cy="105" r="10" fill="#d4a017" stroke="#fff" stroke-width="1.5"/><circle cx="610.0" cy="105" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".8"/><text x="610.0" y="144" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Gold + SCD2</text><text x="610.0" y="158" text-anchor="middle" font-size="10" fill="#555">order facts</text><rect x="770" y="70" width="140" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M828.0 113V104M836.0 113V96M844.0 113V100M852.0 113V91" stroke="#3776ab" stroke-width="6"/><text x="840.0" y="138" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Metrics</text><text x="840.0" y="152" text-anchor="middle" font-size="10" fill="#555">Parquet snapshots</text><rect x="210" y="235" width="140" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2" stroke-dasharray="5 3"/><path d="M268.0 259v17a12 5 0 0 0 24 0v-17" fill="#d4a017" fill-opacity=".15" stroke="#d4a017" stroke-width="1.5"/><ellipse cx="280.0" cy="259" rx="12" ry="5" fill="#d4a017" fill-opacity=".35" stroke="#d4a017" stroke-width="1.5"/><text x="280.0" y="303" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Control tables</text><text x="280.0" y="317" text-anchor="middle" font-size="10" fill="#555">run IDs, row counts</text><rect x="375" y="235" width="140" height="88" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/><path d="M445.0 255l11 4v8c0 7-6 10-11 12c-5-2-11-5-11-12v-8z" fill="#e8412c" fill-opacity=".15" stroke="#e8412c" stroke-width="1.5"/><path d="M440.0 267l4 4l7-8" fill="none" stroke="#e8412c" stroke-width="2"/><text x="445.0" y="303" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Quarantine</text><text x="445.0" y="317" text-anchor="middle" font-size="10" fill="#555">invalid rows</text><path d="M154 114 L210 114" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M350 120 L375 120" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M515 120 L540 120" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M680 120 L700 120 L700 114 L770 114" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M445 164 L445 235" fill="none" stroke="#111" stroke-width="1.3" marker-end="url(#ar)"/><path d="M280 235 L280 164" fill="none" stroke="#111" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#ar)"/></svg></div><p class="cap">Control tables (ingestion_control, processing_control) track run IDs and row counts at each layer.</p><details class="more"><summary>Engineering notes and limits</summary><div class="pg"><div class="pb"><h4>Decisions</h4><ul><li>Composite timestamp and key watermark</li><li>Invalid rows go to quarantine tables</li><li>Gold targets only affected orders</li></ul></div><div class="pb"><h4>Verified</h4><ul><li>Bronze, Silver and Gold notebooks</li><li>Silver merges by key, so reruns update rather than duplicate</li></ul></div><div class="pb gap"><h4>Not yet</h4><ul><li>Automated tests and scheduling</li><li>Trade-off: a crash between Bronze append and checkpoint can re-ingest</li></ul></div></div></details><div class="pf"><ul class="tags"><li>Databricks</li><li>PySpark</li><li>Delta Lake</li><li>SQL</li></ul><a class="btn sm" href="https://github.com/viradidi/1NOVACART-CASE-STUDY" target="_blank" rel="noopener">View on GitHub ↗</a></div></article><p style="margin-top:32px;text-align:center"><a class="btn" href="https://github.com/viradidi" target="_blank" rel="noopener">More on GitHub ↗</a></p></div></section>
+
+<section class="sec" id="practices"><div class="wrap"><p class="lab">04 / Engineering practices</p>
+<h2>Production habits, tied to evidence.</h2>
+<p class="sub">Each practice points to the project where it appears. Partial work is labelled.</p>
+<div class="grid g3">
+<div class="card"><span class="bd">Demonstrated</span><h3>Validation and tests</h3><p>E-Commerce validates before load and has six reported passing tests plus dbt tests. Retail cleans by rule, without tests yet.</p></div>
+<div class="card"><span class="bd">Demonstrated</span><h3>Incremental processing</h3><p>Novacart uses a timestamp and key watermark, with Gold processing limited to affected orders.</p></div>
+<div class="card"><span class="bd p">Partly implemented</span><h3>Idempotency and reruns</h3><p>Upserts and merges by key; Retail overwrites. Novacart Bronze can re-ingest after a crash.</p></div>
+<div class="card"><span class="bd p">Partly implemented</span><h3>Retries and recovery</h3><p>Validation failures stop processing. Airflow retries and alerts are future work.</p></div>
+<div class="card"><span class="bd p">Partly implemented</span><h3>Backfills and late data</h3><p>Novacart detects changes via updated_at. Date-range backfills are a next step.</p></div>
+<div class="card"><span class="bd p">Partly implemented</span><h3>Observability</h3><p>Control tables record run IDs and row counts. Central metrics and alerting are outstanding.</p></div>
+<div class="card"><span class="bd p">Partly implemented</span><h3>Security</h3><p>Environment variables for config. A full secrets-management setup is still to be shown.</p></div>
+<div class="card"><span class="bd">Demonstrated</span><h3>Documentation</h3><p>READMEs, architecture notes and modular, config-driven code. Completeness varies by repo.</p></div>
+<div class="card"><span class="bd n">Next step</span><h3>CI/CD</h3><p>Git and Docker Compose are in place. A CI pipeline running tests and dbt checks is outstanding.</p></div>
+</div></div></section>
+
+<section class="sec alt" id="stack"><div class="wrap"><p class="lab">05 / Stack</p>
+<h2>Tools I’ve used, and where.</h2>
+<p class="sub">Listing a tool doesn’t imply production experience with every feature.</p>
+<div class="grid g3">
+<div class="card sg"><h3>Programming and querying</h3><p>Python · SQL · Spark SQL</p><p>Across all projects</p></div>
+<div class="card sg"><h3>Processing</h3><p>Apache Spark · PySpark</p><p>Retail and Novacart</p></div>
+<div class="card sg"><h3>Warehouse and lakehouse</h3><p>Databricks · Delta Lake · Snowflake</p><p>Novacart; Snowflake in FlowBridge design</p></div>
+<div class="card sg"><h3>Orchestration and transformation</h3><p>Airflow · dbt</p><p>E-Commerce Data Platform</p></div>
+<div class="card sg"><h3>Storage and databases</h3><p>PostgreSQL · Parquet</p><p>E-Commerce and Retail</p></div>
+<div class="card sg"><h3>Infrastructure and delivery</h3><p>Docker · Azure ADLS Gen2 · Git</p><p>Azure in Uber Eats and FlowBridge design</p></div>
+</div>
+</div></section>
+
+<section class="sec" id="writing"><div class="wrap"><p class="lab">06 / Writing</p>
+<h2>Writing and engineering notes.</h2>
+<p class="sub">Articles on pipeline reliability, incremental processing and engineering trade-offs will appear here once published. Nothing is listed until it exists.</p>
+</div></section>
+
+<section class="sec alt" id="resume"><div class="wrap"><p class="lab">07 / Résumé</p>
+<div class="res"><div><h2 style="font-size:1.7rem">A one-page, ATS-friendly résumé.</h2><p class="sub">Skills, project links and education. Portfolio projects stay separate from paid work.</p></div>
+<a class="btn pri" href="resume.pdf" target="_blank" rel="noopener">Download résumé (PDF)</a></div>
+</div></section>
+
+<section class="sec" id="contact"><div class="wrap"><p class="lab">08 / Contact</p>
+<h2>Have a data problem worth solving?</h2>
+<p class="sub">Let’s connect around data engineering, reliable pipelines, cloud data platforms and analytics solutions.</p>
+<div class="grid g2 ct" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+<a class="card" href="mailto:isaiahnyakundi87@gmail.com"><small>Email</small><b>isaiahnyakundi87@gmail.com</b></a>
+<a class="card" href="https://github.com/viradidi" target="_blank" rel="noopener"><small>GitHub</small><b>github.com/viradidi</b></a>
+<a class="card" href="https://www.linkedin.com/" target="_blank" rel="noopener"><small>LinkedIn</small><b>Isaiah Nyakundi</b></a>
+<a class="card" href="tel:+254719367955"><small>Phone</small><b>+254 719 367 955</b></a>
+</div></div></section>
+</main>
+<footer><div class="wrap"><span>Isaiah Nyakundi · Data Engineering · Python · SQL · ETL</span><span><a href="#top">Back to top</a> · © 2026</span></div></footer>
+</body>
+</html>
