@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">AtlasFlow Real-Time Logistics Control Tower Architecture</title>
+<desc id="desc">PostgreSQL operational tables feed Debezium CDC and Kafka. Three Flink streaming stages write Bronze, Silver and Gold Apache Iceberg tables on S3-compatible object storage using an Iceberg REST Catalog. Trino serves Gold data to Superset. Prometheus and Grafana provide observability.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071321"/><stop offset="1" stop-color="#102b43"/></linearGradient>
+ <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3Z" fill="#65e3d2"/></marker>
+ <style>
+ text{font-family:Inter,Segoe UI,Arial,sans-serif}.title{font-size:36px;font-weight:800;fill:#f3f8ff}.sub{font-size:16px;fill:#b2c7d9}.panel{fill:#102337;stroke:#2d4e68;stroke-width:1.5}.src{fill:#142d43;stroke:#5790b4;stroke-width:1.6}.stream{fill:#172d4a;stroke:#8b85da;stroke-width:1.6}.bronze{fill:#3d2a1a;stroke:#e7a65f;stroke-width:2}.silver{fill:#1d3548;stroke:#9bb8cc;stroke-width:2}.gold{fill:#413820;stroke:#e4c55c;stroke-width:2}.serve{fill:#123b3c;stroke:#53bfb0;stroke-width:2}.head{font-size:20px;font-weight:750;fill:#f4f8ff}.body{font-size:14px;fill:#c4d5e3}.small{font-size:12px;fill:#92abc0}.stage{font-size:12px;font-weight:800;letter-spacing:2px;fill:#8ca9c1}.arrow{fill:none;stroke:#65e3d2;stroke-width:2.8;marker-end:url(#a)}.mutedline{fill:none;stroke:#8b85da;stroke-width:2;stroke-dasharray:7 6}
+ </style>
+</defs>
+<rect width="1600" height="900" rx="24" fill="url(#bg)"/>
+<text x="64" y="55" class="stage">REAL-TIME DATA PLATFORM / SOLUTION ARCHITECTURE</text>
+<text x="64" y="105" class="title">ATLASFLOW</text>
+<text x="64" y="137" class="sub">Logistics control tower · PostgreSQL CDC · Kafka · Flink · Iceberg · Trino · Superset</text>
+
+<rect x="48" y="175" width="1504" height="172" rx="18" class="panel"/>
+<text x="74" y="207" class="stage">01 / OPERATIONAL SOURCE &amp; CHANGE DATA CAPTURE</text>
+<rect x="74" y="230" width="260" height="90" rx="12" class="src"/>
+<text x="100" y="263" class="head">PostgreSQL</text>
+<text x="100" y="287" class="body">7 operational source tables</text>
+<text x="100" y="307" class="small">Committed OLTP changes</text>
+<path d="M334 275H395" class="arrow"/>
+<rect x="405" y="230" width="260" height="90" rx="12" class="src"/>
+<text x="431" y="263" class="head">Debezium CDC</text>
+<text x="431" y="287" class="body">Logical replication / WAL</text>
+<text x="431" y="307" class="small">Initial snapshot + ongoing changes</text>
+<path d="M665 275H726" class="arrow"/>
+<rect x="736" y="230" width="300" height="90" rx="12" class="stream"/>
+<text x="762" y="263" class="head">Apache Kafka</text>
+<text x="762" y="287" class="body">atlasflow.cdc.v1</text>
+<text x="762" y="307" class="small">Consolidated business CDC stream</text>
+<path d="M1036 275H1097" class="arrow"/>
+<rect x="1107" y="230" width="405" height="90" rx="12" class="src"/>
+<text x="1133" y="263" class="head">Apache Flink SQL</text>
+<text x="1133" y="287" class="body">Three long-running streaming jobs</text>
+<text x="1133" y="307" class="small">Bronze ingestion · Silver normalization · Gold transformation</text>
+
+<rect x="48" y="378" width="1504" height="298" rx="18" class="panel"/>
+<text x="74" y="410" class="stage">02 / STREAMING LAKEHOUSE — APACHE ICEBERG</text>
+<rect x="84" y="449" width="430" height="174" rx="14" class="bronze"/>
+<text x="112" y="483" font-size="12" font-weight="800" letter-spacing="2" fill="#f5bd7d">LAYER 01</text>
+<text x="112" y="520" class="head">BRONZE · cdc_events</text>
+<text x="112" y="550" class="body">Raw Debezium envelopes + Kafka metadata</text>
+<text x="112" y="576" class="body">Topic · partition · offset · ingestion time</text>
+<text x="112" y="604" class="small">Flink job: atlasflow-bronze-cdc</text>
+<path d="M514 536H580" class="arrow"/>
+<rect x="590" y="449" width="430" height="174" rx="14" class="silver"/>
+<text x="618" y="483" font-size="12" font-weight="800" letter-spacing="2" fill="#b9d3e3">LAYER 02</text>
+<text x="618" y="520" class="head">SILVER · cdc_changes</text>
+<text x="618" y="550" class="body">Normalized append-only CDC history</text>
+<text x="618" y="576" class="body">Entity keys · operations · data-quality labels</text>
+<text x="618" y="604" class="small">Flink job: atlasflow-silver-cdc-normalize</text>
+<path d="M1020 536H1086" class="arrow"/>
+<rect x="1096" y="449" width="420" height="174" rx="14" class="gold"/>
+<text x="1124" y="483" font-size="12" font-weight="800" letter-spacing="2" fill="#f0d978">LAYER 03</text>
+<text x="1124" y="520" class="head">GOLD · shipment_control_tower</text>
+<text x="1124" y="550" class="body">Current shipment state keyed by shipment_id</text>
+<text x="1124" y="576" class="body">Explainable risk level + primary reason</text>
+<text x="1124" y="604" class="small">Flink job: atlasflow-gold-control-tower-stream</text>
+
+<rect x="48" y="705" width="1504" height="140" rx="18" class="panel"/>
+<text x="74" y="737" class="stage">03 / ANALYTICS, OBJECT STORAGE &amp; OBSERVABILITY</text>
+<rect x="84" y="758" width="300" height="63" rx="11" class="serve"/>
+<text x="108" y="785" class="head">Trino SQL</text><text x="108" y="806" class="small">Query Gold Iceberg tables</text>
+<path d="M1516 536H1530V789H384" class="arrow"/>
+<rect x="410" y="758" width="300" height="63" rx="11" class="serve"/>
+<text x="434" y="785" class="head">Apache Superset</text><text x="434" y="806" class="small">Shipment risk control tower</text>
+<path d="M384 789H410" class="arrow"/>
+<rect x="760" y="758" width="300" height="63" rx="11" class="stream"/>
+<text x="784" y="785" class="head">Iceberg REST + RustFS</text><text x="784" y="806" class="small">Catalog + S3-compatible object storage</text>
+<rect x="1110" y="758" width="406" height="63" rx="11" class="src"/>
+<text x="1134" y="785" class="head">Prometheus + Grafana</text><text x="1134" y="806" class="small">Platform metrics and infrastructure observability</text>
+<path d="M1000 449V430H910V378" class="mutedline"/>
+<text x="800" y="880" text-anchor="middle" class="small">Local Docker Compose demonstration architecture · synthetic logistics data · risk rules are deterministic, not predictive</text>
+</svg>

@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Uber Eats Azure Data Engineering Pipeline Architecture</title>
+<desc id="desc">Horizontal pipeline diagram showing REST API, CSV and SQL sources feeding Azure Data Factory extraction, Azure Data Lake Gen2 landing, Databricks normalization, data validation, curated Silver outputs and operational error handling. Metadata and checkpoint controls support the pipeline.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#f4f7fa"/></linearGradient>
+ <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3Z" fill="#65788a"/></marker>
+ <style>
+ text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#263b50}
+ .title{font-size:31px;font-weight:800;fill:#314b65}
+ .subtitle{font-size:15px;fill:#64788b}
+ .stage{font-size:19px;font-weight:750;fill:#fff}
+ .label{font-size:17px;font-weight:700}
+ .body{font-size:14px}
+ .small{font-size:12px;fill:#607488}
+ .italic{font-size:16px;font-style:italic;fill:#40576d}
+ .arrow{fill:none;stroke:#65788a;stroke-width:2.4;marker-end:url(#arrow)}
+ .dash{fill:none;stroke:#8c83bd;stroke-width:2;stroke-dasharray:6 5}
+ </style>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<path d="M55 75H330M1270 75H1545" stroke="#d7e0e8" stroke-width="2"/>
+<text x="800" y="84" text-anchor="middle" class="title">Uber Eats Data Engineering Pipeline Architecture</text>
+<text x="800" y="111" text-anchor="middle" class="subtitle">Azure-based multi-source ingestion · lakehouse processing · data quality · operational recovery</text>
+
+<!-- pipeline canvas -->
+<rect x="28" y="145" width="1544" height="555" rx="20" fill="#fff" stroke="#aab8c5" stroke-width="2"/>
+
+<!-- sources card -->
+<rect x="52" y="235" width="155" height="270" rx="13" fill="#edf3f8" stroke="#d0dbe5"/>
+<text x="129" y="265" text-anchor="middle" class="label">Source Systems</text>
+<rect x="72" y="287" width="52" height="43" rx="7" fill="#3c5871"/>
+<text x="98" y="314" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">API</text>
+<rect x="135" y="287" width="52" height="43" rx="7" fill="#3c5871"/>
+<text x="161" y="314" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">CSV</text>
+<text x="129" y="355" text-anchor="middle" class="body">REST API resources</text>
+<text x="129" y="376" text-anchor="middle" class="body">File-based feeds</text>
+<text x="129" y="397" text-anchor="middle" class="body">SQL source tables</text>
+<path d="M73 420H185" stroke="#c8d5df" stroke-width="1.5"/>
+<text x="129" y="447" text-anchor="middle" class="small">Payments · deliveries</text>
+<text x="129" y="465" text-anchor="middle" class="small">Ratings · orders</text>
+<text x="129" y="483" text-anchor="middle" class="small">Drivers · promotions · zones</text>
+
+<!-- stage 1 extract -->
+<rect x="230" y="215" width="202" height="300" rx="12" fill="#fff7f1" stroke="#e4c6b4" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M230 227Q230 215 242 215H420Q432 215 432 227V270H230Z" fill="#e8753d"/>
+<text x="331" y="250" text-anchor="middle" class="stage">Extract</text>
+<!-- folder icon -->
+<path d="M284 321h88l12 15v57h-100Z" fill="#f6c66d" stroke="#9a6b25" stroke-width="2"/>
+<path d="M284 321v-14h37l10 10h53v19H284Z" fill="#ffda8b" stroke="#9a6b25" stroke-width="2"/>
+<path d="M295 345h70M295 357h58" stroke="#b17b2c" stroke-width="2"/>
+<text x="331" y="424" text-anchor="middle" class="label">Azure Data Factory</text>
+<text x="331" y="451" text-anchor="middle" class="body">API initial load</text>
+<text x="331" y="472" text-anchor="middle" class="body">CSV ingestion</text>
+<text x="331" y="493" text-anchor="middle" class="body">SQL incremental load</text>
+
+<!-- stage 2 land -->
+<rect x="450" y="215" width="202" height="300" rx="12" fill="#f2f8ff" stroke="#b8cde2" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M450 227Q450 215 462 215H640Q652 215 652 227V270H450Z" fill="#3889bd"/>
+<text x="551" y="250" text-anchor="middle" class="stage">Land</text>
+<!-- cloud/lake icon -->
+<path d="M506 351c-15-1-20-23-6-31 3-20 32-27 45-11 16-8 35 4 34 21 18 7 13 27-4 29h-69Z" fill="#d7ecfa" stroke="#3c80ad" stroke-width="2"/>
+<path d="M522 365v25m21-25v25m21-25v25" stroke="#3c80ad" stroke-width="3"/>
+<text x="551" y="424" text-anchor="middle" class="label">ADLS Gen2</text>
+<text x="551" y="451" text-anchor="middle" class="body">Landing / raw data</text>
+<text x="551" y="472" text-anchor="middle" class="body">Source-specific folders</text>
+<text x="551" y="493" text-anchor="middle" class="small">Lake storage handoff</text>
+
+<!-- stage 3 normalize -->
+<rect x="670" y="215" width="202" height="300" rx="12" fill="#f1f8f1" stroke="#b9d5bb" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M670 227Q670 215 682 215H860Q872 215 872 227V270H670Z" fill="#58a36a"/>
+<text x="771" y="250" text-anchor="middle" class="stage">Normalize</text>
+<!-- spark-ish icon -->
+<g transform="translate(735 310)" fill="none" stroke="#4c8e5d" stroke-width="4" stroke-linejoin="round">
+ <path d="M0 26L35 5 70 26 35 47Z"/><path d="M0 45L35 66 70 45"/><path d="M0 64L35 85 70 64"/>
+</g>
+<text x="771" y="424" text-anchor="middle" class="label">Azure Databricks</text>
+<text x="771" y="451" text-anchor="middle" class="body">PySpark transformations</text>
+<text x="771" y="472" text-anchor="middle" class="body">Standardize columns</text>
+<text x="771" y="493" text-anchor="middle" class="body">Prepare Silver datasets</text>
+
+<!-- stage 4 validate -->
+<rect x="890" y="215" width="202" height="300" rx="12" fill="#f2f7fc" stroke="#b9cbdc" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M890 227Q890 215 902 215H1080Q1092 215 1092 227V270H890Z" fill="#3289a9"/>
+<text x="991" y="250" text-anchor="middle" class="stage">Validate</text>
+<!-- clipboard icon -->
+<rect x="955" y="315" width="72" height="82" rx="8" fill="#fff" stroke="#4c718d" stroke-width="3"/>
+<rect x="973" y="306" width="36" height="17" rx="5" fill="#d7e5ef" stroke="#4c718d" stroke-width="2"/>
+<path d="M968 342l7 7 12-14M968 366l7 7 12-14M994 342h22M994 366h22" fill="none" stroke="#4d9a6b" stroke-width="3"/>
+<text x="991" y="424" text-anchor="middle" class="label">Quality checks</text>
+<text x="991" y="451" text-anchor="middle" class="body">Schema and rule validation</text>
+<text x="991" y="472" text-anchor="middle" class="body">Duplicate / invalid records</text>
+<text x="991" y="493" text-anchor="middle" class="body">Reconciliation checks</text>
+
+<!-- stage 5 load -->
+<rect x="1110" y="215" width="202" height="300" rx="12" fill="#f0f8f7" stroke="#b3d4d0" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M1110 227Q1110 215 1122 215H1300Q1312 215 1312 227V270H1110Z" fill="#20a69a"/>
+<text x="1211" y="250" text-anchor="middle" class="stage">Load</text>
+<!-- database icon -->
+<ellipse cx="1211" cy="328" rx="48" ry="17" fill="#d3e9e7" stroke="#397b80" stroke-width="2.5"/>
+<path d="M1163 328v54c0 23 96 23 96 0v-54" fill="#b8d9d5" stroke="#397b80" stroke-width="2.5"/>
+<path d="M1163 354c0 22 96 22 96 0M1163 378c0 22 96 22 96 0" fill="none" stroke="#397b80" stroke-width="2"/>
+<text x="1211" y="424" text-anchor="middle" class="label">Curated Silver</text>
+<text x="1211" y="451" text-anchor="middle" class="body">Analytics-ready outputs</text>
+<text x="1211" y="472" text-anchor="middle" class="body">Checkpoint after success</text>
+<text x="1211" y="493" text-anchor="middle" class="small">Replay-safe write contract</text>
+
+<!-- stage 6 errors -->
+<rect x="1330" y="215" width="202" height="300" rx="12" fill="#fff4f2" stroke="#e5b9b4" stroke-width="1.5" stroke-dasharray="5 4"/>
+<path d="M1330 227Q1330 215 1342 215H1520Q1532 215 1532 227V270H1330Z" fill="#df654d"/>
+<text x="1431" y="250" text-anchor="middle" class="stage">Log &amp; Recover</text>
+<!-- error document icon -->
+<path d="M1395 308h56l18 18v72h-74Z" fill="#fff" stroke="#668096" stroke-width="2"/>
+<path d="M1451 308v19h18" fill="none" stroke="#668096" stroke-width="2"/>
+<rect x="1406" y="339" width="38" height="28" rx="5" fill="#e96a56"/>
+<path d="M1425 345v10m0 5v1" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+<path d="M1406 378h45" stroke="#8da0af" stroke-width="2"/>
+<text x="1431" y="424" text-anchor="middle" class="label">Operational records</text>
+<text x="1431" y="451" text-anchor="middle" class="body">Quarantine / failures</text>
+<text x="1431" y="472" text-anchor="middle" class="body">Audit and rerun guidance</text>
+<text x="1431" y="493" text-anchor="middle" class="small">Investigate before replay</text>
+
+<!-- directional arrows -->
+<path d="M207 365H224" class="arrow"/>
+<path d="M432 365H444" class="arrow"/>
+<path d="M652 365H664" class="arrow"/>
+<path d="M872 365H884" class="arrow"/>
+<path d="M1092 365H1104" class="arrow"/>
+<path d="M1312 365H1324" class="arrow"/>
+
+<!-- control metadata band -->
+<rect x="54" y="555" width="1478" height="86" rx="12" fill="#f0eff9" stroke="#c7c2df" stroke-width="1.5"/>
+<text x="793" y="582" text-anchor="middle" class="label" fill="#5a548a">METADATA &amp; CONTROL PLANE</text>
+<text x="220" y="616" text-anchor="middle" class="body">API / CSV metadata</text>
+<text x="500" y="616" text-anchor="middle" class="body">ADF datasets &amp; linked services</text>
+<text x="820" y="616" text-anchor="middle" class="body">SQL watermark / checkpoint state</text>
+<text x="1190" y="616" text-anchor="middle" class="body">Runtime configuration &amp; secrets</text>
+<path d="M331 515V548M551 515V548M771 515V548M991 515V548M1211 515V548M1431 515V548" class="dash"/>
+
+<!-- footer -->
+<path d="M100 742H1500" stroke="#dce4eb" stroke-width="1.5"/>
+<text x="800" y="695" text-anchor="middle" class="italic">Data flow: Extract → Land → Normalize → Validate → Load → Log &amp; Recover</text>
+<text x="800" y="770" text-anchor="middle" class="label">Cross-cutting engineering practices</text>
+<g transform="translate(175 798)">
+ <path d="M0 0l15-6 15 6v15c0 9-15 17-15 17S0 24 0 15Z" fill="none" stroke="#47718b" stroke-width="2.5"/>
+ <path d="M7 14l6 6 11-13" fill="none" stroke="#47718b" stroke-width="2.5"/>
+</g>
+<text x="220" y="819" class="body">Secure credentials</text>
+<g transform="translate(500 797)" fill="none" stroke="#47718b" stroke-width="2.5">
+ <rect width="30" height="31" rx="3"/><path d="M6 8h18M6 15h18M6 22h12"/>
+</g>
+<text x="545" y="819" class="body">Automated repository tests</text>
+<g transform="translate(900 798)" fill="none" stroke="#47718b" stroke-width="2.5">
+ <circle cx="5" cy="5" r="4"/><circle cx="5" cy="28" r="4"/><circle cx="30" cy="16" r="4"/><path d="M9 7l17 7M9 26l17-8M5 9v15"/>
+</g>
+<text x="945" y="819" class="body">Data quality &amp; reconciliation</text>
+<g transform="translate(1290 797)" fill="none" stroke="#47718b" stroke-width="2.5">
+ <path d="M0 0h32v29H0Z"/><path d="M6 8h20M6 15h20M6 22h13"/>
+</g>
+<text x="1338" y="819" class="body">Recovery runbooks</text>
+<text x="800" y="865" text-anchor="middle" class="small">Logical architecture of the completed project · cloud resources were decommissioned after validation to control costs</text>
+</svg>
