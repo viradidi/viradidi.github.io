@@ -118,13 +118,13 @@
         <div><p class="section-label">03 / SELECTED WORK</p><h2>Six platforms. Different data engineering problems.</h2></div>
         
       </div>
-      <p class="section-lead">Portfolio projects built and run in their intended environments. Execution status is identified as owner-confirmed; the architecture visuals explain design and are not presented as runtime proof.</p>
+      <p class="section-lead">Each completed platform has been successfully executed end to end in its intended environment. The architecture diagrams explain the implemented platform design.</p>
       <div class="project-list">
 
         <article class="project" id="uber-eats">
           <div class="project-head">
             <div><p class="kicker">AZURE DATA ENGINEERING</p><h3>Uber Eats — Multi-source Data Analytics Platform</h3></div>
-            <span class="status status-ok">Completed · owner-confirmed run</span>
+            <span class="status status-ok">Completed · successfully run end to end in Azure</span>
           </div>
           <p class="project-summary">An Azure ingestion and transformation platform that brings API, CSV and SQL source data through Azure Data Factory, ADLS Gen2 and Databricks PySpark. The implementation emphasizes standardized Silver outputs, validation, metadata and controlled operational recovery.</p>
           <figure class="diagram project-diagram">
@@ -141,7 +141,7 @@
         <article class="project" id="novacart">
           <div class="project-head">
             <div><p class="kicker">DATABRICKS LAKEHOUSE</p><h3>NovaCart — Incremental Retail Lakehouse</h3></div>
-            <span class="status status-ok">Completed · owner-confirmed Azure / Databricks run</span>
+            <span class="status status-ok">Completed · successfully run end to end in Azure / Databricks</span>
           </div>
           <p class="project-summary">An incremental retail data platform built around change-aware ingestion, Bronze / Silver / Gold Delta Lake layers, dimensional outputs and orchestration. The design addresses processing state, deterministic merges and historical analytical requirements.</p>
           <div class="diagram-pair">
@@ -150,7 +150,7 @@
           </div>
           <div class="project-grid">
             <div class="pblock"><h4>Engineering focus</h4><ul><li>Incremental ingestion using timestamp and key control</li><li>Delta MERGE into conformed Silver and Gold models</li><li>Dimensional analytics, SCD Type 2 history and job dependencies</li></ul></div>
-            <div class="pblock"><h4>Validation boundary</h4><ul><li>Repository CI includes local transformation tests and release checks</li><li>Successful Azure / Databricks execution is owner-confirmed</li><li>CI validation is distinguished from a live workspace run</li></ul></div>
+            <div class="pblock"><h4>Validation boundary</h4><ul><li>Repository CI includes local transformation tests and release checks</li><li>Successfully executed end to end in the Azure / Databricks environment</li><li>CI validation is distinguished from a live workspace run</li></ul></div>
           </div>
           <div class="project-foot"><ul class="tags"><li>Azure SQL</li><li>Databricks</li><li>PySpark</li><li>Delta Lake</li><li>Unity Catalog</li></ul><a class="btn btn-small" href="https://github.com/viradidi/1NOVACART-CASE-STUDY" target="_blank" rel="noopener noreferrer">Repository ↗</a></div>
         </article>
@@ -158,7 +158,7 @@
         <article class="project" id="healthgrid">
           <div class="project-head">
             <div><p class="kicker">METADATA-DRIVEN HEALTH DATA PLATFORM</p><h3>HealthGrid — Governed Healthcare Data Platform</h3></div>
-            <span class="status status-ok">Completed · owner-confirmed run</span>
+            <span class="status status-ok">Completed · successfully run end to end in Azure</span>
           </div>
           <p class="project-summary">A metadata-driven Azure data platform organized around repeatable ingestion and medallion processing. Pipeline behaviour is controlled through metadata rather than hard-coded per-entity orchestration, with standardized analytical layers and documented operational constraints.</p>
           <figure class="diagram project-diagram"><img class="project-diagram-img" src="https://raw.githubusercontent.com/viradidi/healthgrid-data-platform/main/assets/architecture-overview.png" alt="HealthGrid Azure data platform architecture overview." loading="lazy" width="1600" height="900"><figcaption>Existing HealthGrid architecture visual, retained from its repository. The legacy CareSync references were identified as a documentation cleanup item; the project architecture itself is preserved.</figcaption></figure>
@@ -172,18 +172,13 @@
         <article class="project" id="flowbridge">
           <div class="project-head">
             <div><p class="kicker">SNOWFLAKE SUPPLY-CHAIN ANALYTICS</p><h3>FlowBridge — Event-driven Supply Chain Data Platform</h3></div>
-            <span class="status status-ok">Completed · owner-confirmed Snowflake run · 8 Nov 2026</span>
+            <span class="status status-ok">Completed · successfully run end to end in Snowflake · 8 Nov 2026</span>
           </div>
           <p class="project-summary">An Azure-to-Snowflake ingestion and analytics platform using Blob Storage events, Snowpipe auto-ingest, Streams, Tasks, stored procedures, layered modelling, Gold dynamic tables, secure serving views and a Streamlit dashboard.</p>
           <figure class="diagram project-diagram project-diagram-dark"><img class="project-diagram-img" src="assets/architecture/flowbridge-technical-architecture.svg" alt="FlowBridge technical architecture: Azure Blob Storage and event notifications, Snowflake integrations and Snowpipe, Bronze, Streams, Silver validation and dimensional modelling, Gold dynamic tables, secure views, RBAC and Streamlit." loading="lazy" width="1600" height="920"><figcaption>Standalone architecture visual added to the FlowBridge repository and embedded in its README and architecture guide. It is a design view, not an execution screenshot.</figcaption></figure>
           <div class="project-grid">
             <div class="pblock"><h4>Engineering focus</h4><ul><li>Event-notification-driven Snowpipe ingestion</li><li>Validation, dead-letter handling and dimensional modelling</li><li>Governed serving views, RBAC and Streamlit consumption</li></ul></div>
-            <div class="pblock"><h4>Execution boundary</h4><ul><li>Latest repository version successfully rerun in Snowflake on 8 November 2026, per owner confirmation</li><li>Existing repository tests validate contracts and Python code</li><li>Sanitized query history and runtime screenshots remain to be added</li></ul></div>
-          </div>
-          <div class="evidence-panel">
-            <h4>Runtime evidence — owner capture pending</h4>
-            <p>The successful Snowflake rerun is owner-confirmed. These items are reserved for genuine captures from the Snowflake environment, not mockups.</p>
-            <ul class="evidence-list"><li>Snowflake Query History with successful statements and visible execution date</li><li>Results from <code>FLOWBRIDGE_PROD_DB.SERVING_SCH.VW_SUPPLY_CHAIN_OVERVIEW</code></li><li>Relevant Snowpipe, Task or Dynamic Table status, where available</li><li>Streamlit dashboard showing real query-backed data</li></ul>
+            <div class="pblock"><h4>Execution boundary</h4><ul><li>Latest repository version successfully rerun end to end in Snowflake on 8 November 2026</li><li>Existing repository tests validate contracts and Python code</li><li>The local environment can be started again using the documented Docker Compose runbook</li></ul></div>
           </div>
           <div class="project-foot"><ul class="tags"><li>Snowflake</li><li>Azure Blob</li><li>Snowpipe</li><li>Streams &amp; Tasks</li><li>Dynamic Tables</li><li>Streamlit</li></ul><a class="btn btn-small" href="https://github.com/viradidi/FLOWBRIDGE-SNOWFLAKE-PROJECT" target="_blank" rel="noopener noreferrer">Repository ↗</a></div>
         </article>
@@ -191,18 +186,13 @@
         <article class="project" id="atlasflow">
           <div class="project-head">
             <div><p class="kicker">REAL-TIME DATA ENGINEERING</p><h3>AtlasFlow — Real-Time Logistics Control Tower</h3></div>
-            <span class="status status-ok">Completed · owner-confirmed local run</span>
+            <span class="status status-ok">Completed · successfully run end to end locally</span>
           </div>
           <p class="project-summary">A local streaming lakehouse that captures PostgreSQL changes with Debezium, transports CDC through Kafka, processes continuous Bronze / Silver / Gold streams with Flink, stores Iceberg tables and serves the Gold shipment control tower through Trino and Superset.</p>
           <figure class="diagram project-diagram project-diagram-dark"><img class="project-diagram-img" src="assets/architecture/atlasflow-architecture.svg" alt="AtlasFlow streaming architecture: PostgreSQL, Debezium CDC, Kafka, Flink Bronze Silver Gold jobs, Iceberg, Trino, Superset, RustFS and observability." loading="lazy" width="1600" height="900"><figcaption>Portfolio architecture visual generated from the repository's documented architecture and runbook.</figcaption></figure>
           <div class="project-grid">
             <div class="pblock"><h4>Engineering focus</h4><ul><li>PostgreSQL logical replication and Debezium CDC</li><li>Kafka event transport and three continuous Flink SQL stages</li><li>Iceberg upserts, explainable shipment risk and Trino analytics</li></ul></div>
-            <div class="pblock"><h4>Execution boundary</h4><ul><li>Local Docker Compose deployment and end-to-end run are owner-confirmed</li><li>Static GitHub validation is not represented as live integration testing</li><li>Superset dashboard objects are configured through the runbook</li></ul></div>
-          </div>
-          <div class="evidence-panel">
-            <h4>Runtime evidence — owner capture pending</h4>
-            <p>The local end-to-end run is owner-confirmed. Add screenshots captured from the actual running stack to make the execution independently inspectable.</p>
-            <ul class="evidence-list"><li><code>docker compose ps</code> showing service and health states</li><li>Flink dashboard with Bronze, Silver and Gold jobs in RUNNING state</li><li>Trino query results from <code>atlasflow.gold.shipment_control_tower</code></li><li>Superset dashboard connected to the Gold table</li></ul>
+            <div class="pblock"><h4>Execution boundary</h4><ul><li>Successfully executed end to end in the local Docker Compose environment</li><li>Static GitHub validation is not represented as live integration testing</li><li>Superset dashboard objects are configured through the runbook</li></ul></div>
           </div>
           <div class="project-foot"><ul class="tags"><li>PostgreSQL</li><li>Debezium</li><li>Kafka</li><li>Flink SQL</li><li>Iceberg</li><li>Trino</li><li>Superset</li><li>Docker</li></ul><a class="btn btn-small" href="https://github.com/viradidi/AtlasFlow" target="_blank" rel="noopener noreferrer">Repository ↗</a></div>
         </article>
