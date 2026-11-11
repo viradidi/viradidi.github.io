@@ -1342,10 +1342,6 @@ code {
     .diagram-pair .project-diagram-img {
         max-height: 520px;
     }
-
-    .evidence-list {
-        grid-template-columns: 1fr;
-    }
 }
 
 @media (max-width: 720px) {
@@ -1357,7 +1353,6 @@ code {
         max-height: 420px;
     }
 
-    .evidence-panel,
     .project-diagram-pending {
         padding: 16px;
     }
