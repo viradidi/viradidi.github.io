@@ -1313,52 +1313,6 @@ code {
     max-height: 420px;
 }
 
-.evidence-panel {
-    margin-top: 22px;
-    padding: 20px 22px;
-    border: 1px dashed rgba(251, 191, 36, 0.42);
-    border-radius: var(--radius-sm);
-    background: rgba(251, 191, 36, 0.045);
-}
-
-.evidence-panel h4 {
-    margin-bottom: 7px;
-    color: var(--amber);
-    font: 700 0.76rem/1.5 var(--mono);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.evidence-panel p {
-    max-width: 82ch;
-    margin-bottom: 14px;
-    color: var(--text-soft);
-    font-size: 0.92rem;
-}
-
-.evidence-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 24px;
-}
-
-.evidence-list li {
-    position: relative;
-    padding-left: 18px;
-    color: var(--text-soft);
-    font-size: 0.9rem;
-    overflow-wrap: anywhere;
-}
-
-.evidence-list li::before {
-    content: "○";
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: var(--amber);
-    font-weight: 800;
-}
-
 .project-diagram-pending {
     margin: 24px 0 26px;
     padding: 24px;
