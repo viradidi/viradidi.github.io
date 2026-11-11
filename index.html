@@ -87,7 +87,7 @@
           <ul class="about-points">
             <li><strong>Architecture:</strong> choose platform patterns that match the workload and constraints.</li>
             <li><strong>Data reliability:</strong> validate, reconcile, handle incremental changes and document failure boundaries.</li>
-            <li><strong>Delivery:</strong> keep code, tests, deployment guidance and operational evidence connected.</li>
+            <li><strong>Delivery:</strong> keep code, tests, deployment guidance and operational practices connected.</li>
           </ul>
         </div>
       </div>
@@ -164,7 +164,7 @@
           <figure class="diagram project-diagram"><img class="project-diagram-img" src="https://raw.githubusercontent.com/viradidi/healthgrid-data-platform/main/assets/architecture-overview.png" alt="HealthGrid Azure data platform architecture overview." loading="lazy" width="1600" height="900"><figcaption>Existing HealthGrid architecture visual, retained from its repository. The legacy CareSync references were identified as a documentation cleanup item; the project architecture itself is preserved.</figcaption></figure>
           <div class="project-grid">
             <div class="pblock"><h4>Engineering focus</h4><ul><li>Metadata-driven ingestion and pipeline configuration</li><li>Bronze, Silver and Gold data layers</li><li>Reusable orchestration and transformation patterns</li></ul></div>
-            <div class="pblock"><h4>Engineering boundary</h4><ul><li>Timestamp watermarks are not represented as source CDC</li><li>Dataset is synthetic and educational, not clinical data</li><li>Legacy naming and deployment evidence are documented separately</li></ul></div>
+            <div class="pblock"><h4>Engineering boundary</h4><ul><li>Timestamp watermarks are not represented as source CDC</li><li>Dataset is synthetic and educational, not clinical data</li><li>Naming consistency and deployment constraints are documented separately</li></ul></div>
           </div>
           <div class="project-foot"><ul class="tags"><li>Azure Data Factory</li><li>Azure Databricks</li><li>PySpark</li><li>Metadata-driven</li><li>Medallion</li></ul><a class="btn btn-small" href="https://github.com/viradidi/healthgrid-data-platform" target="_blank" rel="noopener noreferrer">Repository ↗</a></div>
         </article>
@@ -175,7 +175,7 @@
             <span class="status status-ok">Completed · successfully run end to end in Snowflake · 8 Nov 2026</span>
           </div>
           <p class="project-summary">An Azure-to-Snowflake ingestion and analytics platform using Blob Storage events, Snowpipe auto-ingest, Streams, Tasks, stored procedures, layered modelling, Gold dynamic tables, secure serving views and a Streamlit dashboard.</p>
-          <figure class="diagram project-diagram project-diagram-dark"><img class="project-diagram-img" src="assets/architecture/flowbridge-technical-architecture.svg" alt="FlowBridge technical architecture: Azure Blob Storage and event notifications, Snowflake integrations and Snowpipe, Bronze, Streams, Silver validation and dimensional modelling, Gold dynamic tables, secure views, RBAC and Streamlit." loading="lazy" width="1600" height="920"><figcaption>Standalone architecture visual added to the FlowBridge repository and embedded in its README and architecture guide. It is a design view, not an execution screenshot.</figcaption></figure>
+          <figure class="diagram project-diagram project-diagram-dark"><img class="project-diagram-img" src="assets/architecture/flowbridge-technical-architecture.svg" alt="FlowBridge technical architecture: Azure Blob Storage and event notifications, Snowflake integrations and Snowpipe, Bronze, Streams, Silver validation and dimensional modelling, Gold dynamic tables, secure views, RBAC and Streamlit." loading="lazy" width="1600" height="920"><figcaption>Standalone technical architecture visual, also embedded in the FlowBridge README and architecture guide.</figcaption></figure>
           <div class="project-grid">
             <div class="pblock"><h4>Engineering focus</h4><ul><li>Event-notification-driven Snowpipe ingestion</li><li>Validation, dead-letter handling and dimensional modelling</li><li>Governed serving views, RBAC and Streamlit consumption</li></ul></div>
             <div class="pblock"><h4>Execution boundary</h4><ul><li>Latest repository version successfully rerun end to end in Snowflake on 8 November 2026</li><li>Existing repository tests validate contracts and Python code</li><li>The local environment can be started again using the documented Docker Compose runbook</li></ul></div>
