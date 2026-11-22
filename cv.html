@@ -8,145 +8,80 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>CV | Isaiah Nyakundi</title>
-<meta name="description" content="CV of Isaiah Nyakundi, data engineer: experience, cloud and real-time data projects, technical skills, education and certification.">
+<meta name="description" content="CV of Isaiah Nyakundi, Data Engineer specialising in cloud data platforms and analytics engineering.">
 <link rel="canonical" href="https://viradidi.github.io/cv.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b3a2f'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3EIN%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Isaiah Nyakundi">
 <meta property="og:title" content="CV | Isaiah Nyakundi">
-<meta property="og:description" content="CV of Isaiah Nyakundi, data engineer: experience, cloud and real-time data projects, technical skills, education and certification.">
+<meta property="og:description" content="CV of Isaiah Nyakundi, Data Engineer specialising in cloud data platforms and analytics engineering.">
 <meta property="og:url" content="https://viradidi.github.io/cv.html">
 <meta property="og:image" content="https://viradidi.github.io/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Data Platforms | Analytics Engineering">
+<meta property="og:image:alt" content="Isaiah Nyakundi | Data Engineer">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://viradidi.github.io/assets/og-image.png">
-<meta name="twitter:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Data Platforms | Analytics Engineering">
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap"><a class="brand" href="/">Isaiah Nyakundi</a><button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav aria-label="Main" id="site-nav"><ul><li><a href="/">Home</a></li><li><a href="/about.html">About</a></li><li><a href="/projects/">Projects</a></li><li><a href="/blog.html">Blog</a></li><li><a href="/cv.html" aria-current="page">CV</a></li></ul></nav></div></header>
-<main id="main">
-<div class="wrap">
+<main id="main"><div class="wrap">
 <header class="cv-header">
-<div class="cv-header-top"><h1>Isaiah Nyakundi</h1><a class="cv-download" href="/resume/Isaiah-Nyakundi-Data-Engineer-Resume.pdf" download>Download CV (PDF)</a></div>
-<p class="cv-role">Data Engineer | Cloud Data Platforms | Analytics Engineering</p>
-<ul class="cv-contact">
-<li>Nairobi, Kenya</li>
-<li><a href="tel:+254719367955">+254 719 367 955</a></li>
-<li><a href="mailto:isaiahnyakundi87@gmail.com">isaiahnyakundi87@gmail.com</a></li>
-<li><a href="https://www.linkedin.com/in/isaiah-nyakundi-2b58812b4" target="_blank" rel="noopener noreferrer">linkedin.com/in/isaiah-nyakundi-2b58812b4</a></li>
-<li><a href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer">github.com/viradidi</a></li>
-<li>Portfolio: <a href="https://viradidi.github.io/" target="_blank" rel="noopener noreferrer">https://viradidi.github.io/</a></li>
-</ul>
+  <div class="cv-header-top"><h1>ISAIAH NYAKUNDI</h1><div class="cv-download-links"><a class="cv-download" href="/resume/Isaiah-Nyakundi-Data-Engineer-Resume.pdf" download>Download CV (PDF)</a><a class="cv-download" href="/resume/Isaiah_Nyakundi_Data_Engineer_Resume.docx" download>Download CV (DOCX)</a></div></div>
+  <p class="cv-role">DATA ENGINEER | CLOUD DATA PLATFORMS | ANALYTICS ENGINEERING</p>
+  <ul class="cv-contact"><li>Nairobi, Kenya | +254 719 367 955 | isaiahnyakundi87@gmail.com</li><li>Linkedin.com/in/isaiah-nyakundi-2b58812b4 github.com/viradidi.github.io</li></ul>
 </header>
-
-<section class="cv-section">
-<h2>Professional Summary</h2>
-<p>Data engineer with nearly two years of freelance experience building cloud and real-time data pipelines on Azure, Databricks, Snowflake, Kafka, Flink and Apache Iceberg. Builds pipelines that load incrementally, check data quality and can be rerun safely. Each project below was built and run end to end.</p>
-</section>
-
-<section class="cv-section">
-<h2>Experience</h2>
-<div class="cv-entry">
-<h3>Freelance Data Engineer</h3>
-<p class="cv-meta">Independent | December 2024 – Present</p>
-<ul>
-<li>Design and build cloud data pipelines and lakehouses for ingestion, transformation and reporting on Azure and Snowflake.</li>
-<li>Load data incrementally with watermarks and control tables, so reruns do not create duplicate records.</li>
-<li>Add data quality checks, audit logs and reconciliation to each pipeline stage.</li>
-<li>Orchestrate pipelines with Azure Data Factory, Databricks Jobs and Snowflake Tasks, using Python, PySpark and SQL.</li>
-</ul>
-</div>
-</section>
-
-<section class="cv-section">
-<h2>Projects</h2>
-<div class="cv-entry">
-<h3><a href="/projects/atlasflow/">AtlasFlow: Real-Time Logistics Control Tower</a></h3>
-<p class="cv-meta">PostgreSQL, Debezium, Apache Kafka, Apache Flink SQL, Apache Iceberg, Trino, Apache Superset, Docker Compose</p>
-<p><strong>Problem:</strong> Operations teams need current shipment status, but batch reporting lags behind changes in the source database.</p>
-<p><strong>What I built:</strong> Captured PostgreSQL changes with Debezium and Kafka, then ran three Flink SQL streaming jobs that write Bronze, Silver and Gold Iceberg tables.</p>
-<p><strong>Result:</strong> Gold holds one current record per shipment, updated by key, with a rule-based risk classification. Runs end to end in Docker Compose on synthetic data.</p>
-</div>
-
-<div class="cv-entry">
-<h3><a href="/projects/healthgrid/">HealthGrid Data Platform</a></h3>
-<p class="cv-meta">Azure Data Factory, Azure Databricks, PySpark, Azure SQL, PostgreSQL, ADLS Gen2</p>
-<p><strong>Problem:</strong> Repeated, missed or overwritten source loads leave inconsistent records.</p>
-<p><strong>What I built:</strong> Azure SQL control tables choose a FULL, APPEND or MERGE load for each source. Watermarks and a file manifest block repeat loads. MERGE rejects null or duplicate keys and updates a row only when the incoming version is newer.</p>
-<p><strong>Result:</strong> Every stage is audit-logged from landing to Gold. Runs end to end in Azure on synthetic data.</p>
-</div>
-
-<div class="cv-entry">
-<h3><a href="/projects/uber-eats/">Uber Eats Data Analytics Platform</a></h3>
-<p class="cv-meta">Azure Data Factory, ADLS Gen2, Azure Databricks, PySpark, FastAPI, Python</p>
-<p><strong>Problem:</strong> Data from REST APIs, CSV files and SQL sources arrives in different formats and needs one reliable reporting layer.</p>
-<p><strong>What I built:</strong> Three metadata-driven Data Factory pipelines load into ADLS Gen2. Databricks PySpark builds the Bronze and Silver layers, then publishes Gold with reconciliation checks.</p>
-<p><strong>Result:</strong> Checkpointed incremental loads and recovery runbooks. Deployed and run end to end in Azure on synthetic data.</p>
-</div>
-
-<div class="cv-entry">
-<h3><a href="/projects/novacart/">NovaCart Incremental Retail Lakehouse</a></h3>
-<p class="cv-meta">Azure Databricks, Delta Lake, PySpark, Azure SQL, Databricks Jobs</p>
-<p><strong>Problem:</strong> Retail order data changes constantly, and order history has to stay accurate.</p>
-<p><strong>What I built:</strong> Bronze, Silver and Gold layers loaded incrementally, using timestamp and key watermarks in a control table. Delta MERGE and SCD Type 2 keep order history. A Databricks Job runs the layers in sequence.</p>
-<p><strong>Result:</strong> A repeatable workflow that can be rerun safely. Resources were shut down after the run to control cost.</p>
-</div>
-
-<div class="cv-entry">
-<h3><a href="/projects/flowbridge/">FlowBridge Snowflake Project</a></h3>
-<p class="cv-meta">Snowflake, Snowpipe, Streams and Tasks, ADLS Gen2, Streamlit</p>
-<p><strong>Problem:</strong> Files landing in cloud storage must reach the warehouse automatically and be ready for dashboards.</p>
-<p><strong>What I built:</strong> Event-driven ingestion from Azure into Snowflake with Bronze, Silver and Gold layers, a star schema (SCD Type 1) and a Streamlit dashboard.</p>
-<p><strong>Result:</strong> Latest version reran successfully in Snowflake on 8 November 2026. Synthetic data.</p>
-</div>
-
-<div class="cv-entry">
-<h3><a href="/projects/cfpb/">CFPB Consumer Complaint Analytics</a></h3>
-<p class="cv-meta">Microsoft Fabric, PySpark, Fabric Warehouse, Power BI</p>
-<p><strong>Problem:</strong> Shows how complaint volumes change over time, which products, issues and companies generate the most complaints, and how often companies respond on time.</p>
-<p><strong>What I built:</strong> Bronze, Silver and Gold layers in Microsoft Fabric. Kaggle API and a Fabric pipeline load the CFPB CSV into a Bronze Lakehouse. PySpark profiles and cleans it into Silver. A stored procedure loads the Gold fact and dimension tables into a Fabric Warehouse. A semantic model feeds a three-page Power BI report.</p>
-<p><strong>Quality:</strong> Records where the date sent precedes the date received are quarantined. Silver holds 896,931 records and quarantine holds 7,052, reconciling to the 903,983 source records.</p>
-<p><strong>Result:</strong> Run end to end in Fabric with a DEV-to-PROD deployment. Uses real CFPB complaint data.</p>
-</div>
-</section>
-
-<section class="cv-section">
-<h2>Technical Skills</h2>
-<ul class="cv-skills">
-<li><strong>Languages:</strong> Python, SQL, PySpark, Flink SQL</li>
-<li><strong>Cloud platforms:</strong> Microsoft Azure (ADLS Gen2, Data Factory, Databricks, Key Vault, SQL Database), Microsoft Fabric, Snowflake</li>
-<li><strong>Data engineering:</strong> Apache Spark, Delta Lake, Apache Iceberg, Apache Kafka, Debezium (PostgreSQL CDC), Apache Flink, Apache Airflow, Trino, ETL/ELT, incremental and batch processing, medallion architecture</li>
+<section class="cv-section" id="summary"><h2>SUMMARY</h2><p>2 years of end to end freelance design and delivery experience implementing cloud data processing pipelines both in batch and real-time on Azure, Databricks and Snowflake. Specialist in building functional and robust end to end ingestion and lakehouse workflows with Python, SQL and Pyspark using incremental loading, metadata-driven orchestration, data-quality gates and auditability to make pipelines deterministic and safe to rerun. I also have project experience with Kafka, Flink, Apache Iceberg and Microsoft Fabric. Projects below have been built and run end to end in those environments.</p></section>
+<section class="cv-section" id="technical-skills"><h2>TECHNICAL SKILLS</h2><ul class="cv-skills">
+<li><strong>Data programming &amp; querying:</strong> Python, SQL, PySpark, Flink SQL</li>
+<li><strong>Cloud platforms:</strong> Microsoft Azure (ADLS Gen2, Data Factory, Databricks, Key Vault, Azure SQL), Microsoft Fabric, Snowflake</li>
+<li><strong>Data processing and streaming:</strong> Apache Spark, Delta Lake, Apache Iceberg, Apache Kafka, Debezium (PostgreSQL CDC), Apache Flink, Trino</li>
+<li><strong>Integration and orchestration:</strong> Azure Data Factory, Databricks Jobs, Snowpipe, Snowflake Streams and Tasks, Apache Airflow, REST APIs</li>
 <li><strong>Data modelling and analytics:</strong> Star schema, SCD Types 1 and 2, dbt, Power BI, Apache Superset, Streamlit</li>
-<li><strong>Quality, DevOps and testing:</strong> Data quality checks, logging and auditing, Prometheus, Grafana, Docker, Docker Compose, GitHub Actions, Git, pytest</li>
-</ul>
-</section>
-
-<section class="cv-section">
-<h2>Education</h2>
-<div class="cv-entry">
-<h3>Bachelor of Science in Biostatistics</h3>
-<p class="cv-meta">Jomo Kenyatta University of Agriculture and Technology (JKUAT)</p>
-<p>Coursework in statistical reasoning, data handling and analysis of structured data.</p>
-</div>
-</section>
-
-<section class="cv-section">
-<h2>Certifications</h2>
-<div class="cv-entry">
-<p>Professional Data Engineer in Python, DataCamp (May 2026)</p>
-</div>
-</section>
-
-</div>
-</main>
-<footer class="foot"><div class="wrap"><div class="cols"><div><b>Isaiah Nyakundi</b><p>Data Engineer</p></div>
-<nav aria-label="Footer"><div><h4>Site</h4><a href="/projects/">Projects</a><a href="/blog.html">Blog</a><a href="/about.html">About</a><a href="/cv.html">CV</a></div>
-<div><h4>Connect</h4><a href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer">GitHub<span class="vh"> (opens in a new tab)</span></a><a href="https://www.linkedin.com/in/isaiah-nyakundi-2b58812b4" target="_blank" rel="noopener noreferrer">LinkedIn<span class="vh"> (opens in a new tab)</span></a><a href="mailto:isaiahnyakundi87@gmail.com">Email</a></div></nav></div>
-<p class="copy">&copy; 2026 Isaiah Nyakundi</p></div></footer>
+<li><strong>Quality, visibility and Dev Ops:</strong> Checks for the quality of data, audit logging, reconciliation, Prometheus, Grafana, Docker, Docker Compose, Github Actions, Git, pytest.</li>
+</ul></section>
+<section class="cv-section" id="professional-experience"><h2>PROFESSIONAL EXPERIENCE</h2><div class="cv-entry">
+<div class="cv-entry-head"><h3>Freelance Data Engineer</h3><span class="cv-date">December 2024 - Present</span></div>
+<p class="cv-meta"><span>Independent</span><span>Nairobi, Kenya</span></p>
+<ul>
+<li>Building and maintaining cloud data pipelines and lakehouses on Azure &amp; Snowflake, including source ingestion and transformation and analytics-ready data.</li>
+<li>Define techniques such as incremental load through watermarks, control tables and file manifest to handle repeat loads and enable safe rerun of the pipeline.</li>
+<li>Apply data-quality rules, audit logging, and reconciliation throughout pipeline stages; validate business keys and quarantine records not meeting specified criteria.</li>
+<li>Build data transformations using Python, PySpark, and SQL. Schedule your data workflows using Azure Data Factory, Databricks Jobs, and Snowflake Tasks.</li>
+</ul></div></section>
+<section class="cv-section" id="projects"><h2>PROJECTS</h2>
+<div class="cv-entry"><h3>Atlas Flow: Logistics Control Tower in real-time</h3><p class="cv-meta">PostgreSQL | Debezium | Apache Kafka | Apache Flink SQL | Apache Iceberg | Trino | Apache Superset | Docker Compose</p><ul>
+<li>Captured PostgreSQL changes with Debezium and Kafka. Created three Flink SQL streaming jobs, and used them to write the Bronze, Silver and Gold (Iceberg) tables.</li>
+<li>Modelled Gold to maintain one actual record per shipment, keyed, with risk classification rules.</li>
+<li>Served the curated shipment data through Trino and Apache Superset. -Ran the entire stack end to end in Docker Compose on synthetic data.</li>
+</ul></div>
+<div class="cv-entry"><h3>Health Grid Data Platform</h3><p class="cv-meta">Azure Databricks | PySpark | Azure SQL | PostgreSQL | ADLS Gen2</p><ul>
+<li>Created a metadata based Azure platform where Azure SQL control tables determine FULL, APPEND or MERGE loading per source. Harnessed watermarks and a file manifest to avoid re loads, and for MERGE the source key is null checked, duplicate checked and only a newer source version is loaded.</li>
+<li>New audit logs throughout processing from landing to Gold, with end to end execution on Azure on synthetic data.</li>
+</ul></div>
+<div class="cv-entry"><h3>Uber Eats Data Analytics Platform</h3><p class="cv-meta">Azure Databricks | Pyspark | Fast Api | Python</p><ul>
+<li>Designed and built three metadata-driven Data Factory pipelines to load REST API, CSV and SQL sources into ADLS Gen2. Pipeline developed to copy Bronze and Silver using Databricks PySpark to transform and publish Gold with reconciliation checks.</li>
+<li>Added checkpointed incremental loads and recovery runbooks. Deployed and ran end to end in Azure using synthetic data.</li>
+</ul></div>
+<div class="cv-entry"><h3>Nova Cart Incremental Retail Lakehouse</h3><p class="cv-meta">Azure Databricks | Delta Lake | PySpark | Azure SQL | Databricks Jobs</p><ul>
+<li>Interfaced with Azure SQL data and created incremental Bronze, Silver and Gold layers with timestamp and key watermarks in control table.</li>
+<li>Utilized Delta MERGE and SCD Type 2 to retain changes to historical retail order history and track the history of changes.</li>
+<li>Ordered the layers using a Databricks Job, and published a Gold set of analytical models. The workflow is designed to be rerunnable; the resources were taken down after the run completed to minimize cost.</li>
+</ul></div>
+<div class="cv-entry"><h3>Flow Bridge Snowflake Project</h3><p class="cv-meta">Snowflake | Snowpipe | Streams and Tasks | ADLS Gen2 | Streamlit</p><ul>
+<li>Configured event driven ingestion from Azure Blob Storage to Snowflake with Snowpipe auto-ingest.</li>
+<li>Remade the bronze, silver and gold data using Streams and Tasks. Modeled the warehouse as a star schema with SCD Type 1. Published serving data to be used for a Streamlit dashboard. The latest build re-ran successfully on Snowflake, 8 November 2026 (with mock data).</li>
+</ul></div>
+<div class="cv-entry"><h3>CFPB Consumer Complaint Analytics</h3><p class="cv-meta">Microsoft Fabric | PySpark | Fabric Lakehouse | Fabric Warehouse | Power BI</p><ul>
+<li>Ingested the CFPB CSV through Kaggle API and through a Fabric pipeline into a Bronze Lakehouse.</li>
+<li>Profiles and cleans record with PySpark into Silver; quarantines invalid date sequences and loads Gold fact and dimension tables into a Fabric Warehouse using a stored procedure.</li>
+<li>Developed a semantic model against a three page Power BI report. Silver 896,931 quarantine 7,052 reconciliation 903,983 source records End to end in fabric with DEV-to-PROD deployment, using real CFPB complaint data.</li>
+</ul></div></section>
+<section class="cv-section" id="education"><h2>EDUCATION</h2><div class="cv-entry"><h3>BSc in Biostatistics</h3><p class="cv-meta">Jomo Kenyatta University of Agriculture and Technology ( JKUAT ) | Degree obtained</p><p>Completed coursework in data analysis; with understanding of issues on data collection, processing and analysis as it related to a set of data.</p></div></section>
+<section class="cv-section" id="certifications"><h2>CERTIFICATIONS</h2><div class="cv-entry"><p>Professional Data Engineer in Python, Data Camp | May 2026</p></div></section>
+</div></main>
+<footer class="foot"><div class="wrap"><div class="cols"><div><b>Isaiah Nyakundi</b><p>Data Engineer</p></div><nav aria-label="Footer"><div><h4>Site</h4><a href="/projects/">Projects</a><a href="/blog.html">Blog</a><a href="/about.html">About</a><a href="/cv.html">CV</a></div><div><h4>Connect</h4><a href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer">GitHub<span class="vh"> (opens in a new tab)</span></a><a href="https://www.linkedin.com/in/isaiah-nyakundi-2b58812b4" target="_blank" rel="noopener noreferrer">LinkedIn<span class="vh"> (opens in a new tab)</span></a><a href="mailto:isaiahnyakundi87@gmail.com">Email</a></div></nav></div><p class="copy">&copy; 2026 Isaiah Nyakundi</p></div></footer>
 <script src="/js/main.js" defer></script>
-</body>
-</html>
+</body></html>
