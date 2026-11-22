@@ -5,7 +5,7 @@ from reportlab.lib.colors import HexColor
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import mm
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, HRFlowable, KeepTogether
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, HRFlowable, KeepTogether, Flowable
 
 ROOT = Path(__file__).resolve().parents[1]
 HTML_PATH = ROOT / "cv.html"
@@ -15,35 +15,54 @@ MUTED = HexColor("#555555")
 RULE = HexColor("#777777")
 
 styles = getSampleStyleSheet()
-styles.add(ParagraphStyle(name="CVName", fontName="Helvetica-Bold", fontSize=20, leading=22, alignment=1, textColor=INK, spaceAfter=1))
-styles.add(ParagraphStyle(name="CVRole", fontName="Helvetica-Bold", fontSize=9.5, leading=11, alignment=1, textColor=INK, spaceAfter=3))
-styles.add(ParagraphStyle(name="CVContact", fontName="Helvetica", fontSize=8, leading=9.5, alignment=1, textColor=INK, spaceAfter=1))
-styles.add(ParagraphStyle(name="CVSection", fontName="Helvetica-Bold", fontSize=10, leading=11.5, textColor=INK, spaceBefore=5, spaceAfter=3, keepWithNext=True))
-styles.add(ParagraphStyle(name="CVBody", fontName="Helvetica", fontSize=8.7, leading=10.3, textColor=INK, spaceAfter=2.2))
-styles.add(ParagraphStyle(name="CVSkill", fontName="Helvetica", fontSize=8.45, leading=9.8, textColor=INK, spaceAfter=1.4))
-styles.add(ParagraphStyle(name="CVResumeBullet", fontName="Helvetica", fontSize=8.45, leading=9.8, textColor=INK, leftIndent=11, firstLineIndent=-7, spaceAfter=1.4))
-styles.add(ParagraphStyle(name="CVProjectTitle", fontName="Helvetica-Bold", fontSize=9.1, leading=10.5, textColor=INK, spaceBefore=3, spaceAfter=0.5, keepWithNext=True))
-styles.add(ParagraphStyle(name="CVStack", fontName="Helvetica-Oblique", fontSize=7.9, leading=9.1, textColor=MUTED, spaceAfter=1.1, keepWithNext=True))
-styles.add(ParagraphStyle(name="CVMeta", fontName="Helvetica", fontSize=8.3, leading=9.4, textColor=MUTED, spaceAfter=1.5))
-styles.add(ParagraphStyle(name="CVPageTwoName", fontName="Helvetica-Bold", fontSize=9.2, leading=10.5, textColor=INK, spaceAfter=1))
+styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=20, leading=22, alignment=1, textColor=INK, spaceAfter=1))
+styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=9.5, leading=11, alignment=1, textColor=INK, spaceAfter=3))
+styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=8, leading=9.5, alignment=1, textColor=INK, spaceAfter=1))
+styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=10, leading=11.5, textColor=INK, spaceBefore=5, spaceAfter=3, keepWithNext=True))
+styles.add(ParagraphStyle(name="Body", fontName="Helvetica", fontSize=8.7, leading=10.3, textColor=INK, spaceAfter=2.2))
+styles.add(ParagraphStyle(name="Skill", fontName="Helvetica", fontSize=8.45, leading=9.8, textColor=INK, spaceAfter=1.4))
+styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=8.45, leading=9.8, textColor=INK, leftIndent=11, firstLineIndent=-7, spaceAfter=1.4))
+styles.add(ParagraphStyle(name="ProjectTitle", fontName="Helvetica-Bold", fontSize=9.1, leading=10.5, textColor=INK, spaceBefore=3, spaceAfter=0.5, keepWithNext=True))
+styles.add(ParagraphStyle(name="Stack", fontName="Helvetica-Oblique", fontSize=7.9, leading=9.1, textColor=MUTED, spaceAfter=1.1, keepWithNext=True))
+styles.add(ParagraphStyle(name="Meta", fontName="Helvetica", fontSize=8.3, leading=9.4, textColor=MUTED, spaceAfter=1.5))
+styles.add(ParagraphStyle(name="PageTwoName", fontName="Helvetica-Bold", fontSize=9.2, leading=10.5, textColor=INK, spaceAfter=1))
 
-def text(node):
+class LeftRightLine(Flowable):
+    """Selectable single-line content with left and right aligned text."""
+    def __init__(self, left, right, font_name="Helvetica-Bold", font_size=8.8, color=INK, height=12):
+        super().__init__()
+        self.left, self.right = left, right
+        self.font_name, self.font_size = font_name, font_size
+        self.color, self.height = color, height
+
+    def wrap(self, avail_width, avail_height):
+        self.width = avail_width
+        return avail_width, self.height
+
+    def draw(self):
+        self.canv.setFont(self.font_name, self.font_size)
+        self.canv.setFillColor(self.color)
+        self.canv.drawString(0, 1, self.left)
+        self.canv.drawRightString(self.width, 1, self.right)
+
+def txt(node):
     return node.get_text(" ", strip=True) if node else ""
 
-def section(story, label):
-    story.append(Paragraph(escape(label.upper()), styles["CVSection"]))
+def add_section(story, label):
+    story.append(Paragraph(escape(label.upper()), styles["Section"]))
     story.append(HRFlowable(width="100%", thickness=0.55, color=RULE, spaceBefore=0, spaceAfter=3))
 
-def bullet(story, value):
-    story.append(Paragraph("&#8226;&nbsp; " + escape(value), styles["CVResumeBullet"]))
+def add_bullet(story, text):
+    story.append(Paragraph("&#8226;&nbsp; " + escape(text), styles["ResumeBullet"]))
 
-def project(story, entry):
-    title = text(entry.find("h3"))
-    stack = text(entry.find("p", class_="cv-meta"))
-    items = [Paragraph(escape(title), styles["CVProjectTitle"]), Paragraph(escape(stack), styles["CVStack"])]
-    for li in entry.select("ul li"):
-        items.append(Paragraph("&#8226;&nbsp; " + escape(text(li)), styles["CVResumeBullet"]))
-    story.append(KeepTogether(items))
+def add_project(story, entry):
+    title = txt(entry.find("h3"))
+    stack = txt(entry.find("p", class_="cv-meta"))
+    bullet_list = entry.find("ul")
+    parts = [Paragraph(escape(title), styles["ProjectTitle"]), Paragraph(escape(stack), styles["Stack"])]
+    for li in bullet_list.find_all("li", recursive=False):
+        parts.append(Paragraph("&#8226;&nbsp; " + escape(txt(li)), styles["ResumeBullet"]))
+    story.append(KeepTogether(parts))
 
 def footer(canvas, doc):
     canvas.saveState()
@@ -58,65 +77,68 @@ def footer(canvas, doc):
 def main():
     soup = BeautifulSoup(HTML_PATH.read_text(encoding="utf-8"), "html.parser")
     header = soup.select_one(".cv-header")
-    sections = {text(x.find("h2")): x for x in soup.select("main .cv-section")}
+    sections = {txt(x.find("h2")): x for x in soup.select("main .cv-section")}
     required = ["SUMMARY", "TECHNICAL SKILLS", "PROFESSIONAL EXPERIENCE", "PROJECTS", "EDUCATION", "CERTIFICATIONS"]
     missing = [x for x in required if x not in sections]
     if not header or missing:
         raise ValueError(f"Missing CV structure: {missing or ['header']}")
-    name = text(header.find("h1"))
-    role = text(header.select_one(".cv-role"))
-    contacts = [text(li) for li in header.select(".cv-contact li")]
-    skill_items = sections["TECHNICAL SKILLS"].select("ul.cv-skills li")
+    name = txt(header.find("h1"))
+    role = txt(header.select_one(".cv-role"))
+    contacts = [txt(li) for li in header.select(".cv-contact li")]
+    skills = sections["TECHNICAL SKILLS"].select("ul.cv-skills li")
     experience = sections["PROFESSIONAL EXPERIENCE"].select_one(".cv-entry")
     projects = sections["PROJECTS"].select(".cv-entry")
     if len(projects) != 6:
-        raise ValueError(f"Expected six projects, found {len(projects)}")
-
-    story = [Paragraph(escape(name), styles["CVName"]), Paragraph(escape(role), styles["CVRole"])]
-    for value in contacts:
-        story.append(Paragraph(escape(value), styles["CVContact"]))
+        raise ValueError(f"Expected 6 project entries, found {len(projects)}")
+    story = []
+    story.append(Paragraph(escape(name), styles["Name"]))
+    story.append(Paragraph(escape(role), styles["Role"]))
+    for contact in contacts:
+        story.append(Paragraph(escape(contact), styles["Contact"]))
     story.append(Spacer(1, 3))
 
-    section(story, "SUMMARY")
-    story.append(Paragraph(escape(text(sections["SUMMARY"].find("p"))), styles["CVBody"]))
+    add_section(story, "SUMMARY")
+    story.append(Paragraph(escape(txt(sections["SUMMARY"].find("p"))), styles["Body"]))
 
-    section(story, "TECHNICAL SKILLS")
-    for li in skill_items:
+    add_section(story, "TECHNICAL SKILLS")
+    for li in skills:
         label = li.find("strong")
-        label_text = text(label)
-        value = text(li)[len(label_text):].lstrip(": ").strip()
-        story.append(Paragraph("<b>" + escape(label_text) + "</b> " + escape(value), styles["CVSkill"]))
+        label_text = txt(label)
+        whole = txt(li)
+        value = whole[len(label_text):].lstrip(": ").strip()
+        story.append(Paragraph("<b>" + escape(label_text) + "</b> " + escape(value), styles["Skill"]))
 
-    section(story, "PROFESSIONAL EXPERIENCE")
+    add_section(story, "PROFESSIONAL EXPERIENCE")
     head = experience.select_one(".cv-entry-head")
-    role_name = text(head.find("h3"))
-    date = text(head.select_one(".cv-date"))
-    story.append(Paragraph("<b>" + escape(role_name) + "</b> <font name='Helvetica-Bold'>" + escape(date) + "</font>", styles["CVBody"]))
-    meta = [text(x) for x in experience.select(".cv-meta span")]
-    story.append(Paragraph(escape(" | ".join(meta)), styles["CVMeta"]))
+    role_name = txt(head.find("h3"))
+    date = txt(head.select_one(".cv-date"))
+    story.append(LeftRightLine(role_name, date, font_name="Helvetica-Bold", font_size=9.1, height=12))
+    metas = experience.select_one(".cv-meta")
+    meta_spans = [txt(x) for x in metas.find_all("span")]
+    story.append(LeftRightLine(meta_spans[0] if meta_spans else "", meta_spans[1] if len(meta_spans) > 1 else "", font_name="Helvetica", font_size=8.3, color=MUTED, height=11))
     for li in experience.select("ul li"):
-        bullet(story, text(li))
+        add_bullet(story, txt(li))
 
-    section(story, "PROJECTS")
+    add_section(story, "PROJECTS")
     for entry in projects[:3]:
-        project(story, entry)
+        add_project(story, entry)
 
     story.append(PageBreak())
-    story.append(Paragraph("ISAIAH NYAKUNDI | DATA ENGINEER", styles["CVPageTwoName"]))
-    story.append(Paragraph("Nairobi, Kenya | +254 719 367 955 | isaiahnyakundi87@gmail.com | github.com/viradidi", styles["CVMeta"]))
-    section(story, "PROJECTS (CONTINUED)")
+    story.append(Paragraph("ISAIAH NYAKUNDI | DATA ENGINEER", styles["PageTwoName"]))
+    story.append(Paragraph(escape("Nairobi, Kenya | +254 719 367 955 | isaiahnyakundi87@gmail.com | github.com/viradidi"), styles["Meta"]))
+    add_section(story, "PROJECTS (CONTINUED)")
     for entry in projects[3:]:
-        project(story, entry)
+        add_project(story, entry)
 
-    section(story, "EDUCATION")
+    add_section(story, "EDUCATION")
     education = sections["EDUCATION"].select_one(".cv-entry")
-    story.append(Paragraph("<b>" + escape(text(education.find("h3"))) + "</b>", styles["CVBody"]))
-    for p in education.find_all("p", recursive=False):
-        story.append(Paragraph(escape(text(p)), styles["CVBody"]))
+    story.append(Paragraph("<b>" + escape(txt(education.find("h3"))) + "</b>", styles["Body"]))
+    for para in education.find_all("p", recursive=False):
+        story.append(Paragraph(escape(txt(para)), styles["Body"]))
 
-    section(story, "CERTIFICATIONS")
+    add_section(story, "CERTIFICATIONS")
     certification = sections["CERTIFICATIONS"].select_one(".cv-entry")
-    story.append(Paragraph(escape(text(certification)), styles["CVBody"]))
+    story.append(Paragraph(escape(txt(certification)), styles["Body"]))
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     pdf = SimpleDocTemplate(str(OUT), pagesize=A4, rightMargin=14*mm, leftMargin=14*mm, topMargin=12*mm, bottomMargin=16*mm, title=f"{name} - Data Engineer Resume", author=name)
