@@ -8,13 +8,13 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>Why I merge on a key and guard it with a version | Isaiah Nyakundi</title>
-<meta name="description" content="The small rule that keeps a HealthGrid reload from overwriting newer data: reject bad keys, compare versions and fail on a conflict.">
+<meta name="description" content="How HealthGrid validates business keys, uses source versions to protect Delta Lake current state, handles equal-version conflicts and advances Azure Data Factory watermarks safely.">
 <link rel="canonical" href="https://viradidi.github.io/post-healthgrid-version-guarded-merge.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b3a2f'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3EIN%3C/text%3E%3C/svg%3E">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:site_name" content="Isaiah Nyakundi">
 <meta property="og:title" content="Why I merge on a key and guard it with a version | Isaiah Nyakundi">
-<meta property="og:description" content="The small rule that keeps a HealthGrid reload from overwriting newer data: reject bad keys, compare versions and fail on a conflict.">
+<meta property="og:description" content="How HealthGrid validates business keys, uses source versions to protect Delta Lake current state, handles equal-version conflicts and advances Azure Data Factory watermarks safely.">
 <meta property="og:url" content="https://viradidi.github.io/post-healthgrid-version-guarded-merge.html">
 <meta property="og:image" content="https://viradidi.github.io/assets/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
 <meta name="twitter:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
 <link rel="stylesheet" href="/css/style.css">
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Why I merge on a key and guard it with a version", "datePublished": "2026-11-10", "author": {"@type": "Person", "name": "Isaiah Nyakundi", "url": "https://viradidi.github.io/"}, "description": "The small rule that keeps a HealthGrid reload from overwriting newer data: reject bad keys, compare versions and fail on a conflict.", "mainEntityOfPage": "https://viradidi.github.io/post-healthgrid-version-guarded-merge.html", "image": "https://viradidi.github.io/assets/og-image.png"}
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Why I merge on a key and guard it with a version", "datePublished": "2026-11-10", "dateModified": "2026-11-22", "author": {"@type": "Person", "name": "Isaiah Nyakundi", "url": "https://viradidi.github.io/"}, "description": "How HealthGrid validates business keys, uses source versions to protect Delta Lake current state, handles equal-version conflicts and advances Azure Data Factory watermarks safely.", "mainEntityOfPage": "https://viradidi.github.io/post-healthgrid-version-guarded-merge.html", "image": "https://viradidi.github.io/assets/og-image.png", "timeRequired": "PT8M"}
 </script>
 </head>
 <body>
@@ -33,15 +33,76 @@
 <header class="site"><div class="wrap"><a class="brand" href="/">Isaiah Nyakundi</a><button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav aria-label="Main" id="site-nav"><ul><li><a href="/">Home</a></li><li><a href="/about.html">About</a></li><li><a href="/projects/">Projects</a></li><li><a href="/blog.html" aria-current="page">Blog</a></li><li><a href="/cv.html">CV</a></li></ul></nav></div></header>
 <main id="main">
 <div class="wrap">
-<article class="post"><header class="post-header"><a class="post-back" href="/blog.html">&larr; Back to blog</a><h1>Why I merge on a key and guard it with a version</h1><div class="post-meta"><time datetime="2026-11-10">10 November 2026</time><span>&middot;</span><span>2 min read</span></div><ul class="post-tags" aria-label="Topics"><li class="blog-tag">data-engineering</li><li class="blog-tag">merge</li><li class="blog-tag">azure</li></ul></header><div class="post-body"><p>HealthGrid loads with a merge, not an append. The rule I care about most is small: a row is only updated when the incoming version is newer.</p>
-<h2>Reject bad keys first</h2>
-<p>A merge is only as good as its key. HealthGrid's merge rejects rows with null or duplicate keys before it touches the target. If two rows claim to be the same record, the run stops, and it does not pick one at random.</p>
-<h2>Compare versions, not arrival order</h2>
-<p>Data does not always arrive in the order it was created. A file can be delivered twice, or an old extract can land after a newer one. Comparing the incoming source version with the stored one means an older record cannot overwrite a newer one, whatever order the files arrive in.</p>
-<h2>Fail on a conflict</h2>
-<p>If the same version arrives with different content, the merge fails. I would rather have a failed run that someone has to look at than a quiet overwrite that nobody notices. Every stage writes to an audit log with the run ID, status and row counts, so a failure leaves a trail.</p>
-<h2>Where it stops</h2>
-<p>This protects rows that are already in the target. It does not detect changes at the source. The pipeline uses timestamp watermarks, which depend on reliable source timestamps and are not change data capture. The data is synthetic, and the project is educational and not a clinical system.</p></div><nav class="post-nav" aria-label="More posts"><a class="post-nav-link" href="/post-safe-replays.html"><span class="post-nav-label">&larr; Older</span><span class="post-nav-title">Making incremental loads safe to replay</span></a><a class="post-nav-link post-nav-next" href="/post-atlasflow-silver-gold.html"><span class="post-nav-label">Newer &rarr;</span><span class="post-nav-title">Why Silver stays append-only while Gold rebuilds state</span></a></nav></article>
+<article class="post"><header class="post-header"><a class="post-back" href="/blog.html">&larr; Back to blog</a><h1>Why I merge on a key and guard it with a version</h1><div class="post-meta"><time datetime="2026-11-10">10 November 2026</time><span>&middot;</span><span>8 min read</span><span>&middot;</span><span>Updated 22 November 2026</span></div><ul class="post-tags" aria-label="Topics"><li class="blog-tag">data-engineering</li><li class="blog-tag">delta-lake</li><li class="blog-tag">pyspark</li><li class="blog-tag">azure</li></ul></header>
+<div class="post-body"><p>A <code>MERGE</code> statement is not a complete correctness strategy. It tells the table how to match source rows to target rows, but it does not automatically tell the pipeline which source version is newer, whether the source keys are unique, or what to do when two records claim to be the same version but disagree.</p>
+<p>In HealthGrid, I treat a current-state merge as a guarded state transition: identify the business entity, prove the incoming batch is unambiguous, compare source versions, and only then let the target change. The important part is not the syntax of <code>MERGE</code>. It is the contract around it.</p>
+<nav class="post-toc" aria-label="On this page"><strong>On this page</strong><ol><li><a href="#model">The HealthGrid loading model</a></li><li><a href="#key">The business key identifies the entity</a></li><li><a href="#version">The version decides whether an update is allowed</a></li><li><a href="#conflict">Equal-version conflict is not a tie to guess</a></li><li><a href="#validation">Validate both sides before writing</a></li><li><a href="#watermark">Coordinate merge and watermark progress</a></li><li><a href="#limits">Failure modes and limits</a></li><li><a href="#references">References and further reading</a></li></ol></nav>
+<h2 id="model">The HealthGrid loading model</h2>
+<p>HealthGrid is a metadata-driven Azure data-platform demonstration. Azure Data Factory selects source objects and load strategies from control metadata, lands source batches in ADLS Gen2, and invokes Databricks notebooks for Bronze-to-Silver processing. The target is a Delta Lake table. PostgreSQL sources include synthetic operational healthcare data; ADLS CSV feeds use a separate per-file ingestion manifest.</p>
+<figure class="frame post-diagram"><a href="/assets/architecture/healthgrid-architecture-overview.svg"><img src="/assets/architecture/healthgrid-architecture-overview.svg" alt="HealthGrid metadata-driven Azure Data Factory and Databricks lakehouse architecture" class="wide" loading="lazy"></a><figcaption>HealthGrid architecture. ADF orchestration and control metadata are separated from the reusable Spark transformation layer.</figcaption></figure>
+<p>The metadata includes the source system and object, target paths, load strategy, optional watermark column, merge keys and active status. The same transformation notebook supports three distinct behaviours:</p>
+<div class="post-table-wrap"><table><thead><tr><th scope="col">Load strategy</th><th scope="col">Behaviour</th><th scope="col">Correctness requirement</th></tr></thead><tbody><tr><td>FULL</td><td>Replace the target with a complete processed snapshot.</td><td>The incoming batch must represent the complete intended source state.</td></tr><tr><td>APPEND</td><td>Add the current batch to the target.</td><td>A duplicate-delivery and file-replacement policy is required.</td></tr><tr><td>MERGE</td><td>Update matching business keys and insert new keys.</td><td>Stable keys, deterministic source versions and a defined conflict policy are required.</td></tr></tbody></table></div>
+<p>The HealthGrid sample configuration uses FULL for reference entities, MERGE for patients and APPEND for laboratory results. The article focuses on the patient-style current-state MERGE, where a newer patient record should replace an older one without allowing a delayed extract to roll the target backwards.</p>
+
+<h2 id="key">The business key identifies the entity</h2>
+<p>A merge key answers: <em>which real-world entity does this source row describe?</em> For the patient example, the configured key is <code>patient_id</code>. It is not the timestamp, the landing folder or the ADF run ID. Those describe a version or an execution, not the entity itself.</p>
+<p>Before the write, HealthGrid validates that merge-key metadata exists, resolves each configured key to exactly one source column, and rejects null keys. It also groups the incoming batch by the configured key and rejects duplicates instead of choosing an arbitrary winner.</p>
+<p>That duplicate check is essential. Suppose the same patient appears twice in one batch with two different <code>updated_at</code> values. If the pipeline silently takes whichever row Spark happens to return first, the output depends on execution details rather than an explicit data contract. If the source is expected to send multiple changes for a key in one batch, the pipeline must first reduce them with a documented, deterministic ordering rule. HealthGrid's merge path fails closed when duplicate business keys remain.</p>
+
+<h2 id="version">The version decides whether an update is allowed</h2>
+<p>The source version is the value that orders two observations of the same entity. HealthGrid passes the configured watermark/source-version column into the Silver notebook and requires it to be a DATE or TIMESTAMP. For the patient merge this is <code>updated_at</code>.</p>
+<p>The core business rule can be expressed in SQL like this. This is a compact illustration of the implemented rule; the project applies it through PySpark and Delta Lake after additional validation.</p>
+<pre><code class="language-sql">MERGE INTO healthgrid.silver.patients AS target
+USING patients_batch AS source
+ON target.patient_id = source.patient_id
+WHEN MATCHED
+ AND source.updated_at &gt; target.updated_at
+THEN UPDATE SET
+  target.first_name = source.first_name,
+  target.last_name  = source.last_name,
+  target.city       = source.city,
+  target.updated_at = source.updated_at
+WHEN NOT MATCHED THEN
+  INSERT (patient_id, first_name, last_name, city, updated_at)
+  VALUES (source.patient_id, source.first_name, source.last_name,
+          source.city, source.updated_at);</code></pre>
+<p>Consider one patient with three observations. The example uses real fields from the HealthGrid source contract; the specific values are illustrative:</p>
+<div class="post-table-wrap"><table><thead><tr><th scope="col">Incoming observation</th><th scope="col">Target version</th><th scope="col">Expected result</th></tr></thead><tbody><tr><td><code>updated_at = 10:12</code></td><td><code>10:05</code></td><td>Update: incoming version is newer.</td></tr><tr><td><code>updated_at = 10:05</code></td><td><code>10:12</code></td><td>Skip: stale data must not replace newer state.</td></tr><tr><td><code>updated_at = 10:12</code></td><td><code>10:12</code></td><td>Compare payloads: identical is a replay; different content is a conflict.</td></tr></tbody></table></div>
+<p>Arrival time is not a reliable substitute for source version. A retry, delayed file, queue backlog or overlapping extraction can make an older source image arrive after a newer one. The source version preserves the source’s ordering semantics even when delivery order changes.</p>
+
+<h2 id="conflict">An equal-version conflict is not a tie to guess</h2>
+<p>Two rows with the same key and version can be identical because the same input was delivered again. That is a harmless replay. But they can also have different business attributes. For example, two payloads for <code>patient_id = 481</code> both claim <code>updated_at = 10:12</code>, while one has <code>city = Nairobi</code> and the other has <code>city = Kisumu</code>.</p>
+<p>There is no trustworthy winner in that information. The version says both payloads represent the same point in source time. Choosing one by file order or Spark partition order would hide a source-contract violation.</p>
+<p>HealthGrid compares the business payload while excluding operational fields such as landing, insert and update timestamps. Equal version plus equal business payload is a no-op. Equal version plus different business payload fails for reconciliation. Older source versions are skipped; strictly newer versions can update.</p>
+<aside class="post-callout post-callout--warning"><strong>Why fail closed?</strong><p>A failed run is visible and can be investigated. A silent overwrite can make the target look healthy while concealing a contradiction in the source system. For current-state entities, preserving that distinction is more important than forcing every batch to succeed.</p></aside>
+
+<h2 id="validation">Validate both sides before writing</h2>
+<p>A safe source does not make an unsafe target safe. HealthGrid validates the incoming batch and the existing Delta target before applying a merge.</p>
+<div class="post-table-wrap"><table><thead><tr><th scope="col">Validation</th><th scope="col">Why it matters</th></tr></thead><tbody><tr><td>Merge keys are configured and resolve uniquely</td><td>Prevents an empty or ambiguous match condition.</td></tr><tr><td>Source keys are non-null and unique</td><td>Avoids null identity and multiple source rows competing for one target.</td></tr><tr><td>Source version is non-null and DATE/TIMESTAMP</td><td>Ensures rows can be ordered using a real source-version value.</td></tr><tr><td>Source and target columns match case-insensitively, including types</td><td>Prevents an unreviewed schema drift from changing merge meaning.</td></tr><tr><td>Target keys are non-null and unique</td><td>Confirms the target already satisfies the one-row-per-entity contract.</td></tr><tr><td>Target version is non-null and compatible with source type</td><td>Makes source-to-target version comparisons meaningful.</td></tr></tbody></table></div>
+<p>Schema mismatch is not treated as a harmless extra column. The notebook fails and asks for a reviewed schema migration. The target is also checked for duplicate business keys: a merge predicate cannot repair a target that already violates the intended grain.</p>
+<p>These checks have a cost. Counting duplicates and scanning target constraints adds read work before the merge. That cost is a deliberate guardrail for a demonstration whose priority is correctness and explicit failure behaviour. At larger scale, the same invariants can be enforced with partition-aware checks, data-quality jobs, persisted uniqueness audits and carefully measured query plans, but they should not simply be removed to make a pipeline faster.</p>
+
+<h2 id="watermark">Coordinate the merge with watermark progress</h2>
+<p>The merge is only one part of an incremental load. ADF also needs to know which source interval to read next. HealthGrid captures one UTC upper bound when a table run starts and reuses that same value both in the source extraction and in the checkpoint update.</p>
+<p>For the patient PostgreSQL path, the documented interval is:</p>
+<pre><code class="language-sql">WHERE updated_at &gt;= :previous_watermark - INTERVAL &#x27;5 minutes&#x27;
+  AND updated_at &lt;  :captured_run_start_upper_bound</code></pre>
+<p>The lower bound is inclusive and includes a five-minute overlap. The upper bound is exclusive. The overlap intentionally rereads a small range to mitigate boundary timing issues; the version-aware merge makes unchanged, equal-version rows no-ops. The captured upper bound is fixed at run start, so rows updated while the copy is running are not accidentally hidden behind a later checkpoint.</p>
+<p>Checkpoint advancement happens only after Bronze-to-Silver succeeds. If ADF reports <code>NO_DATA</code>, Silver skips the write and the PostgreSQL watermark does not advance. The checkpoint update is monotonic and row-count-checked: an older overlapping run should not move progress backwards.</p>
+<p>This ordering avoids one dangerous failure sequence: source extract succeeds, watermark moves forward, then the Delta write fails. If that happened, the next run would start after rows that never made it into Silver. Advancing progress after the downstream write changes the failure mode from silent loss to possible reread, which is recoverable when the sink is replay-safe.</p>
+
+<h2 id="limits">Failure modes and limits</h2>
+<p>A version-aware merge gives a strong current-state contract, but it does not turn a timestamp source into CDC.</p>
+<ul>
+<li><strong>Hard deletes:</strong> a row disappearing from the source is not visible to a timestamp query unless the source emits a tombstone or soft-delete marker. Use CDC/log-based capture or a reconciliation mechanism when deletion completeness is required.</li>
+<li><strong>Late or backdated updates:</strong> an update arriving more than the configured lookback behind the checkpoint can be missed. Five minutes is a mitigation, not a mathematical guarantee.</li>
+<li><strong>Unreliable timestamps:</strong> if writers fail to update <code>updated_at</code>, backdate it, or use inconsistent timezone assumptions, the version order is invalid.</li>
+<li><strong>Overlapping runs:</strong> monotonic checkpoint updates prevent backward movement, but concurrent writers still need a clear isolation and run-ownership policy.</li>
+<li><strong>Distributed atomicity:</strong> a Delta commit and an Azure SQL control-table update are not one cross-system transaction. Run IDs and commit evidence help diagnose the gap; reconciliation is still required after an uncertain failure.</li>
+</ul>
+<p>HealthGrid is a successfully executed end-to-end project in its original Azure environment, but those resources were later decommissioned to control costs. The repository preserves the code and contracts; its local CI checks do not replace a fresh live Azure integration test. The records are synthetic and the project is educational, not a clinical system.</p>
+<p><a href="https://github.com/viradidi/healthgrid-data-platform">Explore the HealthGrid repository</a> · <a href="https://github.com/viradidi/healthgrid-data-platform/blob/main/docs/ENGINEERING_DECISIONS.md">Engineering decisions</a> · <a href="https://github.com/viradidi/healthgrid-data-platform/blob/main/docs/ADF_SOURCE_EXTRACTION_CONTRACT.md">ADF source extraction contract</a></p>
+<h2 id="references">References and further reading</h2><ol class="post-reference-list"><li><a href="https://learn.microsoft.com/en-us/azure/databricks/delta/merge" target="_blank" rel="noopener noreferrer">Azure Databricks — Upsert into a Delta Lake table using MERGE</a></li><li><a href="https://docs.delta.io/delta-update/" target="_blank" rel="noopener noreferrer">Delta Lake — Update, delete and merge</a></li><li><a href="https://learn.microsoft.com/en-us/azure/data-factory/tutorial-incremental-copy-portal" target="_blank" rel="noopener noreferrer">Microsoft Learn — Incrementally copy data using Azure Data Factory</a></li><li><a href="https://github.com/viradidi/healthgrid-data-platform" target="_blank" rel="noopener noreferrer">HealthGrid — source repository</a></li></ol></div><nav class="post-nav" aria-label="More posts"><a class="post-nav-link" href="/post-safe-replays.html"><span class="post-nav-label">&larr; Older</span><span class="post-nav-title">Making incremental loads safe to replay</span></a><a class="post-nav-link post-nav-next" href="/post-atlasflow-silver-gold.html"><span class="post-nav-label">Newer &rarr;</span><span class="post-nav-title">Why Silver stays append-only while Gold rebuilds state</span></a></nav></article>
 </div>
 </main>
 <footer class="foot"><div class="wrap"><div class="cols"><div><b>Isaiah Nyakundi</b><p>Data Engineer</p></div>

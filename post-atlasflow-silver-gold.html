@@ -8,13 +8,13 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>Why Silver stays append-only while Gold rebuilds state | Isaiah Nyakundi</title>
-<meta name="description" content="How AtlasFlow separates what happened from what is true now: an append-only Silver change history and a Gold table rebuilt as current state.">
+<meta name="description" content="A technical walkthrough of AtlasFlow’s PostgreSQL-to-Kafka CDC history, Flink state reconstruction, Iceberg tables, ordering risks and current-state serving model.">
 <link rel="canonical" href="https://viradidi.github.io/post-atlasflow-silver-gold.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b3a2f'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3EIN%3C/text%3E%3C/svg%3E">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:site_name" content="Isaiah Nyakundi">
 <meta property="og:title" content="Why Silver stays append-only while Gold rebuilds state | Isaiah Nyakundi">
-<meta property="og:description" content="How AtlasFlow separates what happened from what is true now: an append-only Silver change history and a Gold table rebuilt as current state.">
+<meta property="og:description" content="A technical walkthrough of AtlasFlow’s PostgreSQL-to-Kafka CDC history, Flink state reconstruction, Iceberg tables, ordering risks and current-state serving model.">
 <meta property="og:url" content="https://viradidi.github.io/post-atlasflow-silver-gold.html">
 <meta property="og:image" content="https://viradidi.github.io/assets/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
 <meta name="twitter:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
 <link rel="stylesheet" href="/css/style.css">
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Why Silver stays append-only while Gold rebuilds state", "datePublished": "2026-11-12", "author": {"@type": "Person", "name": "Isaiah Nyakundi", "url": "https://viradidi.github.io/"}, "description": "How AtlasFlow separates what happened from what is true now: an append-only Silver change history and a Gold table rebuilt as current state.", "mainEntityOfPage": "https://viradidi.github.io/post-atlasflow-silver-gold.html", "image": "https://viradidi.github.io/assets/og-image.png"}
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Why Silver stays append-only while Gold rebuilds state", "datePublished": "2026-11-12", "dateModified": "2026-11-22", "author": {"@type": "Person", "name": "Isaiah Nyakundi", "url": "https://viradidi.github.io/"}, "description": "A technical walkthrough of AtlasFlow’s PostgreSQL-to-Kafka CDC history, Flink state reconstruction, Iceberg tables, ordering risks and current-state serving model.", "mainEntityOfPage": "https://viradidi.github.io/post-atlasflow-silver-gold.html", "image": "https://viradidi.github.io/assets/og-image.png", "timeRequired": "PT8M"}
 </script>
 </head>
 <body>
@@ -33,16 +33,81 @@
 <header class="site"><div class="wrap"><a class="brand" href="/">Isaiah Nyakundi</a><button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav aria-label="Main" id="site-nav"><ul><li><a href="/">Home</a></li><li><a href="/about.html">About</a></li><li><a href="/projects/">Projects</a></li><li><a href="/blog.html" aria-current="page">Blog</a></li><li><a href="/cv.html">CV</a></li></ul></nav></div></header>
 <main id="main">
 <div class="wrap">
-<article class="post"><header class="post-header"><a class="post-back" href="/blog.html">&larr; Back to blog</a><h1>Why Silver stays append-only while Gold rebuilds state</h1><div class="post-meta"><time datetime="2026-11-12">12 November 2026</time><span>&middot;</span><span>2 min read</span></div><ul class="post-tags" aria-label="Topics"><li class="blog-tag">streaming</li><li class="blog-tag">cdc</li><li class="blog-tag">iceberg</li></ul></header><div class="post-body"><p>AtlasFlow keeps two different ideas of "the data" apart: what happened, and what is true now. Silver holds the first and Gold holds the second, and that split drives most of the design.</p>
-<h2>Silver is a log, so it only appends</h2>
-<p>Debezium turns every committed PostgreSQL change into an event. Bronze keeps the raw envelope, untouched. Silver parses those events into one normalised change history with the entity identifier, the source table, the operation type and a data-quality label. It never updates a row. A change that arrives later is another row, and the order of changes stays visible.</p>
-<p>That matters for three reasons. Nothing is lost if a Gold rule turns out to be wrong. I can reprocess from Silver without going back to the source. And I can explain exactly why a shipment looks the way it does.</p>
-<h2>Gold rebuilds the current state</h2>
-<p>Operations users do not want a change log. They want one row per shipment. The Gold Flink SQL job rebuilds the latest valid record of each entity from Silver using temporary views inside the streaming query. It joins them into the shipment model, classifies risk and upserts by <code>shipment_id</code>. A late update changes that shipment's row. It does not add a new one.</p>
-<h2>What this costs</h2>
-<p>I did not create a current-state table per entity in Silver, so the reconstruction logic sits in Gold. That makes entity selection, update ordering and recovery after a restart the things most worth testing. Gold is also not an event ledger. If I need what happened and when, I read Silver.</p>
-<h2>What it does not show</h2>
-<p>The platform runs locally in Docker Compose on synthetic data. I make no claims about throughput or latency, and a managed deployment would need partitioning, ordering and recovery revisited. The design shows a clean separation of concerns. It does not show scale.</p></div><nav class="post-nav" aria-label="More posts"><a class="post-nav-link" href="/post-healthgrid-version-guarded-merge.html"><span class="post-nav-label">&larr; Older</span><span class="post-nav-title">Why I merge on a key and guard it with a version</span></a></nav></article>
+<article class="post"><header class="post-header"><a class="post-back" href="/blog.html">&larr; Back to blog</a><h1>Why Silver stays append-only while Gold rebuilds state</h1><div class="post-meta"><time datetime="2026-11-12">12 November 2026</time><span>&middot;</span><span>8 min read</span><span>&middot;</span><span>Updated 22 November 2026</span></div><ul class="post-tags" aria-label="Topics"><li class="blog-tag">streaming</li><li class="blog-tag">cdc</li><li class="blog-tag">flink</li><li class="blog-tag">iceberg</li></ul></header>
+<div class="post-body"><p>In a change-data-capture pipeline, there are two different questions hiding inside the phrase <em>current data</em>: what changes did the source emit, and what is the latest valid state of each business entity? Keeping those questions separate makes replay, investigation and downstream modelling easier. In AtlasFlow, Silver records the sequence of changes; Gold turns that sequence into a shipment-level operational view.</p>
+<p>This is not just a naming convention for medallion layers. It determines what gets retained, which layer owns state reconstruction, and what has to be true about event ordering before a “latest row” query is safe.</p>
+<nav class="post-toc" aria-label="On this page"><strong>On this page</strong><ol><li><a href="#flow">The pipeline and its contracts</a></li><li><a href="#silver-history">Why Silver is append-only</a></li><li><a href="#gold-state">How Gold reconstructs state</a></li><li><a href="#ordering">Ordering, deletes and event time</a></li><li><a href="#recovery">Checkpoints and recovery</a></li><li><a href="#tradeoffs">Trade-offs and hardening</a></li><li><a href="#takeaways">When to use this pattern</a></li><li><a href="#references">References and further reading</a></li></ol></nav>
+<h2 id="flow">The pipeline and its contracts</h2>
+<p>AtlasFlow is a local logistics control-tower demonstration built around synthetic operational data. PostgreSQL is the write path for seven related entities: customers, orders, inventory balances, carriers, shipments, tracking events and disruptions. Debezium reads committed database changes through PostgreSQL logical replication and publishes them to Kafka. The business CDC stream is consolidated into <code>atlasflow.cdc.v1</code>.</p>
+<figure class="frame post-diagram"><a href="/assets/architecture/atlasflow-architecture.svg"><img src="/assets/architecture/atlasflow-architecture.svg" alt="AtlasFlow architecture from PostgreSQL through Debezium, Kafka, Flink Bronze Silver and Gold, Iceberg, Trino and Superset" class="wide" loading="lazy"></a><figcaption>AtlasFlow architecture. Bronze preserves the raw CDC envelope, Silver normalizes change events, and Gold publishes the current shipment-level control tower.</figcaption></figure>
+<p>The project separates responsibilities across three persistent Iceberg datasets:</p>
+<div class="post-table-wrap"><table><thead><tr><th scope="col">Layer</th><th scope="col">Persistent table</th><th scope="col">What it represents</th></tr></thead><tbody><tr><td>Bronze</td><td><code>atlasflow.bronze.cdc_events</code></td><td>The raw Debezium event envelope plus Kafka topic, partition, offset and ingestion metadata.</td></tr><tr><td>Silver</td><td><code>atlasflow.silver.cdc_changes</code></td><td>A normalized, append-only record of source changes, including entity identity, operation, event time and quality status.</td></tr><tr><td>Gold</td><td><code>atlasflow.gold.shipment_control_tower</code></td><td>A current-state serving model with one record per shipment and explainable risk attributes.</td></tr></tbody></table></div>
+<p>Trino queries the Iceberg tables and Superset provides the dashboard layer. The Flink jobs are long-running streaming jobs, not a scheduled batch that simply truncates and reloads every layer.</p>
+
+<h2 id="silver-history">Why Silver is append-only</h2>
+<p>A Debezium event describes a source mutation. Its operation indicates whether the record was created, read as part of a snapshot, updated or deleted. The Silver transformation parses the envelope into a common change record: source table, operation, entity identifier, event time, normalized attributes, quality classification and lineage metadata.</p>
+<p>Silver does not overwrite the previous representation of the entity. If shipment <code>SH-1042</code> moves from <code>IN_TRANSIT</code> to <code>DELAYED</code>, both changes remain available as separate events. That gives downstream engineering three important capabilities:</p>
+<ul>
+<li><strong>Reconstruction:</strong> a corrected Gold transformation can be evaluated against retained change history, rather than depending on the source system still having the old event.</li>
+<li><strong>Explanation:</strong> an analyst can inspect the sequence of changes that led to the current shipment status.</li>
+<li><strong>Decoupling:</strong> ingestion does not need to predict every future analytical view. New consumers can derive different state models from the same normalized history.</li>
+</ul>
+<p>Append-only does not mean “keep every malformed payload and pretend it is valid”. The Silver contract also classifies event quality. Gold filters to valid records before state selection; invalid records should remain inspectable through their quality and raw-payload fields instead of quietly influencing the business view.</p>
+
+<h2 id="gold-state">How Gold reconstructs state</h2>
+<p>Operations users generally do not want a stream of every customer or carrier update. They want a compact answer to questions such as “which shipments need attention right now?” AtlasFlow therefore reconstructs the latest valid record for each source entity in the Gold Flink SQL job.</p>
+<p>The essential shape of the query is a windowed rank over each source entity:</p>
+<pre><code class="language-sql">CREATE TEMPORARY VIEW latest_versions AS
+SELECT *,
+       ROW_NUMBER() OVER (
+           PARTITION BY source_table, entity_id
+           ORDER BY event_time DESC
+       ) AS row_rank
+FROM cdc_stream
+WHERE quality_status = &#x27;VALID&#x27;
+  AND entity_id IS NOT NULL;
+
+CREATE TEMPORARY VIEW current_rows AS
+SELECT *
+FROM latest_versions
+WHERE row_rank = 1
+  AND operation &lt;&gt; &#x27;d&#x27;;</code></pre>
+<p>The partition key is a pair, not just an entity ID. Customer <code>42</code> and shipment <code>42</code> are different source records, so the source table is part of the identity. The query first ranks valid events and then removes a latest delete operation from the current-state view. That distinction matters: filtering deletes <em>before</em> ranking could resurrect an older version of a row that was subsequently deleted.</p>
+<p>Temporary views then project the latest current rows for customers, orders, shipments, carriers and inventory. Inventory is aggregated into available-to-promise quantity. Tracking events are separately ranked per shipment. Active disruptions are summarized by shipment. The resulting models are joined at shipment grain and written to the keyed Gold sink.</p>
+<p>The Gold table is intentionally not an event ledger. It stores the latest operational view: shipment and order context, customer and carrier, inventory availability, latest tracking details, active disruption count, a deterministic risk level and a primary reason. A shipment is high risk when explicit conditions such as delayed status, a critical tracking exception, active disruption or insufficient inventory apply. This is explainable rule-based classification, not a predictive score.</p>
+
+<h2 id="ordering">Ordering, deletes and event time</h2>
+<p>“Latest” is only meaningful when the ordering rule is correct. The current Gold query orders each entity by <code>event_time DESC</code>. That is useful, but it creates an important edge case: two events for the same entity can share the same event timestamp. SQL window functions do not promise a stable winner when all ordering expressions tie.</p>
+<p>The project already carries Kafka partition and offset metadata into the normalized change record. A production-hardening step would define an authoritative source version and a deterministic tie-breaker for every entity. A possible order is:</p>
+<pre><code class="language-sql">ORDER BY source_event_time DESC,
+         source_log_position DESC,
+         kafka_partition DESC,
+         kafka_offset DESC</code></pre>
+<p>The source log position is the key part: it should represent the source’s actual change order. Kafka offset is only a safe tie-breaker for records whose key is consistently routed to the same partition. If a key can move between partitions, offsets from different partitions are not globally comparable. The tracking-event model already uses event time followed by partition and offset to choose the latest event within its shipment partition; the general entity-state model deserves the same explicit ordering contract.</p>
+<p>Deletes need equal care. A delete is not simply an event to discard. It is a versioned fact that says the entity must no longer appear in the current-state view. Keeping that delete event in Silver makes it possible for Gold to suppress the entity. If a later valid create or update is permitted by the source’s key lifecycle, it must be ordered after the delete according to the same authoritative version rule.</p>
+
+<h2 id="recovery">Checkpoints and recovery</h2>
+<p>The Flink SQL templates configure a 10-second checkpoint interval, <code>EXACTLY_ONCE</code> checkpointing mode, a 60-second timeout, a tolerance of three failed checkpoints, and checkpoint/savepoint directories. The Iceberg Silver source is configured for streaming reads using <code>TABLE_SCAN_THEN_INCREMENTAL</code>: first scan the existing table, then discover new append-only snapshots. This is an important boundary: the Iceberg streaming reader is not a row-level CDC feed for arbitrary updates and deletes. AtlasFlow makes this workable because the Silver contract writes each normalized source change as a new append-only event row.</p>
+<p>There is a subtle but important boundary here. Flink checkpoint mode describes how Flink snapshots and restores the state and positions managed by the job. It does not, by itself, prove an end-to-end exactly-once business effect across PostgreSQL, Kafka, Flink, Iceberg, the catalog and object storage. That claim depends on connector commit semantics, stable checkpoint storage, recovery behaviour and the external systems participating correctly.</p>
+<p>The Gold source definition sets its watermark to <code>event_time - INTERVAL '99' YEAR</code>. Its accompanying comment explains the reason: historical Silver rows must participate in state rebuilding during the initial Iceberg table scan. The watermark therefore lags event time by an extremely long interval, postponing event-time-driven state cleanup. This is an implementation-specific choice with a cost: state can accumulate as the history grows. It should be measured and revisited before using the pattern on a large, continuously growing history.</p>
+
+<h2 id="tradeoffs">Trade-offs and hardening priorities</h2>
+<div class="post-table-wrap"><table><thead><tr><th scope="col">Choice</th><th scope="col">Benefit</th><th scope="col">Cost or follow-up</th></tr></thead><tbody><tr><td>Append-only Silver CDC history</td><td>Retains what changed and supports reprocessing.</td><td>History grows; retention, compaction and schema evolution need operational policy.</td></tr><tr><td>Reconstruct state in Gold</td><td>Avoids maintaining a persistent current-state table for every source entity in Silver.</td><td>Gold owns complex joins, version ordering, delete handling and restart correctness.</td></tr><tr><td>One row per shipment in Gold</td><td>Simple operational serving grain for dashboards and attention queues.</td><td>Not suitable for event-by-event audit questions; use Silver for history.</td></tr><tr><td>Very long event-time watermark delay</td><td>Allows older historical events to participate in the state-building query.</td><td>Can retain large state; requires measurement, checkpoint planning and an explicit cleanup strategy.</td></tr><tr><td>Rule-based risk classification</td><td>Reasons are deterministic and explainable to operations users.</td><td>Rules need business ownership and do not estimate probability of late delivery.</td></tr></tbody></table></div>
+<p>For the current implementation, the most valuable next tests are not generic “pipeline succeeded” checks. They are state invariants:</p>
+<ol>
+<li>Insert, update and delete the same source entity and assert that only the correct latest non-deleted version appears in the current view.</li>
+<li>Send two same-key events with equal event timestamps but different source positions and assert that the authoritative later change wins.</li>
+<li>Restart the Gold job from a checkpoint while new CDC events arrive and reconcile the keyed sink against a bounded replay.</li>
+<li>Rebuild the shipment view from a known Silver snapshot and compare row counts, join cardinality and risk reasons with the streaming output.</li>
+<li>Measure retained state and checkpoint size as Silver history grows; do not infer scale from a local synthetic run.</li>
+</ol>
+
+<h2 id="takeaways">When to use this pattern</h2>
+<p>Keep an append-only normalized change history when auditability, replay and multiple downstream interpretations matter. Build current-state tables separately when consumers need a stable business grain. The pattern is especially useful when source changes arrive continuously but dashboards need a coherent “now” view.</p>
+<p>It is not free. It moves correctness questions into the state reconstruction layer: key identity, source ordering, delete semantics, state retention, checkpoint recovery and reconciliation. Those are explicit engineering contracts, not details a medallion diagram can solve on its own.</p>
+<aside class="post-callout post-callout--scope"><strong>Implementation scope</strong><p>AtlasFlow is a successfully executed local Docker Compose engineering demonstration using synthetic logistics data. Its repository documents PostgreSQL → Debezium → Kafka → Flink → Iceberg → Trino/Superset. It is not a continuously hosted production service, and this article makes no throughput, latency or availability claims.</p></aside>
+<p><a href="https://github.com/viradidi/AtlasFlow">Explore the AtlasFlow repository</a> · <a href="https://github.com/viradidi/AtlasFlow/blob/main/sql/silver/01_cdc_to_silver.sql.template">Silver Flink SQL</a> · <a href="https://github.com/viradidi/AtlasFlow/blob/main/sql/gold/stream_shipment_control_tower.sql.template">Gold Flink SQL</a></p>
+<h2 id="references">References and further reading</h2><ol class="post-reference-list"><li><a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/concepts/dynamic_tables/" target="_blank" rel="noopener noreferrer">Apache Flink — Dynamic Tables</a></li><li><a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/learn-flink/fault_tolerance/" target="_blank" rel="noopener noreferrer">Apache Flink — Fault tolerance and end-to-end exactly-once requirements</a></li><li><a href="https://iceberg.apache.org/docs/latest/flink-queries/" target="_blank" rel="noopener noreferrer">Apache Iceberg — Flink queries and streaming reads</a></li><li><a href="https://github.com/viradidi/AtlasFlow" target="_blank" rel="noopener noreferrer">AtlasFlow — source repository</a></li></ol></div><nav class="post-nav" aria-label="More posts"><a class="post-nav-link" href="/post-healthgrid-version-guarded-merge.html"><span class="post-nav-label">&larr; Older</span><span class="post-nav-title">Why I merge on a key and guard it with a version</span></a></nav></article>
 </div>
 </main>
 <footer class="foot"><div class="wrap"><div class="cols"><div><b>Isaiah Nyakundi</b><p>Data Engineer</p></div>

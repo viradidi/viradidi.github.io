@@ -323,3 +323,39 @@ a{color:var(--accent);transition:color .2s ease}a:hover{color:var(--accent-hover
 .catalog-group{margin-top:3rem}.catalog-group:first-child{margin-top:0}
 .catalog-group h2{font-size:1.15rem;font-weight:600;letter-spacing:-.02em;margin:0 0 1.25rem}
 .catalog-groups[hidden],.catalog-grid[hidden]{display:none}
+
+
+/* ---------- long-form engineering articles ---------- */
+.post-toc{margin:1.6rem 0 2.4rem;padding:1.15rem 1.35rem;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.post-toc strong{display:block;color:var(--text);font-size:.9rem;margin-bottom:.5rem}
+.post-toc ol{margin:0;padding-left:1.25rem;columns:2;column-gap:2rem}
+.post-toc li{break-inside:avoid;padding:.16rem 0;color:var(--soft);font-size:.88rem;line-height:1.45}
+.post-toc a{color:var(--soft)}
+.post-body h2{scroll-margin-top:1.5rem}
+.post-body h3{font-size:1.08rem;letter-spacing:-.015em;margin:1.8rem 0 .55rem;color:var(--text)}
+.post-body ul,.post-body ol{padding-left:1.35rem;margin:1rem 0 1.35rem}
+.post-body li{color:var(--soft);line-height:1.62;margin:.42rem 0}
+.post-body li strong{color:var(--text)}
+.post-body pre{max-width:100%;overflow-x:auto;margin:1.2rem 0 1.7rem;padding:1.1rem 1.2rem;background:#171a20;color:#edf0f4;border:1px solid #2d333d;border-radius:12px;line-height:1.6;tab-size:4;white-space:pre}
+.post-body pre code{display:block;background:transparent;padding:0;border-radius:0;color:inherit;font-size:.82rem;line-height:1.65;white-space:pre}
+.post-table-wrap{max-width:100%;overflow-x:auto;margin:1.2rem 0 1.7rem;border:1px solid var(--line);border-radius:12px;background:#fff}
+.post-body table{width:100%;min-width:570px;border-collapse:collapse;font-size:.86rem;line-height:1.5}
+.post-body th,.post-body td{padding:.78rem .9rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.post-body th{background:var(--card);color:var(--text);font-weight:600}
+.post-body td{color:var(--soft)}
+.post-body tr:last-child td{border-bottom:0}
+.post-body td code{overflow-wrap:anywhere}
+.post-callout{margin:1.5rem 0;padding:1.1rem 1.25rem;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;background:var(--card)}
+.post-callout strong{display:block;color:var(--text);font-size:.92rem;margin-bottom:.35rem}
+.post-callout p{margin:0;font-size:.92rem}
+.post-callout--warning{border-left-color:#c58b2a}
+.post-callout--scope{border-left-color:#6b8f75}
+.post-diagram{margin:1.7rem 0 2rem}
+.post-diagram img{min-width:0!important}
+.post-reference-list{font-size:.9rem}
+.post-reference-list a{overflow-wrap:anywhere}
+.blog-scope-note{margin:2rem 0 1rem;padding:1.1rem 1.25rem;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.blog-scope-note strong{color:var(--text);font-size:.9rem}
+.blog-scope-note p{color:var(--soft);font-size:.9rem;line-height:1.55;margin:.4rem 0 0}
+.blog-card-meta{flex-wrap:wrap}
+@media(max-width:720px){.post-header{margin-bottom:2rem}.post-header h1{font-size:2.15rem}.post-body{padding-top:2rem}.post-toc ol{columns:1}.post-body pre{padding:.9rem}.post-body pre code{font-size:.76rem}.post-nav{flex-direction:column}.post-nav-link{max-width:100%}.post-nav-next{margin-left:0;text-align:left}}

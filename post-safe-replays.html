@@ -8,13 +8,13 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>Making incremental loads safe to replay | Isaiah Nyakundi</title>
-<meta name="description" content="Three habits from my HealthGrid, Uber Eats and NovaCart projects that make rerunning a failed load harmless.">
+<meta name="description" content="A practical engineering guide to replay-safe incremental pipelines: composite cursors, write-before-checkpoint ordering, idempotent Delta merges, concurrency guards and reconciliation.">
 <link rel="canonical" href="https://viradidi.github.io/post-safe-replays.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b3a2f'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3EIN%3C/text%3E%3C/svg%3E">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:site_name" content="Isaiah Nyakundi">
 <meta property="og:title" content="Making incremental loads safe to replay | Isaiah Nyakundi">
-<meta property="og:description" content="Three habits from my HealthGrid, Uber Eats and NovaCart projects that make rerunning a failed load harmless.">
+<meta property="og:description" content="A practical engineering guide to replay-safe incremental pipelines: composite cursors, write-before-checkpoint ordering, idempotent Delta merges, concurrency guards and reconciliation.">
 <meta property="og:url" content="https://viradidi.github.io/post-safe-replays.html">
 <meta property="og:image" content="https://viradidi.github.io/assets/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
 <meta name="twitter:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
 <link rel="stylesheet" href="/css/style.css">
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Making incremental loads safe to replay", "datePublished": "2026-11-07", "author": {"@type": "Person", "name": "Isaiah Nyakundi", "url": "https://viradidi.github.io/"}, "description": "Three habits from my HealthGrid, Uber Eats and NovaCart projects that make rerunning a failed load harmless.", "mainEntityOfPage": "https://viradidi.github.io/post-safe-replays.html", "image": "https://viradidi.github.io/assets/og-image.png"}
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Making incremental loads safe to replay", "datePublished": "2026-11-07", "dateModified": "2026-11-22", "author": {"@type": "Person", "name": "Isaiah Nyakundi", "url": "https://viradidi.github.io/"}, "description": "A practical engineering guide to replay-safe incremental pipelines: composite cursors, write-before-checkpoint ordering, idempotent Delta merges, concurrency guards and reconciliation.", "mainEntityOfPage": "https://viradidi.github.io/post-safe-replays.html", "image": "https://viradidi.github.io/assets/og-image.png", "timeRequired": "PT9M"}
 </script>
 </head>
 <body>
@@ -33,15 +33,110 @@
 <header class="site"><div class="wrap"><a class="brand" href="/">Isaiah Nyakundi</a><button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav aria-label="Main" id="site-nav"><ul><li><a href="/">Home</a></li><li><a href="/about.html">About</a></li><li><a href="/projects/">Projects</a></li><li><a href="/blog.html" aria-current="page">Blog</a></li><li><a href="/cv.html">CV</a></li></ul></nav></div></header>
 <main id="main">
 <div class="wrap">
-<article class="post"><header class="post-header"><a class="post-back" href="/blog.html">&larr; Back to blog</a><h1>Making incremental loads safe to replay</h1><div class="post-meta"><time datetime="2026-11-07">7 November 2026</time><span>&middot;</span><span>2 min read</span></div><ul class="post-tags" aria-label="Topics"><li class="blog-tag">data-engineering</li><li class="blog-tag">incremental-loading</li><li class="blog-tag">azure</li></ul></header><div class="post-body"><p>Every incremental pipeline fails eventually. A cluster drops, a file arrives twice, a run is cancelled halfway. What matters is what happens when you run it again. In my projects I treat "safe to rerun" as a design requirement and not something to hope for. Three habits do most of the work.</p>
-<h2>1. Move the watermark only after the write succeeds</h2>
-<p>The Uber Eats project has a written checkpoint contract that separates two events that are easy to blur: extracting rows and committing progress. If the checkpoint moves when the extract finishes, a failure during the load loses data silently, because the next run starts after rows that never landed. If it moves only once the write is confirmed, the worst case is that the next run reads some rows again. The next two habits make that harmless.</p>
-<h2>2. Merge on a key, and guard it with a version</h2>
-<p>HealthGrid loads with a merge and not an append. The merge rejects null or duplicate keys, and it updates an existing row only when the incoming source version is newer. If the same version arrives with different content, the run fails instead of overwriting. Replaying a batch therefore either changes nothing or stops and says why. A quiet overwrite is the failure I least want.</p>
-<h2>3. Pair the timestamp with a tiebreaker</h2>
-<p>Timestamps are not unique: several rows can share one. In NovaCart each source has a watermark made of a timestamp and a primary key, stored in a control table. A run can resume from an exact position and not from a time that may split a group of rows. A Delta MERGE then keeps the current-state tables correct if a window is read twice.</p>
-<h2>What this does not give me</h2>
-<p>Timestamp watermarks depend on the source updating its timestamp reliably. They are not change data capture, and they do not see deletes unless the source marks them. The HealthGrid README says so, and the Uber Eats incremental contract lists deletes and late changes as cases to handle explicitly. The NovaCart notebooks are saved without cell outputs, so the repository holds the logic and not a record of it running. I would still like to add a test that runs one batch twice and asserts the target is identical.</p></div><nav class="post-nav" aria-label="More posts"><a class="post-nav-link post-nav-next" href="/post-healthgrid-version-guarded-merge.html"><span class="post-nav-label">Newer &rarr;</span><span class="post-nav-title">Why I merge on a key and guard it with a version</span></a></nav></article>
+<article class="post"><header class="post-header"><a class="post-back" href="/blog.html">&larr; Back to blog</a><h1>Making incremental loads safe to replay</h1><div class="post-meta"><time datetime="2026-11-07">7 November 2026</time><span>&middot;</span><span>9 min read</span><span>&middot;</span><span>Updated 22 November 2026</span></div><ul class="post-tags" aria-label="Topics"><li class="blog-tag">data-engineering</li><li class="blog-tag">incremental-loading</li><li class="blog-tag">idempotency</li><li class="blog-tag">watermarks</li><li class="blog-tag">delta-lake</li></ul></header>
+<div class="post-body"><p>An incremental load is not reliable because its first run completed. It is reliable when the same interval can be submitted again after an uncertain failure without losing records, duplicating business state or moving progress backwards.</p>
+<p>That means designing for retries from the beginning. The control table, source cursor, target write and orchestration sequence form one correctness protocol. Across NovaCart, HealthGrid and Uber Eats, I use the same principles but adapt the exact cursor and replay contract to the source type.</p>
+<nav class="post-toc" aria-label="On this page"><strong>On this page</strong><ol><li><a href="#failure">Start with the failure boundary</a></li><li><a href="#cursor">Define a deterministic extraction cursor</a></li><li><a href="#write">Make the write idempotent</a></li><li><a href="#checkpoint">Advance progress after the durable write</a></li><li><a href="#concurrency">Protect the checkpoint from overlapping runs</a></li><li><a href="#files">Treat files as versioned deliveries</a></li><li><a href="#tests">Test replay as a state transition</a></li><li><a href="#limits">What replay safety does not solve</a></li><li><a href="#references">References and further reading</a></li></ol></nav>
+<h2 id="failure">Start with the failure boundary</h2>
+<p>Imagine a run extracts 10,000 rows, writes them to Bronze, and then the notebook or orchestrator loses its connection before it records success. The caller cannot tell whether the data write committed. On retry, it has two choices:</p>
+<ul>
+<li>Move the checkpoint forward anyway and risk skipping rows if the write did not commit.</li>
+<li>Read the interval again and rely on the target write to absorb a duplicate attempt safely.</li>
+</ul>
+<p>The second option is usually the safer design. It deliberately allows at-least-once execution while making the target effect idempotent for the same source version. The system does not need every activity to run exactly once; it needs repeated execution to converge to the same correct state.</p>
+<aside class="post-callout post-callout--info"><strong>A useful distinction</strong><p>“Exactly once” is often used too broadly. A pipeline that spans an API or database, object storage, Spark, Delta and a separate control table rarely has one atomic transaction across all of them. Describe the actual guarantee: for example, repeated delivery of the same key/version does not create a second Bronze version, and the checkpoint moves only after the durable write is confirmed.</p></aside>
+
+<h2 id="cursor">Define a deterministic extraction cursor</h2>
+<p>A timestamp alone may not uniquely identify a position in a source table. Several rows can share one <code>updated_at</code> value, especially when a batch update changes many records in the same transaction. A cursor that stores only the timestamp can split a group at the boundary or reread every tied row indefinitely.</p>
+<p>NovaCart stores a composite cursor for each source table: the last successfully processed timestamp and the primary key at that timestamp. Its incremental predicate is lexicographic:</p>
+<pre><code class="language-python">def select_incremental_source_rows(
+    source_df,
+    primary_key_column,
+    timestamp_column,
+    last_successful_ts,
+    last_successful_pk,
+):
+    if last_successful_ts is None:
+        return source_df
+
+    if last_successful_pk is None:
+        return source_df.filter(
+            F.col(timestamp_column) &gt; F.lit(last_successful_ts)
+        )
+
+    return source_df.filter(
+        (F.col(timestamp_column) &gt; F.lit(last_successful_ts))
+        | (
+            (F.col(timestamp_column) == F.lit(last_successful_ts))
+            &amp; (F.col(primary_key_column).cast(&quot;long&quot;) &gt; F.lit(int(last_successful_pk)))
+        )
+    )</code></pre>
+<p>In plain language, load rows with a timestamp after the stored timestamp, plus rows tied at the stored timestamp whose primary key is greater than the last processed key. This makes the cursor a stable position rather than a time-only cutoff.</p>
+<p>The composite comparison has assumptions. The primary key must be non-null and sortable with a consistent order; NovaCart uses a numeric key cast to <code>long</code>. The timestamp must be maintained reliably by the source. The code normalizes timestamps to millisecond precision before comparison so the source value and stored checkpoint are compared at the same precision. It scans for null keys or timestamps and fails rather than letting SQL null semantics silently exclude a row.</p>
+<p>The cursor also needs a documented initial-load rule. With no prior timestamp, NovaCart reads the initial source set. Once a timestamp is stored but no key exists, the helper uses a timestamp-only lower boundary. The control state must always be written consistently so a partially initialized cursor cannot become an ambiguous restart point.</p>
+
+<h2 id="write">Make the write idempotent</h2>
+<p>Reading the same range twice is not a problem if the target can recognize the same source version. In NovaCart, the Bronze Delta write merges on the configured primary key and source timestamp. That lets the table preserve distinct source versions while avoiding a second copy of the same key/timestamp version after a partial failure.</p>
+<pre><code class="language-python">merge_condition = (
+    f&quot;target.{pk_col} &lt;=&gt; source.{pk_col} AND &quot;
+    f&quot;target.{ts_col} &lt;=&gt; source.{ts_col}&quot;
+)
+
+(
+    target_delta.alias(&quot;target&quot;)
+    .merge(rows_to_load.alias(&quot;source&quot;), merge_condition)
+    .whenNotMatchedInsertAll()
+    .execute()
+)</code></pre>
+<p>This is an abbreviated illustration of the match condition and insert path from the Bronze notebook; the full project code also manages the configured control record, audit fields and run ID. The target key is not merely the business primary key: it is the pair <code>(primary_key, source_timestamp)</code>, because Bronze preserves separate observed versions of a record.</p>
+<p>There is a useful limit to call out in this exact implementation: the Bronze MERGE inserts when the key/version pair is not present, but a matched pair is left as-is. That makes an identical replay idempotent; it does not independently prove that a second payload carrying the same key and timestamp is identical. If the source can mutate content without advancing its timestamp, add an explicit equal-version payload comparison and fail or reconcile on a mismatch. HealthGrid’s current-state Silver merge implements that stricter equal-version conflict check.</p>
+<p>That is different from a current-state Silver table. A history-oriented Bronze table may intentionally contain multiple versions for one business key. A current-state Silver merge generally matches by business key and uses the source version as a condition for whether the target should be updated. The grain of the table determines the correct merge predicate.</p>
+
+<h2 id="checkpoint">Advance progress after the durable write</h2>
+<p>NovaCart's Bronze sequence is explicit: read the stored cursor, validate the source, select new rows, attach ingestion metadata, write the batch through Delta MERGE, and only then update the control table with the new successful timestamp, primary key, run ID and row count.</p>
+<p>The failure cases become easier to reason about:</p>
+<div class="post-table-wrap"><table><thead><tr><th scope="col">Failure point</th><th scope="col">Checkpoint state</th><th scope="col">Safe recovery behaviour</th></tr></thead><tbody><tr><td>Before the data write</td><td>Old cursor remains.</td><td>Retry reads the same source interval.</td></tr><tr><td>During/after a write with uncertain acknowledgement</td><td>Cursor should still be old until success is confirmed.</td><td>Retry may read the interval again; the same key/version must not be duplicated.</td></tr><tr><td>After write succeeds, before control update</td><td>Data may be present while cursor remains old.</td><td>Retry re-reads; idempotent sink makes the repeated version harmless.</td></tr><tr><td>After checkpoint update</td><td>Cursor represents the committed interval.</td><td>Next run starts after the stored position.</td></tr></tbody></table></div>
+<p>HealthGrid uses a related pattern with ADF rather than a composite numeric key cursor. ADF captures one UTC run-start upper bound, reads a half-open source interval from the previous watermark minus a five-minute lookback to that upper bound, then advances the watermark only after Bronze-to-Silver succeeds. The same upper bound is reused for extraction and checkpointing; the checkpoint update is monotonic and row-count-checked. An explicit <code>NO_DATA</code> result skips both the Silver write and checkpoint advancement.</p>
+<p>The lookback is a recovery aid, not a guarantee that every late change will be found. The version-aware merge must absorb the overlap, and the source contract must ensure that <code>updated_at</code> actually changes when a row changes.</p>
+
+<h2 id="concurrency">Protect the checkpoint from overlapping runs</h2>
+<p>Moving the checkpoint after the write is necessary, but concurrent runs create another problem. Suppose run A starts first and captures an older upper bound. Run B starts later, captures a newer upper bound, finishes quickly and stores it. If run A finishes afterwards and blindly writes its older checkpoint, progress moves backwards.</p>
+<p>HealthGrid protects its checkpoint with a monotonic update and verifies that exactly one control row was changed. The Uber Eats SQL path documents a stronger transactional compare-and-swap checkpoint update: the update expects the control row to still contain the value read by the run, and rolls back if the row is stale or non-unique. Pipeline concurrency is also configured to limit competing writes for that source.</p>
+<p>The conceptual compare-and-swap contract is:</p>
+<pre><code class="language-sql">UPDATE dbo.pipeline_control
+SET last_successful_watermark = @new_watermark,
+    last_run_id = @run_id
+WHERE control_id = @control_id
+  AND last_successful_watermark = @watermark_read_at_start;
+
+-- The transaction must verify that exactly one row was updated.
+-- Zero rows means another run changed the cursor or the row is missing.
+-- More than one row means control metadata is not unique.
+-- Either case should roll back and require reconciliation.</code></pre>
+<p>The important part is not this exact SQL dialect. It is the compare-and-swap invariant: a run may advance only the checkpoint state it actually read. A unique control row, explicit run ID, monotonicity and transaction boundary make concurrent progress changes observable.</p>
+
+<h2 id="files">Treat files as versioned deliveries</h2>
+<p>Not every source is a database table. HealthGrid's ADLS CSV branch uses a per-file manifest rather than applying a row timestamp watermark to the file itself. The manifest records file identity using path, name, last-modified time, size and, where available, content MD5. A file moves through <code>IN_PROGRESS</code>, <code>COPIED</code>, <code>PROCESSED</code> or <code>FAILED</code>; finalization occurs only after Bronze-to-Silver succeeds.</p>
+<p>This is a good example of matching the cursor to the source contract. The file modification time is a delivery property; a <code>reported_at</code> timestamp inside the file is a business event time. They answer different questions. A file manifest can skip the same processed file version, but it does not automatically deduplicate rows when a producer replaces a whole snapshot with a new file version that overlaps earlier records.</p>
+<p>The Delta write and Azure SQL manifest update are not one atomic distributed transaction. If Delta processing succeeds but manifest finalization fails, the file remains in an intermediate state that requires reconciliation rather than blind automatic replay. That is an explicit recovery choice: safer than silently appending the same file again, but it introduces an operational procedure.</p>
+
+<h2 id="tests">Test replay as a state transition</h2>
+<p>A meaningful replay test compares target state before and after repeated execution. It should not stop at checking that the job returned a success status.</p>
+<div class="post-table-wrap"><table><thead><tr><th scope="col">Scenario</th><th scope="col">Expected invariant</th></tr></thead><tbody><tr><td>Same source interval submitted twice</td><td>No duplicate key/version in a history target; current-state values remain unchanged.</td></tr><tr><td>Two rows share the same timestamp</td><td>Composite cursor includes both in deterministic key order.</td></tr><tr><td>Null key or null cursor timestamp</td><td>Batch fails before checkpoint advancement.</td></tr><tr><td>Older version arrives after newer version</td><td>Current-state target does not move backwards.</td></tr><tr><td>Same key/version has a different business payload</td><td>Fail or route to reconciliation; do not choose an arbitrary winner.</td></tr><tr><td>Failure after write but before checkpoint update</td><td>Retry converges to the same target state.</td></tr><tr><td>Two runs attempt to advance the same checkpoint</td><td>Only the run with the expected control state may advance it.</td></tr><tr><td>Hard delete or update later than lookback</td><td>Explicit CDC, tombstone, reconciliation or documented limitation is applied.</td></tr></tbody></table></div>
+<p>For NovaCart, the code also checks invalid cursor rows before filtering, and stores run metadata in a per-table ingestion-control record. In Uber Eats, checkpoint concurrency and SQL source boundaries are documented alongside tests for replay and repository-owned Silver processing. These are different implementations of the same idea: the run must leave enough evidence to decide whether a retry is safe.</p>
+
+<h2 id="limits">What replay safety does not solve</h2>
+<ul>
+<li><strong>Hard deletes:</strong> a timestamp cursor over existing rows cannot discover a row that has disappeared. Use log-based CDC, soft-delete flags or snapshot reconciliation.</li>
+<li><strong>Arbitrarily late changes:</strong> no finite lookback guarantees capture of records backdated beyond the overlap. Establish a source SLA, use CDC or reconcile periodically.</li>
+<li><strong>Broken source timestamps:</strong> if a source mutation does not update its version column, the cursor can miss it.</li>
+<li><strong>Schema drift:</strong> idempotent writes do not make incompatible source and target schemas compatible. Schema changes need validation and controlled migration.</li>
+<li><strong>Cross-system atomicity:</strong> a data-table transaction and a control-table transaction are often separate. Design for the uncertain gap and retain run-level evidence.</li>
+<li><strong>Duplicate business meaning:</strong> a repeated delivery can be harmless at key/version grain while two genuinely different business events still require separate event identifiers and history semantics.</li>
+</ul>
+<p>NovaCart was successfully executed end to end in Azure Databricks on 5 November 2026; its original cloud workspace was later decommissioned to control costs. HealthGrid and Uber Eats were also successfully run in their intended Azure environments, with infrastructure later decommissioned. The examples use synthetic portfolio data and do not imply a continuously hosted production service or universal exactly-once guarantee.</p>
+<p><a href="https://github.com/viradidi/1NOVACART-CASE-STUDY">NovaCart source</a> · <a href="https://github.com/viradidi/healthgrid-data-platform">HealthGrid source</a> · <a href="https://github.com/viradidi/uber-eats-data-analytics-platform">Uber Eats source</a></p>
+<h2 id="references">References and further reading</h2><ol class="post-reference-list"><li><a href="https://github.com/viradidi/1NOVACART-CASE-STUDY/blob/main/novacart_transformations.py" target="_blank" rel="noopener noreferrer">NovaCart — timestamp and primary-key cursor implementation</a></li><li><a href="https://github.com/viradidi/1NOVACART-CASE-STUDY/blob/main/bronze_work.ipynb" target="_blank" rel="noopener noreferrer">NovaCart — Bronze ingestion notebook</a></li><li><a href="https://github.com/viradidi/healthgrid-data-platform/blob/main/docs/ADF_SOURCE_EXTRACTION_CONTRACT.md" target="_blank" rel="noopener noreferrer">HealthGrid — ADF source extraction contract</a></li><li><a href="https://github.com/viradidi/uber-eats-data-analytics-platform" target="_blank" rel="noopener noreferrer">Uber Eats — incremental loading and checkpoint contracts</a></li><li><a href="https://docs.databricks.com/aws/en/delta/merge" target="_blank" rel="noopener noreferrer">Databricks — Delta MERGE semantics</a></li><li><a href="https://learn.microsoft.com/en-us/azure/data-factory/tutorial-incremental-copy-portal" target="_blank" rel="noopener noreferrer">Microsoft Learn — incremental copy with Azure Data Factory</a></li></ol></div><nav class="post-nav" aria-label="More posts"><a class="post-nav-link post-nav-next" href="/post-healthgrid-version-guarded-merge.html"><span class="post-nav-label">Newer &rarr;</span><span class="post-nav-title">Why I merge on a key and guard it with a version</span></a></nav></article>
 </div>
 </main>
 <footer class="foot"><div class="wrap"><div class="cols"><div><b>Isaiah Nyakundi</b><p>Data Engineer</p></div>
