@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1654 386" width="1654" height="386" role="img" aria-labelledby="t d">
+<title id="t">CFPB Consumer Complaint Analytics: Microsoft Fabric</title><desc id="d">Silver 896,931 + quarantine 7,052 = 903,983 source records. Promotion is manual, not Git-triggered CI/CD.</desc>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6e6e73"/></marker></defs>
+<rect width="1654" height="386" fill="#fff"/>
+<text x="30" y="34" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#1d1d1f">CFPB Consumer Complaint Analytics: Microsoft Fabric</text>
+<text x="30" y="56" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#6e6e73">Diagram generated from the repository README components. Replace with the original file when available.</text>
+<text x="30" y="78" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#424245">Source</text>
+<line x1="30" y1="84" x2="220" y2="84" stroke="#d2d2d7"/>
+<rect x="30" y="94" width="190" height="54" rx="8" fill="#e8f1ff" stroke="#3973ac" stroke-width="1.5"/>
+<text x="125.0" y="125.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">Kaggle API</text>
+<text x="264" y="78" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#424245">Ingestion</text>
+<line x1="264" y1="84" x2="454" y2="84" stroke="#d2d2d7"/>
+<rect x="264" y="94" width="190" height="54" rx="8" fill="#fff0d9" stroke="#c27b22" stroke-width="1.5"/>
+<text x="359.0" y="117.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">Fabric ingestion</text>
+<text x="359.0" y="133.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">pipeline</text>
+<text x="498" y="78" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#424245">Bronze</text>
+<line x1="498" y1="84" x2="688" y2="84" stroke="#d2d2d7"/>
+<rect x="498" y="94" width="190" height="54" rx="8" fill="#e1f5e8" stroke="#37885a" stroke-width="1.5"/>
+<text x="593.0" y="125.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">Raw CSV in Lakehouse</text>
+<text x="732" y="78" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#424245">Silver</text>
+<line x1="732" y1="84" x2="922" y2="84" stroke="#d2d2d7"/>
+<rect x="732" y="94" width="190" height="54" rx="8" fill="#eee5ff" stroke="#8055bd" stroke-width="1.5"/>
+<text x="827.0" y="117.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">PySpark profiling,</text>
+<text x="827.0" y="133.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">validation, cleaning</text>
+<rect x="732" y="166" width="190" height="54" rx="8" fill="#e1f5e8" stroke="#37885a" stroke-width="1.5"/>
+<text x="827.0" y="189.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">Silver: cleaned</text>
+<text x="827.0" y="205.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">complaints</text>
+<rect x="732" y="238" width="190" height="54" rx="8" fill="#f2f2f4" stroke="#86868b" stroke-width="1.5"/>
+<text x="827.0" y="261.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">Quarantine for</text>
+<text x="827.0" y="277.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">investigation</text>
+<text x="966" y="78" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#424245">Gold</text>
+<line x1="966" y1="84" x2="1156" y2="84" stroke="#d2d2d7"/>
+<rect x="966" y="94" width="190" height="54" rx="8" fill="#eee5ff" stroke="#8055bd" stroke-width="1.5"/>
+<text x="1061.0" y="125.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">SQL stored procedure</text>
+<rect x="966" y="166" width="190" height="54" rx="8" fill="#ffe8ec" stroke="#b8435a" stroke-width="1.5"/>
+<text x="1061.0" y="189.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">Fact and dimension</text>
+<text x="1061.0" y="205.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">tables (Warehouse)</text>
+<text x="1200" y="78" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#424245">Reporting</text>
+<line x1="1200" y1="84" x2="1390" y2="84" stroke="#d2d2d7"/>
+<rect x="1200" y="94" width="190" height="54" rx="8" fill="#ffe8ec" stroke="#b8435a" stroke-width="1.5"/>
+<text x="1295.0" y="125.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">Semantic model and DAX</text>
+<rect x="1200" y="166" width="190" height="54" rx="8" fill="#ffe8ec" stroke="#b8435a" stroke-width="1.5"/>
+<text x="1295.0" y="197.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">Power BI report</text>
+<text x="1434" y="78" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#424245">Delivery</text>
+<line x1="1434" y1="84" x2="1624" y2="84" stroke="#d2d2d7"/>
+<rect x="1434" y="94" width="190" height="54" rx="8" fill="#fff0d9" stroke="#c27b22" stroke-width="1.5"/>
+<text x="1529.0" y="117.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">End-to-end pipeline</text>
+<text x="1529.0" y="133.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">orchestration</text>
+<rect x="1434" y="166" width="190" height="54" rx="8" fill="#fff0d9" stroke="#c27b22" stroke-width="1.5"/>
+<text x="1529.0" y="189.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">Deployment pipelines DEV</text>
+<text x="1529.0" y="205.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#1d1d1f">to PROD</text>
+<path d="M220 121.0 C242.0 121.0 242.0 121.0 262 121.0" fill="none" stroke="#6e6e73" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M454 121.0 C476.0 121.0 476.0 121.0 496 121.0" fill="none" stroke="#6e6e73" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M688 121.0 C710.0 121.0 710.0 193.0 730 193.0" fill="none" stroke="#6e6e73" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M922 193.0 C944.0 193.0 944.0 157.0 964 157.0" fill="none" stroke="#6e6e73" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M1156 157.0 C1178.0 157.0 1178.0 157.0 1198 157.0" fill="none" stroke="#6e6e73" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M1390 157.0 C1412.0 157.0 1412.0 157.0 1432 157.0" fill="none" stroke="#6e6e73" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="30" y="362" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#6e6e73">Silver 896,931 + quarantine 7,052 = 903,983 source records. Promotion is manual, not Git-triggered CI/CD.</text></svg>

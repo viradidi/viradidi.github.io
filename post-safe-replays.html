@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<title>Making incremental loads safe to replay | Isaiah Nyakundi</title>
+<meta name="description" content="Three habits from my HealthGrid, Uber Eats and NovaCart projects that make rerunning a failed load harmless.">
+<link rel="canonical" href="https://viradidi.github.io/post-safe-replays.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b3a2f'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3EIN%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Isaiah Nyakundi">
+<meta property="og:title" content="Making incremental loads safe to replay | Isaiah Nyakundi">
+<meta property="og:description" content="Three habits from my HealthGrid, Uber Eats and NovaCart projects that make rerunning a failed load harmless.">
+<meta property="og:url" content="https://viradidi.github.io/post-safe-replays.html">
+<meta property="og:image" content="https://viradidi.github.io/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://viradidi.github.io/assets/og-image.png">
+<meta name="twitter:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Making incremental loads safe to replay", "datePublished": "2026-11-07", "author": {"@type": "Person", "name": "Isaiah Nyakundi", "url": "https://viradidi.github.io/"}, "description": "Three habits from my HealthGrid, Uber Eats and NovaCart projects that make rerunning a failed load harmless.", "mainEntityOfPage": "https://viradidi.github.io/post-safe-replays.html", "image": "https://viradidi.github.io/assets/og-image.png"}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site"><div class="wrap"><a class="brand" href="/">Isaiah Nyakundi</a><button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav aria-label="Main" id="site-nav"><ul><li><a href="/">Home</a></li><li><a href="/about.html">About</a></li><li><a href="/projects/">Projects</a></li><li><a href="/blog.html" aria-current="page">Blog</a></li><li><a href="/cv.html">CV</a></li></ul></nav></div></header>
+<main id="main">
+<div class="wrap">
+<article class="post"><header class="post-header"><a class="post-back" href="/blog.html">&larr; Back to blog</a><h1>Making incremental loads safe to replay</h1><div class="post-meta"><time datetime="2026-11-07">7 November 2026</time><span>&middot;</span><span>2 min read</span></div><ul class="post-tags" aria-label="Topics"><li class="blog-tag">data-engineering</li><li class="blog-tag">incremental-loading</li><li class="blog-tag">azure</li></ul></header><div class="post-body"><p>Every incremental pipeline fails eventually. A cluster drops, a file arrives twice, a run is cancelled halfway. What matters is what happens when you run it again. In my projects I treat "safe to rerun" as a design requirement and not something to hope for. Three habits do most of the work.</p>
+<h2>1. Move the watermark only after the write succeeds</h2>
+<p>The Uber Eats project has a written checkpoint contract that separates two events that are easy to blur: extracting rows and committing progress. If the checkpoint moves when the extract finishes, a failure during the load loses data silently, because the next run starts after rows that never landed. If it moves only once the write is confirmed, the worst case is that the next run reads some rows again. The next two habits make that harmless.</p>
+<h2>2. Merge on a key, and guard it with a version</h2>
+<p>HealthGrid loads with a merge and not an append. The merge rejects null or duplicate keys, and it updates an existing row only when the incoming source version is newer. If the same version arrives with different content, the run fails instead of overwriting. Replaying a batch therefore either changes nothing or stops and says why. A quiet overwrite is the failure I least want.</p>
+<h2>3. Pair the timestamp with a tiebreaker</h2>
+<p>Timestamps are not unique: several rows can share one. In NovaCart each source has a watermark made of a timestamp and a primary key, stored in a control table. A run can resume from an exact position and not from a time that may split a group of rows. A Delta MERGE then keeps the current-state tables correct if a window is read twice.</p>
+<h2>What this does not give me</h2>
+<p>Timestamp watermarks depend on the source updating its timestamp reliably. They are not change data capture, and they do not see deletes unless the source marks them. The HealthGrid README says so, and the Uber Eats incremental contract lists deletes and late changes as cases to handle explicitly. The NovaCart notebooks are saved without cell outputs, so the repository holds the logic and not a record of it running. I would still like to add a test that runs one batch twice and asserts the target is identical.</p></div><nav class="post-nav" aria-label="More posts"><a class="post-nav-link post-nav-next" href="/post-healthgrid-version-guarded-merge.html"><span class="post-nav-label">Newer &rarr;</span><span class="post-nav-title">Why I merge on a key and guard it with a version</span></a></nav></article>
+</div>
+</main>
+<footer class="foot"><div class="wrap"><div class="cols"><div><b>Isaiah Nyakundi</b><p>Data Engineer</p></div>
+<nav aria-label="Footer"><div><h4>Site</h4><a href="/projects/">Projects</a><a href="/blog.html">Blog</a><a href="/about.html">About</a><a href="/cv.html">CV</a></div>
+<div><h4>Connect</h4><a href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer">GitHub<span class="vh"> (opens in a new tab)</span></a><a href="https://www.linkedin.com/in/isaiah-nyakundi-2b58812b4" target="_blank" rel="noopener noreferrer">LinkedIn<span class="vh"> (opens in a new tab)</span></a><a href="mailto:isaiahnyakundi87@gmail.com">Email</a></div></nav></div>
+<p class="copy">&copy; 2026 Isaiah Nyakundi</p></div></footer>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

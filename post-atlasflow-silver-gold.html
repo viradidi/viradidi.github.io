@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<title>Why Silver stays append-only while Gold rebuilds state | Isaiah Nyakundi</title>
+<meta name="description" content="How AtlasFlow separates what happened from what is true now: an append-only Silver change history and a Gold table rebuilt as current state.">
+<link rel="canonical" href="https://viradidi.github.io/post-atlasflow-silver-gold.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b3a2f'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3EIN%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Isaiah Nyakundi">
+<meta property="og:title" content="Why Silver stays append-only while Gold rebuilds state | Isaiah Nyakundi">
+<meta property="og:description" content="How AtlasFlow separates what happened from what is true now: an append-only Silver change history and a Gold table rebuilt as current state.">
+<meta property="og:url" content="https://viradidi.github.io/post-atlasflow-silver-gold.html">
+<meta property="og:image" content="https://viradidi.github.io/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://viradidi.github.io/assets/og-image.png">
+<meta name="twitter:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Why Silver stays append-only while Gold rebuilds state", "datePublished": "2026-11-12", "author": {"@type": "Person", "name": "Isaiah Nyakundi", "url": "https://viradidi.github.io/"}, "description": "How AtlasFlow separates what happened from what is true now: an append-only Silver change history and a Gold table rebuilt as current state.", "mainEntityOfPage": "https://viradidi.github.io/post-atlasflow-silver-gold.html", "image": "https://viradidi.github.io/assets/og-image.png"}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site"><div class="wrap"><a class="brand" href="/">Isaiah Nyakundi</a><button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav aria-label="Main" id="site-nav"><ul><li><a href="/">Home</a></li><li><a href="/about.html">About</a></li><li><a href="/projects/">Projects</a></li><li><a href="/blog.html" aria-current="page">Blog</a></li><li><a href="/cv.html">CV</a></li></ul></nav></div></header>
+<main id="main">
+<div class="wrap">
+<article class="post"><header class="post-header"><a class="post-back" href="/blog.html">&larr; Back to blog</a><h1>Why Silver stays append-only while Gold rebuilds state</h1><div class="post-meta"><time datetime="2026-11-12">12 November 2026</time><span>&middot;</span><span>2 min read</span></div><ul class="post-tags" aria-label="Topics"><li class="blog-tag">streaming</li><li class="blog-tag">cdc</li><li class="blog-tag">iceberg</li></ul></header><div class="post-body"><p>AtlasFlow keeps two different ideas of "the data" apart: what happened, and what is true now. Silver holds the first and Gold holds the second, and that split drives most of the design.</p>
+<h2>Silver is a log, so it only appends</h2>
+<p>Debezium turns every committed PostgreSQL change into an event. Bronze keeps the raw envelope, untouched. Silver parses those events into one normalised change history with the entity identifier, the source table, the operation type and a data-quality label. It never updates a row. A change that arrives later is another row, and the order of changes stays visible.</p>
+<p>That matters for three reasons. Nothing is lost if a Gold rule turns out to be wrong. I can reprocess from Silver without going back to the source. And I can explain exactly why a shipment looks the way it does.</p>
+<h2>Gold rebuilds the current state</h2>
+<p>Operations users do not want a change log. They want one row per shipment. The Gold Flink SQL job rebuilds the latest valid record of each entity from Silver using temporary views inside the streaming query. It joins them into the shipment model, classifies risk and upserts by <code>shipment_id</code>. A late update changes that shipment's row. It does not add a new one.</p>
+<h2>What this costs</h2>
+<p>I did not create a current-state table per entity in Silver, so the reconstruction logic sits in Gold. That makes entity selection, update ordering and recovery after a restart the things most worth testing. Gold is also not an event ledger. If I need what happened and when, I read Silver.</p>
+<h2>What it does not show</h2>
+<p>The platform runs locally in Docker Compose on synthetic data. I make no claims about throughput or latency, and a managed deployment would need partitioning, ordering and recovery revisited. The design shows a clean separation of concerns. It does not show scale.</p></div><nav class="post-nav" aria-label="More posts"><a class="post-nav-link" href="/post-healthgrid-version-guarded-merge.html"><span class="post-nav-label">&larr; Older</span><span class="post-nav-title">Why I merge on a key and guard it with a version</span></a></nav></article>
+</div>
+</main>
+<footer class="foot"><div class="wrap"><div class="cols"><div><b>Isaiah Nyakundi</b><p>Data Engineer</p></div>
+<nav aria-label="Footer"><div><h4>Site</h4><a href="/projects/">Projects</a><a href="/blog.html">Blog</a><a href="/about.html">About</a><a href="/cv.html">CV</a></div>
+<div><h4>Connect</h4><a href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer">GitHub<span class="vh"> (opens in a new tab)</span></a><a href="https://www.linkedin.com/in/isaiah-nyakundi-2b58812b4" target="_blank" rel="noopener noreferrer">LinkedIn<span class="vh"> (opens in a new tab)</span></a><a href="mailto:isaiahnyakundi87@gmail.com">Email</a></div></nav></div>
+<p class="copy">&copy; 2026 Isaiah Nyakundi</p></div></footer>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

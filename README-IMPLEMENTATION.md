@@ -1,53 +1,66 @@
 # Portfolio implementation notes
 
-This repository is a static GitHub Pages site built with HTML, CSS and a small progressive-enhancement JavaScript file. There is no build step.
+Static HTML, CSS and JavaScript for GitHub Pages. No framework, no build step, no backend.
+Live site: https://viradidi.github.io/
 
-## Site files
+## Site map
 
-| Path | Purpose |
+| URL | Purpose |
 |---|---|
-| `index.html` | Portfolio page, six project case studies, architecture diagrams and execution status |
-| `css/style.css` | Responsive design system and project-diagram presentation |
-| `js/main.js` | Accessible mobile navigation and active-section highlighting |
-| `assets/favicon.svg`, `assets/og-image.png` | Favicon and social preview image |
-| `assets/architecture/` | Portfolio-local architecture diagrams |
-| `resume/Isaiah-Nyakundi-Data-Engineer-Resume.pdf` | Résumé PDF |
+| `/` | Home: introduction, stats, four featured projects, tools, writing, and a link to the full catalogue |
+| `/projects/` | Engineering Projects catalogue: search, discipline filters, technology filters |
+| `/projects/atlasflow/` | Case study 1 |
+| `/projects/healthgrid/` | Case study 2 |
+| `/projects/uber-eats/` | Case study 3 |
+| `/projects/novacart/` | Case study 4 |
+| `/projects/flowbridge/` | Case study 5 |
+| `/projects/cfpb/` | Case study 6 |
+| `/about.html`, `/cv.html` | Background and CV |
+| `/blog.html` and `/post-*.html` | Blog index and three posts |
+| `/404.html` | Not-found page |
+
+All internal links are root-absolute (`/projects/...`), which is correct for a user site served from the domain root.
 
 ## Project inventory
 
-The portfolio presents six project cards:
+| Project | Disciplines | Status | Repository | Architecture asset |
+|---|---|---|---|---|
+| AtlasFlow | Streaming and real-time; Data platform architecture | Completed, local Docker Compose | `AtlasFlow` | `assets/architecture/atlasflow-architecture.svg` |
+| HealthGrid | Cloud and lakehouse; Data platform architecture | Completed, run in Azure | `healthgrid-data-platform` | `assets/architecture/healthgrid-architecture-overview.png` |
+| Uber Eats | Cloud and lakehouse; Data platform architecture; Warehouse and analytics | Completed, run in Azure | `uber-eats-data-analytics-platform` | `assets/architecture/uber-eats-architecture.svg` |
+| NovaCart | Cloud and lakehouse; Warehouse and analytics | Completed, run in Azure Databricks | `1NOVACART-CASE-STUDY` | `assets/architecture/novacart-overview.svg`, `novacart-detailed.svg` |
+| FlowBridge | Warehouse and analytics; Data platform architecture | Completed, latest version rerun in Snowflake on 8 November 2026 | `FLOWBRIDGE-SNOWFLAKE-PROJECT` | `assets/architecture/flowbridge-technical-architecture.svg` |
+| CFPB | Warehouse and analytics; Cloud and lakehouse | Completed, Microsoft Fabric | `CFPB-Consumer-Complaint-Analytics` | `assets/architecture/cfpb-consumer-complaint-analytics.webp` |
 
-1. Uber Eats — Azure multi-source analytics platform.
-2. NovaCart — incremental Databricks lakehouse.
-3. HealthGrid — metadata-driven Azure data platform.
-4. FlowBridge — Azure-to-Snowflake supply-chain analytics.
-5. AtlasFlow — local real-time logistics control tower.
-6. CFPB Consumer Complaint Analytics — Microsoft Fabric project currently in progress.
+A project can appear under several disciplines. It still has one case-study page.
 
-The first five projects are described as successfully executed end to end in their intended environments. The CFPB Microsoft Fabric project remains in progress and is not described as completed.
+## Assets that must exist
 
-## Architecture assets
+The diagrams are the original files from each project and are never redrawn. They live in `assets/architecture/`:
 
-- Uber Eats and both NovaCart SVG diagrams are copied into the portfolio repository so the page does not depend on GitHub's file-rendering URLs.
-- FlowBridge has a standalone technical SVG in its project repository and a portfolio-local copy. The README and architecture guide embed the standalone SVG alongside the Mermaid source diagram.
-- AtlasFlow has a portfolio architecture SVG based on its README and manual runbook.
-- HealthGrid continues to use its existing repository architecture image.
-- The CFPB architecture image and project details will be incorporated as the Microsoft Fabric work progresses.
+- `atlasflow-architecture.svg`, `uber-eats-architecture.svg`, `novacart-overview.svg`, `novacart-detailed.svg`, `flowbridge-technical-architecture.svg`
+- `cfpb-consumer-complaint-analytics.webp` (copy it from the CFPB repository's `architecture/` folder)
+- `healthgrid-architecture-overview.png` (included)
 
-## Execution and documentation policy
+`assets/og-image.png` is the social-share image. `resume/Isaiah-Nyakundi-Data-Engineer-Resume.pdf` is the CV download.
 
-The portfolio states the execution status of completed projects directly: each was successfully run end to end in its intended environment. Runtime screenshots are optional supporting material, not a prerequisite for presenting the completed work.
+## How the pages work
 
-Repository CI statements remain scoped to what the corresponding workflow actually runs. Architecture diagrams explain system design; they are not described as runtime logs or benchmark results.
+- **Catalogue:** each `.project-card` carries `data-cats`, `data-tech` and `data-search`. `js/main.js` filters on all three at once. Without JavaScript every card is shown and the controls are hidden.
+- **Case studies:** nine sections in a fixed order (hero, business problem, architecture, how it works, engineering decisions, reliability and testing, deployment, evidence and boundaries, documentation), then previous and next project links.
+- **Diagrams:** each opens in a native `<dialog>` lightbox. Without JavaScript the link opens the image in a new tab. On phones the image keeps a readable minimum width and scrolls inside its frame.
 
-## Source-level verification
+## Adding a project
 
-The source audit checks:
+1. Copy a folder under `projects/` to `projects/<name>/` and edit the sections.
+2. Add a card to `projects/index.html` with the `data-cats`, `data-tech` and `data-search` attributes.
+3. Add the diagram to `assets/architecture/`.
+4. Add the URL to `sitemap.xml`, and the previous and next links on the neighbouring case studies.
 
-- all six project cards and repository links;
-- local architecture asset paths;
-- internal navigation targets;
-- stylesheet and JavaScript references;
-- responsive diagram styles and mobile navigation hooks.
+## Security and quality
 
-A hosted browser review should still be performed after deployment at desktop and mobile widths to confirm rendering and live asset delivery. That review is separate from whether the completed data platforms ran end to end in their intended environments.
+A Content Security Policy meta tag on every page (own-site scripts, styles and images only), a referrer policy, `rel="noopener noreferrer"` on external links, no inline scripts or styles, no third-party requests, AA text contrast, a skip link, keyboard-operable filters and lightbox, reduced-motion support, print styles and structured data. `.nojekyll` makes GitHub Pages serve the files as they are.
+
+## Verification boundaries stated on the case studies
+
+Each case study separates repository checks (static validation and unit tests) from execution in the cloud or local environment. Some Azure environments were decommissioned after a successful run to control cost, and the pages state this plainly.

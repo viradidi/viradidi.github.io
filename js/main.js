@@ -1,238 +1,194 @@
-
 /*
- * Portfolio progressive enhancements
- *
- * Features:
- * - Accessible mobile navigation
- * - Outside-click and Escape-to-close behavior
- * - Active navigation section highlighting
- * - Graceful handling of optional browser APIs
- *
- * Navigation links remain ordinary HTML anchors, so the site remains
- * navigable if JavaScript or IntersectionObserver is unavailable.
+ * Portfolio enhancements (progressive: every page works without JavaScript).
+ *  - Projects catalogue: search plus discipline and technology filters.
+ *  - Diagram lightbox: opens the original image in a native <dialog>.
  */
 (function () {
     "use strict";
 
-    function initNavigation() {
-        var toggle = document.querySelector(".nav-toggle");
-        var menu = document.getElementById("nav-menu");
-        var links = Array.prototype.slice.call(
-            document.querySelectorAll(".nav-links a[href^='#']")
-        );
+    document.documentElement.classList.add("js");
 
-        /* Mobile navigation */
-        function setMenu(open) {
-            if (!toggle || !menu) {
-                return;
-            }
+    function initCatalogue() {
+        var cards = Array.prototype.slice.call(document.querySelectorAll(".project-card"));
+        var chips = Array.prototype.slice.call(document.querySelectorAll(".chip[data-group]"));
+        var input = document.getElementById("project-search");
+        var count = document.getElementById("catalog-count");
+        var status = document.getElementById("filter-status");
+        var none = document.getElementById("no-results");
+        var state = { cat: "all", tech: "all", terms: [] };
 
-            toggle.setAttribute("aria-expanded", String(open));
-            menu.classList.toggle("is-open", open);
-        }
-
-        if (toggle && menu) {
-            toggle.addEventListener("click", function () {
-                var isOpen =
-                    toggle.getAttribute("aria-expanded") === "true";
-
-                setMenu(!isOpen);
-            });
-
-            menu.addEventListener("click", function (event) {
-                var target = event.target;
-
-                if (
-                    target &&
-                    typeof target.closest === "function" &&
-                    target.closest("a[href]")
-                ) {
-                    setMenu(false);
-                }
-            });
-
-            document.addEventListener("click", function (event) {
-                var isOpen =
-                    toggle.getAttribute("aria-expanded") === "true";
-
-                if (
-                    isOpen &&
-                    !menu.contains(event.target) &&
-                    !toggle.contains(event.target)
-                ) {
-                    setMenu(false);
-                }
-            });
-
-            document.addEventListener("keydown", function (event) {
-                if (
-                    event.key === "Escape" &&
-                    toggle.getAttribute("aria-expanded") === "true"
-                ) {
-                    setMenu(false);
-                    toggle.focus();
-                }
-            });
-
-            /*
-             * Reset the mobile menu when the desktop breakpoint is reached.
-             * Support older browsers that expose addListener instead.
-             */
-            if (typeof window.matchMedia === "function") {
-                var desktopQuery = window.matchMedia("(min-width: 861px)");
-
-                var handleBreakpointChange = function (event) {
-                    if (event.matches) {
-                        setMenu(false);
-                    }
-                };
-
-                if (typeof desktopQuery.addEventListener === "function") {
-                    desktopQuery.addEventListener(
-                        "change",
-                        handleBreakpointChange
-                    );
-                } else if (
-                    typeof desktopQuery.addListener === "function"
-                ) {
-                    desktopQuery.addListener(handleBreakpointChange);
-                }
-
-                handleBreakpointChange(desktopQuery);
-            }
-        }
-
-        /* Active section highlighting */
-        if (
-            !links.length ||
-            !("IntersectionObserver" in window)
-        ) {
+        if (!cards.length) {
             return;
         }
 
-        var sections = [];
-        var activeLink = null;
+        var grid = document.querySelector(".catalog-grid");
+        var groupsEl = null;
+        var labels = {};
+        chips.forEach(function (c) {
+            if (c.getAttribute("data-group") === "cat") { labels[c.getAttribute("data-filter")] = c.textContent; }
+        });
+        var order = Object.keys(labels).filter(function (k) { return k !== "all"; });
 
-        links.forEach(function (link) {
-            var href = link.getAttribute("href");
-
-            if (!href || href.length < 2) {
+        // Default view: projects grouped under their primary discipline. Any filter or search switches to the flat grid.
+        function regroup(grouped) {
+            if (!grid) { return; }
+            if (!grouped) {
+                if (groupsEl) { groupsEl.hidden = true; }
+                grid.hidden = false;
+                cards.forEach(function (card) { grid.appendChild(card); });
                 return;
             }
-
-            var id = href.slice(1);
-
-            /*
-             * Only observe real sections that correspond to navigation links.
-             */
-            var section = document.getElementById(id);
-
-            if (!section) {
-                return;
+            if (!groupsEl) {
+                groupsEl = document.createElement("div");
+                groupsEl.className = "catalog-groups";
+                grid.parentNode.insertBefore(groupsEl, grid);
             }
+            groupsEl.innerHTML = "";
+            order.forEach(function (key) {
+                var members = cards.filter(function (card) { return card.getAttribute("data-cats").split("|")[0] === key; });
+                if (!members.length) { return; }
+                var section = document.createElement("section");
+                section.className = "catalog-group";
+                var h = document.createElement("h2");
+                h.textContent = labels[key];
+                var g = document.createElement("div");
+                g.className = "catalog-grid";
+                members.forEach(function (card) { g.appendChild(card); });
+                section.appendChild(h);
+                section.appendChild(g);
+                groupsEl.appendChild(section);
+            });
+            groupsEl.hidden = false;
+            grid.hidden = true;
+        }
 
-            var alreadyRegistered = sections.some(function (item) {
-                return item.section === section;
+        function apply() {
+            var shown = 0;
+            regroup(state.cat === "all" && state.tech === "all" && !state.terms.length);
+
+            cards.forEach(function (card) {
+                var cats = card.getAttribute("data-cats").split("|");
+                var tech = card.getAttribute("data-tech").split("|");
+                var text = card.getAttribute("data-search");
+                var ok =
+                    (state.cat === "all" || cats.indexOf(state.cat) !== -1) &&
+                    (state.tech === "all" || tech.indexOf(state.tech) !== -1) &&
+                    state.terms.every(function (term) { return text.indexOf(term) !== -1; });
+
+                card.hidden = !ok;
+
+                if (ok) {
+                    shown += 1;
+                }
             });
 
-            if (!alreadyRegistered) {
-                sections.push({
-                    section: section,
-                    link: link
+            var message = "Showing " + shown + " of " + cards.length + " projects";
+
+            if (count) { count.textContent = message; }
+            if (status) { status.textContent = message; }
+            if (none) { none.hidden = shown !== 0; }
+        }
+
+        apply();
+
+        chips.forEach(function (chip) {
+            chip.addEventListener("click", function () {
+                var group = chip.getAttribute("data-group");
+
+                state[group] = chip.getAttribute("data-filter");
+
+                chips.forEach(function (other) {
+                    if (other.getAttribute("data-group") === group) {
+                        other.setAttribute("aria-pressed", String(other === chip));
+                    }
                 });
-            }
+
+                apply();
+            });
         });
 
-        if (!sections.length) {
+        if (input) {
+            input.addEventListener("input", function () {
+                state.terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+                apply();
+            });
+        }
+    }
+
+    function initLightbox() {
+        var links = document.querySelectorAll(".frame > a");
+        var dialog, view, caption, closeBtn, opener;
+
+        if (!links.length || typeof HTMLDialogElement === "undefined") {
             return;
         }
 
-        function clearActiveLink() {
-            links.forEach(function (link) {
-                link.removeAttribute("aria-current");
+        function build() {
+            if (dialog) { return; }
+            dialog = document.createElement("dialog");
+            dialog.className = "lightbox";
+            dialog.setAttribute("aria-label", "Enlarged diagram");
+            dialog.innerHTML =
+                '<button type="button" class="lightbox-close" aria-label="Close enlarged diagram">Close</button>' +
+                '<div class="lightbox-scroll"><img class="lightbox-img" alt=""></div>' +
+                '<p class="lightbox-caption"></p>';
+            document.body.appendChild(dialog);
+            view = dialog.querySelector(".lightbox-img");
+            caption = dialog.querySelector(".lightbox-caption");
+            closeBtn = dialog.querySelector(".lightbox-close");
+            closeBtn.addEventListener("click", function () { dialog.close(); });
+            dialog.addEventListener("click", function (event) {
+                if (event.target === dialog) { dialog.close(); }
             });
-
-            activeLink = null;
+            dialog.addEventListener("close", function () {
+                if (opener) { opener.focus(); }
+            });
         }
 
-        function setActiveLink(link) {
-            if (!link || activeLink === link) {
-                return;
-            }
+        Array.prototype.forEach.call(links, function (link) {
+            link.addEventListener("click", function (event) {
+                var img = link.querySelector("img");
+                var figcaption = link.parentNode.querySelector("figcaption");
 
-            clearActiveLink();
-
-            link.setAttribute("aria-current", "location");
-            activeLink = link;
-        }
-
-        var observer = new IntersectionObserver(
-            function () {
-                /*
-                 * Choose the section nearest the activation line rather than
-                 * relying on the order of entries in the observer callback.
-                 */
-                if (window.scrollY < 120) {
-                    clearActiveLink();
-                    return;
-                }
-
-                var activationLine = window.innerHeight * 0.35;
-                var bestSection = null;
-                var bestDistance = Infinity;
-
-                sections.forEach(function (item) {
-                    var rect = item.section.getBoundingClientRect();
-
-                    if (
-                        rect.top <= activationLine &&
-                        rect.bottom > activationLine
-                    ) {
-                        bestSection = item;
-                        bestDistance = 0;
-                        return;
-                    }
-
-                    if (bestDistance === 0) {
-                        return;
-                    }
-
-                    var distance = Math.abs(rect.top - activationLine);
-
-                    if (distance < bestDistance) {
-                        bestDistance = distance;
-                        bestSection = item;
-                    }
-                });
-
-                if (bestSection) {
-                    setActiveLink(bestSection.link);
-                }
-            },
-            {
-                rootMargin: "-30% 0px -60% 0px",
-                threshold: 0
-            }
-        );
-
-        sections.forEach(function (item) {
-            observer.observe(item.section);
+                if (!img) { return; }
+                event.preventDefault();
+                build();
+                opener = link;
+                view.src = img.currentSrc || img.src;
+                view.alt = img.alt;
+                caption.textContent = figcaption ? figcaption.textContent : "";
+                dialog.showModal();
+                closeBtn.focus();
+            });
         });
+    }
 
-        window.addEventListener(
-            "scroll",
-            function () {
-                if (window.scrollY < 120) {
-                    clearActiveLink();
-                }
-            },
-            { passive: true }
-        );
+    function initNav() {
+        var btn = document.querySelector(".nav-toggle");
+        var nav = document.getElementById("site-nav");
+        if (!btn || !nav) { return; }
+        btn.addEventListener("click", function () {
+            var open = nav.classList.toggle("open");
+            btn.setAttribute("aria-expanded", String(open));
+        });
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && nav.classList.contains("open")) {
+                nav.classList.remove("open");
+                btn.setAttribute("aria-expanded", "false");
+                btn.focus();
+            }
+        });
+    }
+
+    function init() {
+        initNav();
+        initCatalogue();
+        initLightbox();
     }
 
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initNavigation);
+        document.addEventListener("DOMContentLoaded", init);
     } else {
-        initNavigation();
+        init();
     }
 })();

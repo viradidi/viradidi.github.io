@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<title>FlowBridge Event-Driven Snowflake Platform | Isaiah Nyakundi</title>
+<meta name="description" content="A Snowflake-native supply-chain data platform for a fictional equipment distributor: Azure storage events trigger Snowpipe, and Streams, Tasks, stored procedures and Dynamic Tables build a governed Bronze, Silver and Gold model behind secure views.">
+<link rel="canonical" href="https://viradidi.github.io/projects/flowbridge/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b3a2f'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3EIN%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Isaiah Nyakundi">
+<meta property="og:title" content="FlowBridge Event-Driven Snowflake Platform | Isaiah Nyakundi">
+<meta property="og:description" content="A Snowflake-native supply-chain data platform for a fictional equipment distributor: Azure storage events trigger Snowpipe, and Streams, Tasks, stored procedures and Dynamic Tables build a governed Bronze, Silver and Gold model behind secure views.">
+<meta property="og:url" content="https://viradidi.github.io/projects/flowbridge/">
+<meta property="og:image" content="https://viradidi.github.io/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://viradidi.github.io/assets/og-image.png">
+<meta name="twitter:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://viradidi.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Projects", "item": "https://viradidi.github.io/projects/"}, {"@type": "ListItem", "position": 3, "name": "FlowBridge Event-Driven Snowflake Platform", "item": "https://viradidi.github.io/projects/flowbridge/"}]}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site"><div class="wrap"><a class="brand" href="/">Isaiah Nyakundi</a><button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav aria-label="Main" id="site-nav"><ul><li><a href="/">Home</a></li><li><a href="/about.html">About</a></li><li><a href="/projects/" aria-current="page">Projects</a></li><li><a href="/blog.html">Blog</a></li><li><a href="/cv.html">CV</a></li></ul></nav></div></header>
+<main id="main">
+<div class="wrap">
+<article class="case">
+<nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/projects/">Projects</a></li><li aria-current="page">FlowBridge</li></ol></nav>
+<header class="case-hero"><ul class="case-cats"><li>Warehouse &amp; Analytics Engineering</li><li>Data Platform Architecture</li></ul><h1>FlowBridge Event-Driven Snowflake Platform</h1><p class="case-summary">A Snowflake-native supply-chain data platform for a fictional equipment distributor: Azure storage events trigger Snowpipe, and Streams, Tasks, stored procedures and Dynamic Tables build a governed Bronze, Silver and Gold model behind secure views.</p><ul class="tags" aria-label="Technologies"><li>Snowflake</li><li>Snowpipe</li><li>Streams and Tasks</li><li>Dynamic Tables</li><li>Azure Blob Storage</li><li>Event Grid</li><li>Streamlit</li><li>SQL</li></ul>
+<p class="case-status"><strong>Status:</strong> Completed · latest version rerun in Snowflake, 8 November 2026 · synthetic data</p>
+<p class="case-links"><a class="btn primary" href="https://github.com/viradidi/FLOWBRIDGE-SNOWFLAKE-PROJECT" target="_blank" rel="noopener noreferrer">View GitHub Repository &#8599;<span class="vh"> (opens in a new tab)</span></a><a class="btn" href="#architecture">Jump to the architecture</a></p></header>
+<nav class="case-toc" aria-label="On this page"><ul><li><a href="#problem">Business problem</a></li><li><a href="#architecture">Architecture</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#decisions">Engineering decisions</a></li><li><a href="#reliability">Reliability and testing</a></li><li><a href="#deployment">Deployment</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#docs">Source code</a></li></ul></nav>
+<section id="problem"><h2>Business problem and objectives</h2><p>Supply-chain operations need reliable visibility into orders, revenue, products, suppliers, warehouses, inventory activity and shipments. Raw operational data is hard to analyse directly. It has inconsistent structures, duplicate records and fields that are not shaped for analysis.</p><h3>Objectives</h3><ul><li>Replace manual reporting with automated, event-driven loading.</li><li>Cleanse and model raw operational JSON into governed, analytics-ready tables.</li><li>Serve results through secure, role-controlled views and a Streamlit application.</li></ul></section>
+<section id="architecture"><h2>System architecture</h2><figure class="frame"><a href="/assets/architecture/flowbridge-technical-architecture.svg" target="_blank" rel="noopener noreferrer"><img src="/assets/architecture/flowbridge-technical-architecture.svg" class="wide" alt="FlowBridge technical architecture: event-driven ingestion from Azure into Snowflake, with Bronze, Silver and Gold layers and secure serving." loading="lazy" decoding="async"><span class="vh"> (open the diagram full size)</span></a><figcaption>FlowBridge technical architecture diagram. Select it to open full size.</figcaption></figure><p>Python and Faker generate nested JSON into ADLS Gen2. Azure Event Grid and a storage queue trigger Snowpipe, which loads Snowflake automatically. Streams, Tasks and stored procedures move data through Bronze, Silver and Gold. Secure views serve the curated results to a Streamlit dashboard.</p></section>
+<section id="how-it-works"><h2>How the platform works</h2><ol class="stages"><li><strong>Bronze:</strong> raw ingestion with load metadata, preserving the source structure.</li><li><strong>Silver:</strong> type standardisation, deduplication, cleansing, null handling and flattening of nested operational structures, in two stages.</li><li><strong>Gold:</strong> a star schema of facts and dimensions (customers, products, suppliers, warehouses, shipments) with surrogate keys and SCD Type 1.</li><li><strong>Serving:</strong> secure views and business-ready metrics for the dashboard.</li></ol></section>
+<section id="decisions"><h2>Engineering decisions</h2><ul><li>Event-driven loading through Event Grid and Snowpipe follows file arrival and does not poll.</li><li>Streams track changes so later layers can process only what is new.</li><li>Dynamic Tables keep selected analytical datasets maintained declaratively.</li><li>SCD Type 1 keeps current values only. It is simpler than Type 2, and it gives up history.</li><li>Role-based access and secure views control what consumers can see, and development and production are kept separate.</li><li>Inventory movement is calculated as a proxy metric. It is not conventional inventory turnover.</li></ul></section>
+<section id="reliability"><h2>Reliability, testing and data quality</h2><p>Validation is built into the pipeline: required fields, data types, duplicates, referential relationships and business rules. Verification SQL is kept in <code>sql/09_resume_and_verify.sql</code>. The latest repository version was rerun successfully in Snowflake on 8 November 2026.</p></section>
+<section id="deployment"><h2>Deployment and operations</h2><p>Nine numbered SQL scripts run in order, from account setup through Bronze, Silver, Gold, serving and governance to DEV to PROD deployment and verification. Deployment and governance are documented in the <code>docs/</code> folder. I reran the latest version of the repository in Snowflake on 8 November 2026, and it completed successfully.</p></section>
+<section id="evidence"><h2>Results and implementation evidence</h2><h3>Implemented</h3><ul><li>The original project ran successfully in Snowflake, and the latest repository version was rerun successfully in Snowflake on 8 November 2026.</li><li>Nine numbered SQL scripts take the platform from account setup to verification, with five design documents covering the business problem, architecture, data model, deployment and governance.</li><li>The data is generated with Faker and is synthetic.</li></ul><h3>Boundaries</h3><ul><li>The data is generated with Faker, so it is synthetic and not real business data.</li><li>SCD Type 1 does not keep dimension history, a deliberate simplification.</li></ul></section>
+<section id="docs"><h2>Documentation and source code</h2><ul class="doc-links"><li><a href="https://github.com/viradidi/FLOWBRIDGE-SNOWFLAKE-PROJECT" target="_blank" rel="noopener noreferrer">GitHub repository<span class="vh"> (opens in a new tab)</span> &#8599;</a></li><li><a href="https://github.com/viradidi/FLOWBRIDGE-SNOWFLAKE-PROJECT#readme" target="_blank" rel="noopener noreferrer">README<span class="vh"> (opens in a new tab)</span> &#8599;</a></li><li><a href="https://github.com/viradidi/FLOWBRIDGE-SNOWFLAKE-PROJECT/tree/main/docs" target="_blank" rel="noopener noreferrer">Documentation folder<span class="vh"> (opens in a new tab)</span> &#8599;</a></li><li><a href="https://github.com/viradidi/FLOWBRIDGE-SNOWFLAKE-PROJECT/tree/main/sql" target="_blank" rel="noopener noreferrer">SQL scripts<span class="vh"> (opens in a new tab)</span> &#8599;</a></li><li><a href="/assets/architecture/flowbridge-technical-architecture.svg" target="_blank" rel="noopener noreferrer">Architecture diagram, full size<span class="vh"> (opens in a new tab)</span></a></li></ul></section>
+<nav class="case-pager" aria-label="Project navigation"><a class="case-pager-link" href="/projects/novacart/"><span class="case-pager-label">&larr; Previous project</span><span class="case-pager-title">NovaCart</span></a><a class="case-pager-link case-pager-next" href="/projects/cfpb/"><span class="case-pager-label">Next project &rarr;</span><span class="case-pager-title">CFPB</span></a></nav>
+</article>
+</div>
+</main>
+<footer class="foot"><div class="wrap"><div class="cols"><div><b>Isaiah Nyakundi</b><p>Data Engineer</p></div>
+<nav aria-label="Footer"><div><h4>Site</h4><a href="/projects/">Projects</a><a href="/blog.html">Blog</a><a href="/about.html">About</a><a href="/cv.html">CV</a></div>
+<div><h4>Connect</h4><a href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer">GitHub<span class="vh"> (opens in a new tab)</span></a><a href="https://www.linkedin.com/in/isaiah-nyakundi-2b58812b4" target="_blank" rel="noopener noreferrer">LinkedIn<span class="vh"> (opens in a new tab)</span></a><a href="mailto:isaiahnyakundi87@gmail.com">Email</a></div></nav></div>
+<p class="copy">&copy; 2026 Isaiah Nyakundi</p></div></footer>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

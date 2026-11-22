@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://viradidi.github.io/sitemap.xml

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<title>Why I merge on a key and guard it with a version | Isaiah Nyakundi</title>
+<meta name="description" content="The small rule that keeps a HealthGrid reload from overwriting newer data: reject bad keys, compare versions and fail on a conflict.">
+<link rel="canonical" href="https://viradidi.github.io/post-healthgrid-version-guarded-merge.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b3a2f'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3EIN%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Isaiah Nyakundi">
+<meta property="og:title" content="Why I merge on a key and guard it with a version | Isaiah Nyakundi">
+<meta property="og:description" content="The small rule that keeps a HealthGrid reload from overwriting newer data: reject bad keys, compare versions and fail on a conflict.">
+<meta property="og:url" content="https://viradidi.github.io/post-healthgrid-version-guarded-merge.html">
+<meta property="og:image" content="https://viradidi.github.io/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://viradidi.github.io/assets/og-image.png">
+<meta name="twitter:image:alt" content="Isaiah Nyakundi, Data Engineer | Cloud Engineer | Analytics Engineer">
+<link rel="stylesheet" href="/css/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Why I merge on a key and guard it with a version", "datePublished": "2026-11-10", "author": {"@type": "Person", "name": "Isaiah Nyakundi", "url": "https://viradidi.github.io/"}, "description": "The small rule that keeps a HealthGrid reload from overwriting newer data: reject bad keys, compare versions and fail on a conflict.", "mainEntityOfPage": "https://viradidi.github.io/post-healthgrid-version-guarded-merge.html", "image": "https://viradidi.github.io/assets/og-image.png"}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site"><div class="wrap"><a class="brand" href="/">Isaiah Nyakundi</a><button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav aria-label="Main" id="site-nav"><ul><li><a href="/">Home</a></li><li><a href="/about.html">About</a></li><li><a href="/projects/">Projects</a></li><li><a href="/blog.html" aria-current="page">Blog</a></li><li><a href="/cv.html">CV</a></li></ul></nav></div></header>
+<main id="main">
+<div class="wrap">
+<article class="post"><header class="post-header"><a class="post-back" href="/blog.html">&larr; Back to blog</a><h1>Why I merge on a key and guard it with a version</h1><div class="post-meta"><time datetime="2026-11-10">10 November 2026</time><span>&middot;</span><span>2 min read</span></div><ul class="post-tags" aria-label="Topics"><li class="blog-tag">data-engineering</li><li class="blog-tag">merge</li><li class="blog-tag">azure</li></ul></header><div class="post-body"><p>HealthGrid loads with a merge, not an append. The rule I care about most is small: a row is only updated when the incoming version is newer.</p>
+<h2>Reject bad keys first</h2>
+<p>A merge is only as good as its key. HealthGrid's merge rejects rows with null or duplicate keys before it touches the target. If two rows claim to be the same record, the run stops, and it does not pick one at random.</p>
+<h2>Compare versions, not arrival order</h2>
+<p>Data does not always arrive in the order it was created. A file can be delivered twice, or an old extract can land after a newer one. Comparing the incoming source version with the stored one means an older record cannot overwrite a newer one, whatever order the files arrive in.</p>
+<h2>Fail on a conflict</h2>
+<p>If the same version arrives with different content, the merge fails. I would rather have a failed run that someone has to look at than a quiet overwrite that nobody notices. Every stage writes to an audit log with the run ID, status and row counts, so a failure leaves a trail.</p>
+<h2>Where it stops</h2>
+<p>This protects rows that are already in the target. It does not detect changes at the source. The pipeline uses timestamp watermarks, which depend on reliable source timestamps and are not change data capture. The data is synthetic, and the project is educational and not a clinical system.</p></div><nav class="post-nav" aria-label="More posts"><a class="post-nav-link" href="/post-safe-replays.html"><span class="post-nav-label">&larr; Older</span><span class="post-nav-title">Making incremental loads safe to replay</span></a><a class="post-nav-link post-nav-next" href="/post-atlasflow-silver-gold.html"><span class="post-nav-label">Newer &rarr;</span><span class="post-nav-title">Why Silver stays append-only while Gold rebuilds state</span></a></nav></article>
+</div>
+</main>
+<footer class="foot"><div class="wrap"><div class="cols"><div><b>Isaiah Nyakundi</b><p>Data Engineer</p></div>
+<nav aria-label="Footer"><div><h4>Site</h4><a href="/projects/">Projects</a><a href="/blog.html">Blog</a><a href="/about.html">About</a><a href="/cv.html">CV</a></div>
+<div><h4>Connect</h4><a href="https://github.com/viradidi" target="_blank" rel="noopener noreferrer">GitHub<span class="vh"> (opens in a new tab)</span></a><a href="https://www.linkedin.com/in/isaiah-nyakundi-2b58812b4" target="_blank" rel="noopener noreferrer">LinkedIn<span class="vh"> (opens in a new tab)</span></a><a href="mailto:isaiahnyakundi87@gmail.com">Email</a></div></nav></div>
+<p class="copy">&copy; 2026 Isaiah Nyakundi</p></div></footer>
+<script src="/js/main.js" defer></script>
+</body>
+</html>
